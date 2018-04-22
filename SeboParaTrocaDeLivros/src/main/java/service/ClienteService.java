@@ -43,6 +43,20 @@ public class ClienteService {
 		}
 	}
 	
+	public void modificarCliente(Cliente cliente) {
+		try {
+			validarLogin(cliente.getLogin());
+			Cliente c = (Cliente) clienteDAO.getByID(new Cliente(), cliente.getId());
+			c.setLogin(cliente.getLogin());
+			c.setNome(cliente.getNome());
+			clienteDAO.update(c);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	/**
 	 * Esse método adiciona um livro ao usuário que o possue, caso ele não pertença a outro usuário.
 	 * @param idCliente

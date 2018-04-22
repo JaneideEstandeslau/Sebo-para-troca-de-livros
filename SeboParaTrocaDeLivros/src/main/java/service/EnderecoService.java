@@ -23,10 +23,16 @@ public class EnderecoService {
 		}
 	}
 	
-	public void editarEndereco(Long idEndereco) {
-		Endereco endereco = enderecoDAO.recuperarEndereco(idEndereco);
+	public void editarEndereco(Endereco endereco) {
 		try {
-			enderecoDAO.update(endereco);
+			Endereco end = (Endereco) enderecoDAO.getByID(new Endereco(), endereco.getId());
+			end.setRua(endereco.getRua());
+			end.setNumero(endereco.getNumero());
+			end.setBairro(endereco.getBairro());
+			end.setCidade(endereco.getCidade());
+			end.setEstado(endereco.getEstado());
+			end.setCep(endereco.getCep());
+			enderecoDAO.update(end);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -17,6 +17,24 @@ public class LivroService {
 		}
 	}
 	
+	public void modificarLivro(Livro livro) {
+		
+		try {
+			validarIsbn(livro.getIsbn());
+			Livro l = (Livro) livroDAO.getByID(new Livro(), livro.getId());
+			l.setConservacao(livro.getConservacao());
+			l.setTitulo(livro.getTitulo());
+			l.setEditora(livro.getEditora());
+			l.setPublicacao(livro.getPublicacao());
+			l.setIsbn(livro.getIsbn());
+			l.setSinopse(livro.getSinopse());
+			livroDAO.update(l);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public void validarIsbn(String isbn) {
 		
 		Livro livro = livroDAO.validarIsbn(isbn);
