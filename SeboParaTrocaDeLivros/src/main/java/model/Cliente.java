@@ -29,8 +29,9 @@ public class Cliente implements Serializable {
 	private String login;
 	private String senha;
 	private int ponto = 0;
+//	private boolean ativo;
 
-	@OneToMany(mappedBy = "usuarioPossue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuarioPossue", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	private Collection<Livro> livrosPossuem = new ArrayList<Livro>();
 
 	@ManyToMany(mappedBy = "clientesDesejam", cascade = CascadeType.ALL)
@@ -40,13 +41,13 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "fk_cliente")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "clienteSolicitou", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "clienteSolicitou", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 	
-	@OneToMany(mappedBy= "clienteEnviando", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy= "clienteEnviando", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Troca> trocasEnviadas = new ArrayList<Troca>();
 	
-	@OneToMany(mappedBy= "clienteRecebendo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy= "clienteRecebendo", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Troca> trocasRecebidas = new ArrayList<Troca>();
 	
 	
@@ -137,6 +138,14 @@ public class Cliente implements Serializable {
 	public void setPonto(int ponto) {
 		this.ponto = ponto;
 	}
+	
+//	public boolean isAtivo() {
+//		return ativo;
+//	}
+//
+//	public void setAtivo(boolean ativo) {
+//		this.ativo = ativo;
+//	}
 
 	@Override
 	public int hashCode() {

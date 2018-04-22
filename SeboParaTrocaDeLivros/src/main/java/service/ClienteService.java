@@ -32,10 +32,11 @@ public class ClienteService {
 		}
 	}
 	
-	public void removerCliente(Long idCliente) {
-		Cliente cliente = clienteDAO.recuperarCliente(idCliente);
+	public void removerUsuario(Long idCliente) {
 		try {
-			clienteDAO.delete(cliente);
+			Cliente cliente = (Cliente) clienteDAO.getByID(new Cliente(), idCliente);
+//			cliente.setAtivo(false);
+			clienteDAO.update(cliente);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -202,6 +203,16 @@ public class ClienteService {
 			System.out.println("Nem um usuario possui esse livro");
 		}
 
+	}
+	
+	public void cancelarSolicitacao(Long idSolicitacao) {
+		
+		try {
+			soliDAO.delete(new Solicitacao(), idSolicitacao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**

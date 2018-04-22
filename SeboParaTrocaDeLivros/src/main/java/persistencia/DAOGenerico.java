@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import model.Cliente;
 
 public class DAOGenerico extends DAO {
 
@@ -43,7 +45,7 @@ public class DAOGenerico extends DAO {
 		} catch (PersistenceException pe) {
 			transaction.rollback();
 			pe.printStackTrace();
-			throw new Exception("Erro na exclusÃ£o", pe);
+			throw new Exception("Erro na exclusão", pe);
 		} finally {
 			em.close();
 		}
@@ -54,30 +56,33 @@ public class DAOGenerico extends DAO {
 		EntityManager em = getEntityManager();
 		Object resultado = null;
 		try {
+			
 			resultado = em.find(objeto.getClass(), id);
 		} catch (PersistenceException pe) {
 			pe.printStackTrace();
-			throw new Exception("Erro na recuperaÃ§Ã£o do item.", pe);
+			throw new Exception("Erro na recuperação do item.", pe);
 		} finally {
 			em.close();
 		}
 
 		return resultado;
 	}
-
-	public Object getByID(Object objeto, String id) throws Exception {
+	
+	public void delete(Object o, Long pk) throws Exception {
 		EntityManager em = getEntityManager();
-		Object resultado = null;
+		EntityTransaction transaction = em.getTransaction();
 		try {
-			resultado = em.find(objeto.getClass(), id);
+			transaction.begin();
+			o = em.find(o.getClass(), pk);
+			em.remove(o);
+			transaction.commit();
 		} catch (PersistenceException pe) {
+			transaction.rollback();
 			pe.printStackTrace();
-			throw new Exception("Erro na recuperaÃ§Ã£o do item.", pe);
+			throw new Exception("Erro na exclusão", pe);
 		} finally {
 			em.close();
 		}
-
-		return resultado;
 	}
 
 	public List<Object> getAll(Object o) throws Exception {
@@ -94,7 +99,7 @@ public class DAOGenerico extends DAO {
 			resultado = typedQuery.getResultList();
 		} catch (PersistenceException pe) {
 			pe.printStackTrace();
-			throw new Exception("Erro na recuperaÃ§Ã£o de todos os itens.", pe);
+			throw new Exception("Erro na recuperação de todos os itens.", pe);
 		} finally {
 			em.close();
 		}
@@ -109,28 +114,11 @@ public class DAOGenerico extends DAO {
 			em.merge(o);
 			transaction.commit();
 		} catch (Exception e) {
-			throw new Exception("Erro na atualizaÃ§Ã£o de " + o.getClass().getSimpleName(), e);
+			throw new Exception("Erro na atualização de " + o.getClass().getSimpleName(), e);
 		} finally {
 			em.close();
 		}
 
-	}
-
-	public void delete(Object o) throws Exception {
-		EntityManager em = getEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		try {
-			em.detach(o);
-			em.remove(o);
-			transaction.commit();
-		} catch (PersistenceException pe) {
-			transaction.rollback();
-			pe.printStackTrace();
-			throw new Exception("Erro na exclusÃ£o", pe);
-		} finally {
-			em.close();
-		}
 	}
 
 	public Image find(Long id) {
@@ -138,19 +126,5 @@ public class DAOGenerico extends DAO {
 		return em.find(Image.class, id);
 	}
 
-	public Object getByID(Object objeto, BigInteger id) throws Exception {
-		EntityManager em = getEntityManager();
-		Object resultado = null;
-		try {
-			resultado = em.find(objeto.getClass(), id);
-		} catch (PersistenceException pe) {
-			pe.printStackTrace();
-			throw new Exception("Erro na recuperaÃ§Ã£o do item.", pe);
-		} finally {
-			em.close();
-		}
-
-		return resultado;
-	}
 
 }

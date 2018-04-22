@@ -1,5 +1,6 @@
 package service;
 
+import model.Cliente;
 import model.Livro;
 import persistencia.DAOLivro;
 
@@ -12,15 +13,6 @@ public class LivroService {
 			validarIsbn(livro.getIsbn());
 			livroDAO.save(livro);
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void removerLivro(Livro livro) {
-		try {
-			livroDAO.delete(livro);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -46,7 +46,7 @@ public class Livro {
 	@OneToMany(mappedBy = "clienteSolicitou", cascade = CascadeType.ALL)
 	private Collection<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 	
-	@OneToMany(mappedBy= "livro", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy= "livro", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Troca> trocas = new ArrayList<Troca>();
 
 	public Livro() {
