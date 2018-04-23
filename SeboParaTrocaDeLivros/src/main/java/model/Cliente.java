@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+
 @Entity
 public class Cliente implements Serializable {
 
@@ -30,6 +31,9 @@ public class Cliente implements Serializable {
 	private String senha;
 	private int ponto = 0;
 //	private boolean ativo;
+	
+//	@OneToMany(mappedBy= "cliente", cascade = CascadeType.ALL)
+//	private Collection<ProblemaTroca> problematroca = new ArrayList<ProblemaTroca>();
 
 	@OneToMany(mappedBy = "usuarioPossue", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	private Collection<Livro> livrosPossuem = new ArrayList<Livro>();

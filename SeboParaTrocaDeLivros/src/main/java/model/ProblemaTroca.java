@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 //@Entity
 public class ProblemaTroca{
 	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

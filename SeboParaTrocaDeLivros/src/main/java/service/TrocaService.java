@@ -64,6 +64,14 @@ public class TrocaService {
 	}
 
 	public void cancelarTroca(Long idTroca) {
+		
+		try {
+//			Troca troca = (Troca) trocaDAO.getByID(new Troca(), idTroca);
+			trocaDAO.delete(new Troca(), idTroca);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Troca troca = DAOTroca.retrieve(idTroca);
 		//

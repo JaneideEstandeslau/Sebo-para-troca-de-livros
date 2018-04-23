@@ -43,12 +43,13 @@ public class ClienteService {
 		}
 	}
 	
-	public void modificarCliente(Cliente cliente) {
+	public void modificarUsuario(Cliente cliente) {
 		try {
 			validarLogin(cliente.getLogin());
 			Cliente c = (Cliente) clienteDAO.getByID(new Cliente(), cliente.getId());
 			c.setLogin(cliente.getLogin());
 			c.setNome(cliente.getNome());
+			c.setPonto(cliente.getPonto());
 			clienteDAO.update(c);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -155,101 +156,6 @@ public class ClienteService {
 			e.printStackTrace();
 		}
 		
-	}
-	
-
-	/**
-	 * Esse metodo solicito, faz com que um cliente solicite um livro já existente.
-	 * 
-	 * @param idCliente
-	 * @param idLivro
-	 */
-	public void solicitarLivro(Long idCliente, Long idLivro) {
-
-		Livro usuarioPossue = livroDAO.recuperarLivroComPossuinte(idLivro);
-
-		if (usuarioPossue.getUsuarioPossue() != null) {
-
-			Cliente cliente = clienteDAO.recuperarClienteComSolicitacoes(idCliente);
-			if (cliente.getPonto() > 0) {
-
-				boolean solicitou = false;
-				for (Solicitacao s : cliente.getSolicitacoes()) {
-					if (s.getLivroSolicitado().getId() == idLivro) {
-						solicitou = true;
-						break;
-					}
-				}
-
-				if (solicitou == false) {
-
-					Livro livro = livroDAO.recuperarLivroComSolicitacoes(idLivro);
-					Cliente c = clienteDAO.recuperarClienteComLivrosPossue(idCliente);
-					boolean possui = false;
-					for (Livro l : c.getLivrosPossuem()) {
-						if (l.getIsbn().equals(livro.getIsbn())) {
-							possui = true;
-							break;
-						}
-					}
-					if (possui == false) {
-
-						Solicitacao solicitacao = new Solicitacao();
-						cliente.getSolicitacoes().add(solicitacao);
-						livro.getSolicitacoes().add(solicitacao);
-						solicitacao.setClienteSolicitou(cliente);
-						solicitacao.setLivroSolicitado(livro);
-						try {
-							soliDAO.save(solicitacao);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					} else {
-						System.out.println("Você possui esse livro, por tanto não pode solicitalo");
-					}
-				} else {
-					System.out.println("Você já solicitou esse livro");
-				}
-			} else {
-				System.out.println("Para solicitar um livro você precisa enviar outro primeiro");
-			}
-		} else {
-			System.out.println("Nem um usuario possui esse livro");
-		}
-
-	}
-	
-	public void cancelarSolicitacao(Long idSolicitacao) {
-		
-		try {
-			soliDAO.delete(new Solicitacao(), idSolicitacao);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	/**
-	 * Esse método aceita uma solicitação feita por um cliente e em seguida realiza
-	 * a troca.
-	 * 
-	 * @param idSolicitacao
-	 */
-	public void aceitarSolicitacao(Long idSolicitacao) {
-
-		Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
-		Long idClienteSolicitou = soli.getClienteSolicitou().getId();
-		soli = soliDAO.recuperarSolicitacaoComLivro(idSolicitacao);
-		Livro livro = livroDAO.recuperarLivroComPossuinte(soli.getLivroSolicitado().getId());
-		soli.setAceita(true);
-
-		try {
-			soliDAO.update(soli);
-			trocaServe.realizarTroca(livro.getUsuarioPossue().getId(), livro.getId(), idClienteSolicitou);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
