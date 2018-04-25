@@ -18,7 +18,6 @@ public class ProblemaTrocaService {
 	public void registrarProblemaTroca(Long idTroca, Long idCliente, ProblemaTroca problema) {
 		
 		Cliente cliente = clienteDAO.recuprarClienteComProblemaTroca(idCliente);
-		System.out.println(cliente.getNome());
 		Troca troca = trocaDAO.recuperarTrocaComProblemas(idTroca);
 		
 		problema.setCliente(cliente);
@@ -35,6 +34,19 @@ public class ProblemaTrocaService {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void problemaResolvido(Long idProblemaTroca) {
+		try {
+			
+			ProblemaTroca problema = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), idProblemaTroca);
+			problema.setResolvido(true);
+			problemaDAO.update(problema);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

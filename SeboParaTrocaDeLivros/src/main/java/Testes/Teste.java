@@ -77,6 +77,7 @@ public class Teste {
 		try {
 			
 //			problemaService.registrarProblemaTroca((long) 1, (long) 2, problema);
+			problemaService.problemaResolvido((long) 4);
 			
 //			livroService.salvarLivro(livro);
 //			livroService.salvarLivro(livro1);
