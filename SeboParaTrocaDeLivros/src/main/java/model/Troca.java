@@ -16,8 +16,8 @@ public class Troca {
 	private Long id;
 	private String dataTroca;
 	
-//	@OneToOne
-//	private ProblemaTroca problema;
+	@OneToOne
+	private ProblemaTroca problema;
 	
 	@ManyToOne
 	private Livro livro;
@@ -46,12 +46,12 @@ public class Troca {
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
-//	public ProblemaTroca getProblema() {
-//		return problema;
-//	}
-//	public void setProblema(ProblemaTroca problema) {
-//		this.problema = problema;
-//	}
+	public ProblemaTroca getProblema() {
+		return problema;
+	}
+	public void setProblema(ProblemaTroca problema) {
+		this.problema = problema;
+	}
 	public Cliente getClienteEnviando() {
 		return clienteEnviando;
 	}

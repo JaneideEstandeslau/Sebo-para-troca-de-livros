@@ -10,7 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-//@Entity
+@Entity
 public class ProblemaTroca{
 	
 	
@@ -20,10 +20,10 @@ public class ProblemaTroca{
 	@Lob
 	private String descricaoProblema;
 	
-//	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	private Cliente cliente;
 	
-//	@OneToOne(mappedBy="problema", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="problema",fetch=FetchType.EAGER)
 	private Troca troca;
 	
 	private boolean resolvido;
@@ -51,4 +51,22 @@ public class ProblemaTroca{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public Troca getTroca() {
+		return troca;
+	}
+
+	public void setTroca(Troca troca) {
+		this.troca = troca;
+	}
+
+	public boolean isResolvido() {
+		return resolvido;
+	}
+
+	public void setResolvido(boolean resolvido) {
+		this.resolvido = resolvido;
+	}
+	
+	
 }

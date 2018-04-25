@@ -19,6 +19,27 @@ public class DAOCliente extends DAOGenerico {
 	}
 	
 	/**
+	 * Recupera um cliente com seus respectivos problemas na troca
+	 * @param idCliente
+	 * @return
+	 */
+	public Cliente recuprarClienteComProblemaTroca(Long idCliente) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
+					"SELECT c FROM Cliente c LEFT JOIN FETCH c.problematroca ls WHERE c.id = :idCliente");
+			query.setParameter("idCliente", idCliente);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		} finally {
+			em.close();
+		}
+		return resultado;
+	}
+	
+	/**
 	 * Esse método recupera um cliente do sistema
 	 * @param idCliente
 	 */

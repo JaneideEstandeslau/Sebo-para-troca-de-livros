@@ -25,6 +25,7 @@ public class ClienteService {
 	public void salvarUsuario(Cliente cliente) {
 		try {
 			validarLogin(cliente.getLogin());
+			cliente.setAtivo(true);
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

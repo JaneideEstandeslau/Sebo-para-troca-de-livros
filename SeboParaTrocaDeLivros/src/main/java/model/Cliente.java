@@ -30,10 +30,10 @@ public class Cliente implements Serializable {
 	private String login;
 	private String senha;
 	private int ponto = 0;
-//	private boolean ativo;
+	private boolean ativo;
 	
-//	@OneToMany(mappedBy= "cliente", cascade = CascadeType.ALL)
-//	private Collection<ProblemaTroca> problematroca = new ArrayList<ProblemaTroca>();
+	@OneToMany(mappedBy= "cliente", cascade = CascadeType.ALL)
+	private Collection<ProblemaTroca> problematroca = new ArrayList<ProblemaTroca>();
 
 	@OneToMany(mappedBy = "usuarioPossue", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	private Collection<Livro> livrosPossuem = new ArrayList<Livro>();
@@ -55,6 +55,14 @@ public class Cliente implements Serializable {
 	private Collection<Troca> trocasRecebidas = new ArrayList<Troca>();
 	
 	
+	public Collection<ProblemaTroca> getProblematroca() {
+		return problematroca;
+	}
+
+	public void setProblematroca(Collection<ProblemaTroca> problematroca) {
+		this.problematroca = problematroca;
+	}
+
 	public Collection<Troca> getTrocasEnviadas() {
 		return trocasEnviadas;
 	}
@@ -143,13 +151,13 @@ public class Cliente implements Serializable {
 		this.ponto = ponto;
 	}
 	
-//	public boolean isAtivo() {
-//		return ativo;
-//	}
-//
-//	public void setAtivo(boolean ativo) {
-//		this.ativo = ativo;
-//	}
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	@Override
 	public int hashCode() {
