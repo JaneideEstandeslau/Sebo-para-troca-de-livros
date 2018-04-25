@@ -1,5 +1,6 @@
 package service;
 
+import excecoes.RollbackException;
 import model.Cliente;
 import model.Livro;
 import model.Solicitacao;
@@ -19,8 +20,9 @@ public class SolicitacaoService {
 	 * 
 	 * @param idCliente
 	 * @param idLivro
+	 * @throws RollbackException 
 	 */
-	public void solicitarLivro(Long idCliente, Long idLivro) {
+	public void solicitarLivro(Long idCliente, Long idLivro) throws RollbackException {
 
 		Livro usuarioPossue = livroDAO.recuperarLivroComPossuinte(idLivro);
 
@@ -61,16 +63,16 @@ public class SolicitacaoService {
 							e.printStackTrace();
 						}
 					} else {
-						System.out.println("Você possui esse livro, por tanto não pode solicitalo");
+						throw new RollbackException("Você possui esse livro, por tanto não pode solicitalo");
 					}
 				} else {
-					System.out.println("Você já solicitou esse livro");
+					throw new RollbackException("Você já solicitou esse livro");
 				}
 			} else {
-				System.out.println("Para solicitar um livro você precisa enviar outro primeiro");
+				throw new RollbackException("Para solicitar um livro você precisa enviar outro primeiro");
 			}
 		} else {
-			System.out.println("Nem um usuario possui esse livro");
+			throw new RollbackException("Nem um usuario possui esse livro, por tanto você não pode solicitalo");
 		}
 
 	}
@@ -112,7 +114,7 @@ public class SolicitacaoService {
 	public void verificarSolicitacaoAceita(Long idSolicitacao) throws Exception {
 		Solicitacao soli = (Solicitacao) soliDAO.getByID(new Solicitacao(), idSolicitacao);
 		if(soli.isAceita() == true) {
-			//Lança uma excessão
+			throw new RollbackException("A solicitação foi aceita é o livro enviado, por tanto você não pode cancelala");
 		}
 	}
 

@@ -26,12 +26,12 @@ public class Teste {
 		TrocaService trocaService = new TrocaService();
 		ProblemaTrocaService problemaService = new ProblemaTrocaService();
 		
-//		Cliente cliente = new Cliente();
-//		cliente.setLogin("Patricia_Silva");
-//		cliente.setNome("Janeide Estandeslau da Silva");
-//		cliente.setSenha("50jeipb08d");
-//		cliente.setId((long) 3);
-//		cliente.setPonto(1);
+		Cliente cliente = new Cliente();
+		cliente.setLogin("Patricia_Silva");
+		cliente.setNome("Janeide Estandeslau da Silva");
+		cliente.setSenha("50jeipb08d");
+		cliente.setId((long) 3);
+		cliente.setPonto(1);
 		
 //		Cliente cliente2 = new Cliente();
 //		cliente2.setLogin("Patricia_Cabral");
@@ -77,7 +77,7 @@ public class Teste {
 		try {
 			
 //			problemaService.registrarProblemaTroca((long) 1, (long) 2, problema);
-			problemaService.problemaResolvido((long) 4);
+//			problemaService.problemaResolvido((long) 4);
 			
 //			livroService.salvarLivro(livro);
 //			livroService.salvarLivro(livro1);
@@ -88,7 +88,7 @@ public class Teste {
 //			soliService.solicitarLivro((long) 2, (long) 1);
 //			soliService.aceitarSolicitacao((long) 1);
 			
-//			cliServe.salvarUsuario(cliente);
+			cliServe.salvarUsuario(cliente);
 //			cliServe.salvarUsuario(cliente2);
 			
 //			endServe.editarEndereco(end);

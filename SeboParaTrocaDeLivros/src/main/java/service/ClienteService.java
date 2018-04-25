@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import excecoes.RollbackException;
 import model.Cliente;
 import model.Livro;
 import model.Solicitacao;
@@ -28,8 +29,7 @@ public class ClienteService {
 			cliente.setAtivo(true);
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -136,11 +136,11 @@ public class ClienteService {
 				cliente.getLivrosDesejados().add(livro);
 				livroDAO.adicionarLivroListaDesejos(livro);
 			} else {
-				System.out.println("Você possui esse livro, por tanto não pode Desejalo");
+				throw new RollbackException("Você possui esse livro, por tanto não pode Desejalo");
 			}
 
 		} else {
-			System.out.println("Você já adicionou esse livro a sua lista de desejos");
+			throw new RollbackException("Você já adicionou esse livro a sua lista de desejos");
 		}
 	}
 	
@@ -164,24 +164,26 @@ public class ClienteService {
 	 * já existente no sistema.
 	 * 
 	 * @param login
+	 * @throws RollbackException 
 	 */
-	public void validarLogin(String login) {
+	public void validarLogin(String login) throws RollbackException {
 
 		Cliente c = clienteDAO.validarLogin(login);
 
 		if (c != null) {
-			System.out.println("Login invalido");
+			throw new RollbackException("Login invalido");
 		}
 	}
 	
 	/**
 	 * Esse método verifica se o livro já possue um dono.
 	 * @param idLivro
+	 * @throws RollbackException 
 	 */
-	public void verificarLivroPossuiDono(Livro usuarioPossue) {
+	public void verificarLivroPossuiDono(Livro usuarioPossue) throws RollbackException {
 
 		if (usuarioPossue.getUsuarioPossue() != null) {
-			System.out.println("Usuario já possue esse livro");
+			throw new RollbackException("Você já possue esse livro");
 		}
 		
 	}

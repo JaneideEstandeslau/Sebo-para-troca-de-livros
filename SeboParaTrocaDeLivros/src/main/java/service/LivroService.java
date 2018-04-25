@@ -1,5 +1,6 @@
 package service;
 
+import excecoes.RollbackException;
 import model.Cliente;
 import model.Livro;
 import persistencia.DAOLivro;
@@ -35,11 +36,16 @@ public class LivroService {
 		}
 		
 	}
-	public void validarIsbn(String isbn) {
+	/**
+	 * Esse método verifica se já existe um livro com o isbn que o cliente esta tentando cadastrar.
+	 * @param isbn
+	 * @throws RollbackException
+	 */
+	public void validarIsbn(String isbn) throws RollbackException {
 		
 		Livro livro = livroDAO.validarIsbn(isbn);
 		if(livro != null) {
-			System.out.println("Livro já existe");
+			throw new RollbackException("Livro já existe");
 		}
 		
 	}
