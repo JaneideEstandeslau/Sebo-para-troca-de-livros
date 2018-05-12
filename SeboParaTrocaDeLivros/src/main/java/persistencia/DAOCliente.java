@@ -160,14 +160,14 @@ public class DAOCliente extends DAOGenerico {
 	 * @param login
 	 * @return
 	 */
-	public Cliente validarLogin(String login) {
+	public Cliente validarCPF(String cpf) {
 		
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
 		try {
 			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
-					"SELECT c FROM Cliente c WHERE c.login = :login");
-			query.setParameter("login", login);
+					"SELECT c FROM Cliente c WHERE c.cpf = :cpf");
+			query.setParameter("cpf", cpf);
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;

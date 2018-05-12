@@ -25,7 +25,7 @@ public class ClienteService {
 	 */
 	public void salvarUsuario(Cliente cliente) {
 		try {
-			validarLogin(cliente.getLogin());
+			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
@@ -36,7 +36,7 @@ public class ClienteService {
 	public void removerUsuario(Long idCliente) {
 		try {
 			Cliente cliente = (Cliente) clienteDAO.getByID(new Cliente(), idCliente);
-//			cliente.setAtivo(false);
+			cliente.setAtivo(false);
 			clienteDAO.update(cliente);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -44,9 +44,13 @@ public class ClienteService {
 		}
 	}
 	
+	/**
+	 * Esse metodo modifica as informações pessoais do usuário.
+	 * @param cliente
+	 */
 	public void modificarUsuario(Cliente cliente) {
 		try {
-			validarLogin(cliente.getLogin());
+			validarCPF(cliente.getCpf());
 			Cliente c = (Cliente) clienteDAO.getByID(new Cliente(), cliente.getId());
 			c.setLogin(cliente.getLogin());
 			c.setNome(cliente.getNome());
@@ -144,6 +148,11 @@ public class ClienteService {
 		}
 	}
 	
+	/**
+	 * Esse método remove um livro da lista de desejos do usuário.
+	 * @param idCliente
+	 * @param idLivro
+	 */
 	public void removerLivroListaDesejos(Long idCliente, Long idLivro) {
 		
 		Livro livro = livroDAO.recuperarLivroComClienteDesejam(idLivro);
@@ -163,15 +172,15 @@ public class ClienteService {
 	 * Esse método verifica se o login informado não esta associado a nem um usuário
 	 * já existente no sistema.
 	 * 
-	 * @param login
+	 * @param cpf
 	 * @throws RollbackException 
 	 */
-	public void validarLogin(String login) throws RollbackException {
+	public void validarCPF(String cpf) throws RollbackException {
 
-		Cliente c = clienteDAO.validarLogin(login);
+		Cliente c = clienteDAO.validarCPF(cpf);
 
 		if (c != null) {
-			throw new RollbackException("Login invalido");
+			throw new RollbackException("Já existe um cliente com esse CPF");
 		}
 	}
 	

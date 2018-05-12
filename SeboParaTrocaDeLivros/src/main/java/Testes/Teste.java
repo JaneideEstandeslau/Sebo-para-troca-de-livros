@@ -4,6 +4,7 @@ import model.Cliente;
 import model.Endereco;
 import model.Livro;
 import model.ProblemaTroca;
+import model.Usuario;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import service.ClienteService;
@@ -12,6 +13,7 @@ import service.LivroService;
 import service.ProblemaTrocaService;
 import service.SolicitacaoService;
 import service.TrocaService;
+import service.UsuarioService;
 
 public class Teste {
 	
@@ -25,24 +27,30 @@ public class Teste {
 		SolicitacaoService soliService = new SolicitacaoService();
 		TrocaService trocaService = new TrocaService();
 		ProblemaTrocaService problemaService = new ProblemaTrocaService();
+		UsuarioService userService = new UsuarioService();
 		
 		Cliente cliente = new Cliente();
+		cliente.setCpf("23654879621");
 		cliente.setLogin("Patricia_Silva");
 		cliente.setNome("Janeide Estandeslau da Silva");
 		cliente.setSenha("50jeipb08d");
-		cliente.setId((long) 3);
 		cliente.setPonto(1);
 		
 //		Cliente cliente2 = new Cliente();
+//		cliente2.setCpf("20514896536");
 //		cliente2.setLogin("Patricia_Cabral");
 //		cliente2.setNome("Patricia SIlva Cabral");
 //		cliente2.setSenha("50jeipb08d");
-//		cliente2.setId((long) 3);
 //		cliente2.setPonto(1);
+		
+//		Usuario admin = new Usuario();
+//		admin.setCpf("23654879621");
+//		admin.setLogin("Patricia_Cabral");
+//		admin.setNome("Patricia SIlva Cabral");
+//		admin.setSenha("50jeipb08d");
 		
 		
 //		Livro livro = new Livro();
-//		livro.setId((long) 1);
 //		livro.setConservacao("òtimo estado");
 //		livro.setEditora("SAraiva");
 //		livro.setIsbn("9788561559342");
@@ -50,7 +58,7 @@ public class Teste {
 //		livro.setSinopse("Júlio César (Dan Stulbach), um psicólogo decepcionado.");
 //		livro.setTitulo("O vendedor de sonhos");
 		
-		
+//		
 //		Livro livro1 = new Livro();
 //		livro1.setConservacao("òtimo estado");
 //		livro1.setEditora("SAraiva");
@@ -88,8 +96,10 @@ public class Teste {
 //			soliService.solicitarLivro((long) 2, (long) 1);
 //			soliService.aceitarSolicitacao((long) 1);
 			
-			cliServe.salvarUsuario(cliente);
-//			cliServe.salvarUsuario(cliente2);
+//			cliServe.salvarUsuario(cliente);
+//			cliServe.salvarUsuario(admin);
+			
+//			userService.salvarAdmin(admin);
 			
 //			endServe.editarEndereco(end);
 //			livroService.modificarLivro(livro);
