@@ -10,9 +10,9 @@ public class EnderecoService {
 	private DAOEndereco enderecoDAO = new  DAOEndereco();
 	private DAOCliente clienteDAO = new DAOCliente();
 	
-	public void cadastrarEndereco(Endereco endereco, Long idCliente) {
+	public void cadastrarEndereco(Endereco endereco, String cpf) {
 		
-		Cliente cliente = clienteDAO.recuperarClienteComEndereco(idCliente);
+		Cliente cliente = clienteDAO.recuperarClienteComEndereco(cpf);
 		try {
 			cliente.setEndereco(endereco);
 			endereco.setCliente(cliente);

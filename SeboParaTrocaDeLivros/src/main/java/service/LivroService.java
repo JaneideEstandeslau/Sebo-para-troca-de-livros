@@ -1,6 +1,8 @@
 package service;
 
+
 import excecoes.RollbackException;
+import excecoes.ServiceDacException;
 import model.Cliente;
 import model.Livro;
 import persistencia.DAOLivro;
@@ -9,12 +11,12 @@ public class LivroService {
 	
 	private DAOLivro livroDAO = new DAOLivro();
 	
-	public void salvarLivro(Livro livro) {
+	public void salvarLivro(Livro livro) throws RollbackException {
 		try {
 			validarIsbn(livro.getIsbn());
 			livroDAO.save(livro);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 	}
 	
@@ -48,6 +50,14 @@ public class LivroService {
 			throw new RollbackException("Livro já existe");
 		}
 		
+	}
+	
+	public Livro getByID(Long itemId) throws ServiceDacException {
+		try {
+			return (Livro) livroDAO.getByID(new Livro(), itemId);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
 	}
 
 }

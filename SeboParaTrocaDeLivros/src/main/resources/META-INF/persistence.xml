@@ -8,6 +8,14 @@
 
         <non-jta-data-source>java:/seboParaTrocaDeLivros_PostgreSQL</non-jta-data-source>
 		<!-- <non-jta-data-source>java:/DACA_MySQL</non-jta-data-source> -->
+		
+		<class>model.Livro</class>
+		<class>model.Cliente</class>
+		<class>model.Endereco</class>
+		<class>model.ProblemaTroca</class>
+		<class>model.Solicitacao</class>
+		<class>model.Troca</class>
+		<class>model.Usuario</class>
         
 		<properties>
         

@@ -5,7 +5,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import excecoes.RollbackException;
+import excecoes.ServiceDacException;
 import model.Cliente;
+import model.Endereco;
 import model.Livro;
 import model.Solicitacao;
 import persistencia.DAOCliente;
@@ -22,14 +24,16 @@ public class ClienteService {
 	/**
 	 * Esse método cadastra um cliente
 	 * @param cliente
+	 * @throws RollbackException 
 	 */
-	public void salvarUsuario(Cliente cliente) {
+	public void salvarUsuario(Cliente cliente) throws RollbackException {
 		try {
+			validarLogin(cliente.getLogin());
 			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new RollbackException(e.getMessage());
 		}
 	}
 	
@@ -87,8 +91,9 @@ public class ClienteService {
 	 * Esse método remove um livro da lista dos livros que um usuário possue.
 	 * @param idCliente
 	 * @param idLivro
+	 * @throws RollbackException 
 	 */
-	public void removerLivroPossuintes(Long idCliente, Long idLivro) {
+	public void removerLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
 			
@@ -97,8 +102,7 @@ public class ClienteService {
 			livro.setUsuarioPossue(null);
 			livroDAO.update(livro);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 	}
 	
@@ -184,6 +188,15 @@ public class ClienteService {
 		}
 	}
 	
+	public void validarLogin(String login) throws RollbackException {
+
+		Cliente c = clienteDAO.validarLogin(login);
+
+		if (c != null) {
+			throw new RollbackException("Já existe um cliente com esse Login");
+		}
+	}
+	
 	/**
 	 * Esse método verifica se o livro já possue um dono.
 	 * @param idLivro
@@ -195,6 +208,14 @@ public class ClienteService {
 			throw new RollbackException("Você já possue esse livro");
 		}
 		
+	}
+
+	public Object getByID(Long id) throws ServiceDacException {
+		try {
+			return (Livro) clienteDAO.getByID(new Cliente(), id);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
 	}
 
 }

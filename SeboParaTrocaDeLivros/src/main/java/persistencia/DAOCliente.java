@@ -177,14 +177,32 @@ public class DAOCliente extends DAOGenerico {
 		return resultado;
 		
 	}
+	
+	public Cliente validarLogin(String login) {
 
-	public Cliente recuperarClienteComEndereco(Long idCliente) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em
+					.createQuery("SELECT u FROM Usuario u WHERE u.login = :login");
+			query.setParameter("login", login);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		} finally {
+			em.close();
+		}
+		return resultado;
+
+	}
+
+	public Cliente recuperarClienteComEndereco(String cpf) {
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
 		try {
 			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
-					"SELECT c FROM Cliente c LEFT JOIN FETCH c.endereco ls WHERE c.id = :idCliente");
-			query.setParameter("idCliente", idCliente);
+					"SELECT c FROM Cliente c LEFT JOIN FETCH c.endereco ls WHERE c.cpf = :cpf");
+			query.setParameter("cpf", cpf);
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
@@ -193,5 +211,4 @@ public class DAOCliente extends DAOGenerico {
 		}
 		return resultado;
 	}
-
 }

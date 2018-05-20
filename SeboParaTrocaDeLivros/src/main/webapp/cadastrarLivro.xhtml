@@ -7,7 +7,20 @@
 
 <ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
 
-	<ui:define name="logado">
+	<f:metadata>
+		<f:viewParam name="livro" value="#{beanCadastrarLivro.livro}" />
+		<!-- <f:event listener="#{userEdit.init()}" type="preRenderView" /> -->
+		<f:viewAction action="#{beanCadastrarLivro.init()}" />
+
+	</f:metadata>
+
+	<ui:define name="layoutLogado">
+
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
+			closable="true" severity="error" />
+
 		<br />
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
@@ -16,26 +29,38 @@
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:outputLabel value="Titulo:" for="titulo" />
-					<p:inputText id="titulo" label="Titulo" style="width:350px" />
+					<p:inputText id="titulo" value="#{beanCadastrarLivro.livro.titulo}"
+						label="Titulo" style="width:350px" />
 
 					<h:outputLabel value="ISBN:" for="isbn" />
-					<p:inputText id="isbn" label="ISBN" style="width:350px" />
+					<p:inputText id="isbn" value="#{beanCadastrarLivro.livro.isbn}"
+						label="ISBN" style="width:350px" validator="isbnValidar"></p:inputText>
 
 					<p:outputLabel value="Edotora:" for="editora" />
-					<p:inputText id="editora" label="Edotora" style="width:350px" />
+					<p:inputText id="editora"
+						value="#{beanCadastrarLivro.livro.editora}" label="Edotora"
+						style="width:350px" />
 
-					<p:outputLabel value="Ano de Publicação:" for="publicacao" />
-					<p:inputText id="publicacao" label="Ano de Publicação"
-						style="width:350px" />
-						
+					<p:outputLabel for="publicacao" value="Ano de Publicação:" />
+					<p:inputText id="publicacao"
+						value="#{beanCadastrarLivro.livro.publicacao}"
+						label="Ano de Publicação" style="width:350px">
+						<f:convertNumber integerOnly="true" minIntegerDigits="1" />
+					</p:inputText>
+
+
 					<p:outputLabel value="Conservação:" for="conservacao" />
-					<p:inputTextarea id="conservacao" label="Conservação"
-						style="width:350px" />
+					<p:inputTextarea id="conservacao"
+						value="#{beanCadastrarLivro.livro.conservacao}"
+						label="Conservação" style="width:350px" />
 
 					<p:outputLabel value="Sinopse:" for="sinopse" />
-					<p:inputTextarea id="sinopse" label="Sinopse" style="width:350px" />
+					<p:inputTextarea id="sinopse"
+						value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
+						style="width:350px" />
 
-					<p:commandButton id="btnCadastrar" value="Cadastrar" />
+					<p:commandButton id="btnCadastrar"
+						action="#{beanCadastrarLivro.saveLivro}" value="Cadastrar" />
 					<p:commandButton id="btnCancelar" value="Cancelar" />
 
 				</h:panelGrid>

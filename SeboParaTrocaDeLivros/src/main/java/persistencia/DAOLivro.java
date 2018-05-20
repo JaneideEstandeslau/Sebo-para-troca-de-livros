@@ -3,7 +3,6 @@ package persistencia;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-
 import model.Livro;
 
 public class DAOLivro extends DAOGenerico{

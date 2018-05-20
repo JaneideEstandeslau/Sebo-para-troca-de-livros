@@ -59,13 +59,13 @@ public class Teste {
 //		livro.setTitulo("O vendedor de sonhos");
 		
 //		
-//		Livro livro1 = new Livro();
-//		livro1.setConservacao("òtimo estado");
-//		livro1.setEditora("SAraiva");
-//		livro1.setIsbn("455410456");
-//		livro1.setPublicacao(2000);
-//		livro1.setSinopse("sefhhjbdg");
-//		livro1.setTitulo("A mulher do Viajante no tempo");
+		Livro livro1 = new Livro();
+		livro1.setConservacao("òtimo estado");
+		livro1.setEditora("SAraiva");
+		livro1.setIsbn("455410456");
+		livro1.setPublicacao(2000);
+		livro1.setSinopse("sefhhjbdg");
+		livro1.setTitulo("A mulher do Viajante no tempo");
 		
 		
 //		Endereco end = new Endereco();
@@ -88,7 +88,7 @@ public class Teste {
 //			problemaService.problemaResolvido((long) 4);
 			
 //			livroService.salvarLivro(livro);
-//			livroService.salvarLivro(livro1);
+			livroService.salvarLivro(livro1);
 			
 //			cliServe.adicionaLivroPossuintes((long) 1, (long) 1);
 			
