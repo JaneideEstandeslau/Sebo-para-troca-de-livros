@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title><ui:insert name="title">Troca de Livros usados com segurança é aqui!!</ui:insert></title>
+	<style>
+		div#divMenu01 {
+			width: 1329px;
+			height: 11px;
+			margin-top: -8px;
+			margin-left: -8px;
+			padding: 10px;
+			background-color: #228B22;
+		}
+		
+		div#divMenu01 h1#vc {
+			margin-top: -4px;
+			color: #ffffff;
+			font-size: 12pt;
+			margin-left: 40px;
+		}
+		div#divMenu02 {
+			width: 250px;
+			height: 95px;
+			margin-top: 0px;
+			margin-left: -8px;
+			padding: 10px;
+			background-color: #FFFFFF;
+		}
+		
+		div#divMenu02 img#imagem {
+			display: block;
+			margin-top: 0px;
+			margin-left: 27px;
+		}
+		div#divMenu022 {
+			width: 373px;
+			height: 95px;
+			margin-top: -115px;
+			margin-left: 390px;
+			padding: 10px;
+			background-color: #ffffff;
+		}div#divMenu022 {
+			width: 373px;
+			height: 95px;
+			margin-top: -115px;
+			margin-left: 390px;
+			padding: 10px;
+			background-color: #ffffff;
+		}
+	</style>
+</h:head>
+
+<h:body>
+
+	<ui:debug hotkey="z" />
+
+	<div id="divMenu01">
+		<h1 id="vc">Compartilhando Conhecimento</h1>
+	</div>
+
+	<div id="divMenu02">
+		<img id="imagem" src="/WEB-INF/imagens/logo-iloveimg-resized (1).png" alt="Engage" />
+
+	</div>
+	
+	<div id="divMenu022">
+		<h:form>
+			<p:inputText id="cPesquisa" style="width:350px" />
+		</h:form>
+	</div>
+
+	<div id="content">
+		<ui:insert name="content" />
+	</div>
+</h:body>
+</html>

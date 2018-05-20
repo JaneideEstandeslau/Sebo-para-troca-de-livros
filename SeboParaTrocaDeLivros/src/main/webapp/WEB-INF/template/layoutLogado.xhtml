@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/_layoutPadrao.xhtml">
+
+	<ui:define name="content">
+	<style typr="text/css">
+		div#divMenu03 {
+			width: 1329px;
+			height: 36px;
+			margin-top: 0px;
+			margin-left: -8px;
+			padding: 10px;
+			background-color: #000000;
+		}
+		
+		div#divMenu03 nav#menuDiv03 a {
+			color: #ffffff;
+			text-decoration: none;
+		}
+		
+		div#divMenu03 nav#menuDiv03 a:hover {
+			color: #ffffff;
+			text-decoration: underline;
+		}
+		
+		div#divMenu03 nav#menuDiv03 li {
+			display: inline-block;
+			padding: 0px;
+			margin: 0px;
+			transition: background-color 1s;
+			font-size: 10pt;
+			font-family: Arial, sans-serif;
+		}
+		
+		div#divMenu03 nav#menuDiv03 li#lateral {
+			border-right: 0px solid #606060;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul li {
+			background-color: #000000;
+			color: white;
+			float: left;
+			width: 130px;
+			height: 30px;
+			margin-top: -0px;
+			display: inline-block;
+			text-align: center;
+			line-height: 17px;
+			font-size: 15px;
+			position: relative;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul li:hover {
+			background-color: #000000;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul {
+			padding: 0;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul  ul {
+			display: none;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul li:hover>ul {
+			display: block;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul ul {
+			margin-left: 0px;
+			top: 30px;
+			position: absolute;
+		}
+		
+		div#divMenu03 nav#menuDiv03 ul ul ul {
+			margin-left: 130px;
+			top: 0px;
+			position: absolute;
+		}
+	</style>
+		<div id="divMenu03">
+
+			<nav id="menuDiv03">
+				<ul>
+					<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>
+					<li><a href="nossaLojaUsuarioLogado.xhtml"> Nossa Loja</a></li>
+					<li><a href="#">Historico</a>
+						<ul>
+							<li><a href="#">Solicitação</a>
+								<ul>
+									<li><a href="#">Enviadas</a>
+									</li>
+									<li><a href="#">Recebidas</a></li>
+								</ul></li>
+							<li><a href="#">Trocas</a>
+								<ul>
+									<li><a href="#">Enviadas</a></li>
+									<li><a href="#">Recebidas</a></li>
+								</ul></li>
+							<li><a href="#">Pontos</a></li>
+						</ul></li>
+					<li class="teste"><a href="#">Livros</a>
+						<ul>
+							<li><a href="#">Meus Livro</a></li>
+							<li><a href="#">Cadastrar Livro</a></li>
+							<li><a href="#">Remover Livro</a></li>
+						</ul>
+					</li>
+					<li><a href="faleconosco.html"> Fale conosco </a></li>
+				</ul>
+			</nav>
+		</div>
+		<div id="layoutLogado">
+			<ui:insert name="layoutLogado" />
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

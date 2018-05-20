@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
+
+	<ui:define name="define">
+
+		<div id="divImagem">
+
+			<h:form>
+				
+					<h:panelGrid columns="2" cellpadding="10">
+					
+						<p:fieldset legend="Dados Pessoais"
+							style="margin-bottom:20px">
+							<h:panelGrid columns="4" cellpadding="10">
+
+								<p:outputLabel value="Nome:" for="nome" />
+								<p:inputText id="nome" label="Nome Completo" style="width:350px" />
+
+								<p:outputLabel value="CPF:" for="cpf" />
+								<p:inputMask mask="999.999.999-99" id="cpf" label="CPF" style="width:350px" />
+
+								<p:outputLabel value="Login:" for="login" />
+								<p:inputText id="login" label="Login" style="width:350px" />
+
+								<p:outputLabel value="Senha:" for="senha" />
+								<p:inputText id="senha" label="Senha" style="width:350px" />
+							</h:panelGrid>
+						</p:fieldset>
+						
+						<p:outputLabel value="" />
+
+						<p:fieldset legend="Endereço"
+							style="margin-bottom:20px">
+							<h:panelGrid columns="4" cellpadding="10">
+								<p:outputLabel value="CEP:" for="cep" />
+								<p:inputMask mask="99999-999" id="cep" label="CEP" style="width:350px" />
+
+								<p:outputLabel value="Rua:" for="rua" />
+								<p:inputText id="rua" label="Rua" style="width:350px" />
+
+								<p:outputLabel value="Bairro:" for="bairro" />
+								<p:inputText id="bairro" label="Bairro" style="width:350px" />
+
+								<p:outputLabel value="Numero:" for="numero" />
+								<p:inputText id="numero" label="Numero" style="width:350px" />
+
+								<p:outputLabel value="Cidade:" for="cidade" />
+								<p:inputText id="cidade" label="Cidade" style="width:350px" />
+
+								<p:outputLabel value="Estado:" for="estado" />
+								<p:inputText id="estado" label="estado" style="width:350px" />
+
+							</h:panelGrid>
+						</p:fieldset>
+
+						
+					</h:panelGrid>
+					<p:commandButton id="btnLogar" value="Salvar" />
+					<p:commandButton id="btnCancelar" value="Cancelar" />
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
