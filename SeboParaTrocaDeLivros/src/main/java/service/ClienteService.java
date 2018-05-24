@@ -1,5 +1,7 @@
 package service;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -14,12 +16,17 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
 
-public class ClienteService {
+public class ClienteService implements Serializable{
 
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOSolicitacao soliDAO = new DAOSolicitacao();
 	private DAOLivro livroDAO = new DAOLivro();
 	private TrocaService trocaServe = new TrocaService();
+	
+	
+	public void logarUsuario(String login, String senha) {
+		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
+	}
 
 	/**
 	 * Esse método cadastra um cliente

@@ -105,7 +105,11 @@ public class DAOCliente extends DAOGenerico {
 		return resultado;
 	}
 
-	
+	/**
+	 * Esse método recupera um cliente junto com os livros que o mesmo deseja.
+	 * @param idCliente
+	 * @return
+	 */
 	public Cliente recuperarClienteComLivrosDesejados(Long idCliente) {
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
@@ -122,6 +126,11 @@ public class DAOCliente extends DAOGenerico {
 		return resultado;
 	}
 	
+	/**
+	 * Esse método recupera o cliente com as trocas que o mesmo envio.
+	 * @param idCliente
+	 * @return
+	 */
 	public Cliente recuperarClienteComTrocasEnviadas(Long idCliente) {
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
@@ -138,6 +147,11 @@ public class DAOCliente extends DAOGenerico {
 		return resultado;
 	}
 	
+	/**
+	 * Esse método recupera o cliente com as trocas que ele recebeu.
+	 * @param idCliente
+	 * @return
+	 */
 	public Cliente recuperarClienteComTrocasRecebidas(Long idCliente) {
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
@@ -178,6 +192,12 @@ public class DAOCliente extends DAOGenerico {
 		
 	}
 	
+	/**
+	 * Esse método verifica se o login que o usuario deseja cadastrar é valido, ou seja, se 
+	 * não existe um usuário com esse login.
+	 * @param login
+	 * @return
+	 */
 	public Cliente validarLogin(String login) {
 
 		EntityManager em = getEntityManager();
@@ -196,6 +216,11 @@ public class DAOCliente extends DAOGenerico {
 
 	}
 
+	/**
+	 * Esse método recupear um cliente pelo CPF junto com os seu endereço.
+	 * @param cpf
+	 * @return
+	 */
 	public Cliente recuperarClienteComEndereco(String cpf) {
 		EntityManager em = getEntityManager();
 		Cliente resultado = null;
@@ -203,6 +228,23 @@ public class DAOCliente extends DAOGenerico {
 			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
 					"SELECT c FROM Cliente c LEFT JOIN FETCH c.endereco ls WHERE c.cpf = :cpf");
 			query.setParameter("cpf", cpf);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		} finally {
+			em.close();
+		}
+		return resultado;
+	}
+	
+	public Cliente recuperarClienteParaLogar(String login, String senha) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
+					"SELECT c FROM Cliente c WHERE c.login = :login AND c.senha = :senha");
+			query.setParameter("login", login);
+			query.setParameter("senha", senha);
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;

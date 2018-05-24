@@ -7,9 +7,19 @@
 
 <ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
 
+	<f:metadata>
+		<f:viewAction action="#{logarClienteBean.init()}" />
+	</f:metadata>
+
 	<ui:define name="define">
+	
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
+			closable="true" severity="error" />
+	
 		<div id="divImagem">
-		
+
 			<style typr="text/css">
 				div#divImagem {
 					width: 1329px;
@@ -22,45 +32,61 @@
 				}
 			</style>
 
-			<h:form rendered="#{logar()}">
-				<p:panel id="basic" header="Entrar" style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
+			<h:form id="logar" rendered="#{logarClienteBean.logarUsuario()}">
+				<p:panel id="basic" header="Entrar"
+					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
 					<h:panelGrid columns="2" cellpadding="10">
 
 						<p:outputLabel value="Login:" for="login" />
 						<p:inputText id="login" label="Login" style="width:350px" />
 
 						<p:outputLabel value="Senha:" for="senha" />
-						<p:inputText id="senha" label="Senha" style="width:350px" />
-					
+						<p:password id="senha" label="Senha" feedback="true"
+							style="width:350px" />
+
 
 						<p:commandButton id="btnLogar" value="Entrar" />
 						<p:commandButton id="btnCancelar" value="Cancelar" />
 
 					</h:panelGrid>
-					<div id="msg2" >
+					<div id="msg2">
 						Esqueceu sua senha?
-						<h:commandLink action="inicio" value="Redefinir Senha" 
-							style="padding:10px"/>
+						<h:commandLink action="#{logarClienteBean.redefinirSenha()}"
+							value="Redefinir Senha" style="padding:10px" />
 					</div>
 					<br />
 				</p:panel>
 			</h:form>
-			
-			<h:form rendered="#{redefinirSenha}">
-				<p:panel id="basic" header="Entrar" style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
+
+			<h:form id="redefirnirSenha"
+				rendered="#{logarClienteBean.editarSenha()}">
+				<p:panel id="basic" header="Entrar"
+					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
 					<h:panelGrid columns="2" cellpadding="10">
 
+
+						<p:outputLabel value="Login:" for="login" />
+						<p:inputText id="login" label="Login" required="true" style="width:350px" />
+
 						<p:outputLabel value="Senha Atual:" for="senhaAtual" />
-						<p:inputText id="senhaAtual" label="Senha Atual" style="width:350px" />
+						<p:password id="senhaAtual" label="Senha Atual"
+							match="confirmacaoPassword" feedback="true" required="true"
+							style="width:350px" />
+
 
 						<p:outputLabel value="Nova Senha:" for="novaSenha" />
-						<p:inputText id="novaSenha" label="Nova Senha" style="width:350px" />
-					
-						<p:outputLabel value="Confirmar Senha:" for="confirmarSenha" />
-						<p:inputText id="confirmarSenha" label="Confirmar Senha" style="width:350px" />
+						<p:password id="novaSenha" label="Nova Senha"
+							match="confirmacaoPassword" feedback="true" required="true"
+							style="width:350px" />
 
-						<p:commandButton id="btnLogar" value="Logar" />
-						<p:commandButton id="btnCancelar" value="Cancelar" />
+						<p:outputLabel value="Confirmar Senha:" for="confirmarSenha" />
+						<p:password id="confirmarSenha" label="Confirmar Senha"
+							match="confirmacaoPassword" feedback="true" required="true"
+							style="width:350px" />
+
+						<p:commandButton id="btnLogar" value="Logar"/>
+						<p:commandButton id="btnCancelar" action="#{logarClienteBean.init()}"
+						value="Cancelar"/>
 
 					</h:panelGrid>
 				</p:panel>

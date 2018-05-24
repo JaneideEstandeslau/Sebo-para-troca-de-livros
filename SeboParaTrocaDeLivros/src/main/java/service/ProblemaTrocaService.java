@@ -1,5 +1,7 @@
 package service;
 
+import java.io.Serializable;
+
 import model.Cliente;
 import model.ProblemaTroca;
 import model.Troca;
@@ -9,7 +11,7 @@ import persistencia.DAOProblemaTroca;
 import persistencia.DAOSolicitacao;
 import persistencia.DAOTroca;
 
-public class ProblemaTrocaService {
+public class ProblemaTrocaService implements Serializable{
 	
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOTroca trocaDAO = new DAOTroca();

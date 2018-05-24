@@ -15,7 +15,7 @@
 	</f:metadata>
 
 	<ui:define name="define">
-	
+
 		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
 			severity="info" />
 		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
@@ -24,68 +24,80 @@
 		<div id="divImagem">
 
 			<h:form>
-				
-					<h:panelGrid columns="2" cellpadding="10">
-					
-						<p:fieldset legend="Dados Pessoais"
-							style="margin-bottom:20px">
-							<h:panelGrid columns="4" cellpadding="10">
 
-								<p:outputLabel value="Nome:" for="nome" />
-								<p:inputText id="nome" value="#{cadastrarClienteBean.cliente.nome}"
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<p:fieldset legend="Dados Pessoais" style="margin-bottom:20px">
+						<h:panelGrid columns="4" cellpadding="10">
+
+							<p:outputLabel value="Nome:" for="nome" />
+							<p:inputText id="nome"
+								value="#{cadastrarClienteBean.cliente.nome}"
 								label="Nome Completo" required="true" style="width:350px" />
 
-								<p:outputLabel value="CPF:" for="cpf" />
-								<p:inputMask mask="999.999.999-99" id="cpf" value="#{cadastrarClienteBean.cliente.cpf}"
-								label="CPF" required="true" style="width:350px" />
+							<p:outputLabel value="CPF:" for="cpf" />
+							<p:inputMask mask="999.999.999-99" id="cpf"
+								value="#{cadastrarClienteBean.cliente.cpf}" label="CPF"
+								required="true" style="width:350px" />
 
-								<p:outputLabel value="Login:" for="login" />
-								<p:inputText id="login" value="#{cadastrarClienteBean.cliente.login}"
-								label="Login" required="true" style="width:350px" />
+							<p:outputLabel value="Login:" for="login" />
+							<p:inputText id="login"
+								value="#{cadastrarClienteBean.cliente.login}" label="Login"
+								required="true" style="width:350px" />
 
-								<p:outputLabel value="Senha:" for="senha" />
-								<p:inputText id="senha" value="#{cadastrarClienteBean.cliente.senha}"
-								label="Senha" required="true" style="width:350px" />
-							</h:panelGrid>
-						</p:fieldset>
-						
-						<p:outputLabel value="" />
+							<p:outputLabel value="Senha:" for="senha" />
 
-						<p:fieldset legend="Endereço"
-							style="margin-bottom:20px">
-							<h:panelGrid columns="4" cellpadding="10">
-								<p:outputLabel value="CEP:" for="cep" />
-								<p:inputMask mask="99999-999" id="cep" value="#{cadastrarClienteBean.endereco.cep}"
-								label="CEP" required="true" style="width:350px" />
 
-								<p:outputLabel value="Rua:" for="rua" />
-								<p:inputText id="rua" value="#{cadastrarClienteBean.endereco.rua}"
-								label="Rua" required="true" style="width:350px" />
+							<p:password id="senha"
+								value="#{cadastrarClienteBean.cliente.senha}" label="Senha"
+								match="confirmacaoPassword" feedback="true" required="true"
+								style="width:350px" />
 
-								<p:outputLabel value="Bairro:" for="bairro" />
-								<p:inputText id="bairro" value="#{cadastrarClienteBean.endereco.bairro}"
-								label="Bairro" required="true" style="width:350px" />
+						</h:panelGrid>
+					</p:fieldset>
 
-								<p:outputLabel value="Numero:" for="numero" />
-								<p:inputText id="numero" value="#{cadastrarClienteBean.endereco.numero}"
-								label="Numero" required="true" style="width:350px" />
+					<p:outputLabel value="" />
 
-								<p:outputLabel value="Cidade:" for="cidade" />
-								<p:inputText id="cidade" value="#{cadastrarClienteBean.endereco.cidade}"
-								label="Cidade" required="true" style="width:350px" />
+					<p:fieldset legend="Endereço" style="margin-bottom:20px">
+						<h:panelGrid columns="4" cellpadding="10">
+							<p:outputLabel value="CEP:" for="cep" />
+							<p:inputMask mask="99999-999" id="cep"
+								value="#{cadastrarClienteBean.endereco.cep}" label="CEP"
+								required="true" style="width:350px" />
 
-								<p:outputLabel value="Estado:" for="estado" />
-								<p:inputText id="estado" value="#{cadastrarClienteBean.endereco.estado}"
-								label="estado" required="true" style="width:350px" />
+							<p:outputLabel value="Rua:" for="rua" />
+							<p:inputText id="rua"
+								value="#{cadastrarClienteBean.endereco.rua}" label="Rua"
+								required="true" style="width:350px" />
 
-							</h:panelGrid>
-						</p:fieldset>
+							<p:outputLabel value="Bairro:" for="bairro" />
+							<p:inputText id="bairro"
+								value="#{cadastrarClienteBean.endereco.bairro}" label="Bairro"
+								required="true" style="width:350px" />
 
-						
-					</h:panelGrid>
-					<p:commandButton id="btnLogar" action="#{cadastrarClienteBean.saveCliente()}"
-					value="Salvar" />
-					<p:commandButton id="btnCancelar" value="Cancelar" />
+							<p:outputLabel value="Numero:" for="numero" />
+							<p:inputText id="numero"
+								value="#{cadastrarClienteBean.endereco.numero}" label="Numero"
+								required="true" style="width:350px" />
+
+							<p:outputLabel value="Cidade:" for="cidade" />
+							<p:inputText id="cidade"
+								value="#{cadastrarClienteBean.endereco.cidade}" label="Cidade"
+								required="true" style="width:350px" />
+
+							<p:outputLabel value="Estado:" for="estado" />
+							<p:inputText id="estado"
+								value="#{cadastrarClienteBean.endereco.estado}" label="estado"
+								required="true" style="width:350px" />
+
+						</h:panelGrid>
+					</p:fieldset>
+
+
+				</h:panelGrid>
+				<p:commandButton id="btnLogar"
+					action="#{cadastrarClienteBean.saveCliente()}" value="Salvar" />
+				<p:commandButton id="btnCancelar" value="Cancelar" />
 			</h:form>
 
 		</div>

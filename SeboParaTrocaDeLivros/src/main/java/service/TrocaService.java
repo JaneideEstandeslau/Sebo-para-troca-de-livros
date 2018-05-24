@@ -1,5 +1,6 @@
 package service;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,7 +11,7 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOTroca;
 
-public class TrocaService {
+public class TrocaService implements Serializable{
 
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOLivro livroDAO = new DAOLivro();

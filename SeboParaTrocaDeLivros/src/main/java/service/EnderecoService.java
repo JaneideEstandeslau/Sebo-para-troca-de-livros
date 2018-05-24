@@ -1,11 +1,13 @@
 package service;
 
+import java.io.Serializable;
+
 import model.Cliente;
 import model.Endereco;
 import persistencia.DAOCliente;
 import persistencia.DAOEndereco;
 
-public class EnderecoService {
+public class EnderecoService implements Serializable{
 	
 	private DAOEndereco enderecoDAO = new  DAOEndereco();
 	private DAOCliente clienteDAO = new DAOCliente();

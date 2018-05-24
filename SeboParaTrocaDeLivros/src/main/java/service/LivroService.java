@@ -1,13 +1,15 @@
 package service;
 
 
+import java.io.Serializable;
+
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
 import model.Livro;
 import persistencia.DAOLivro;
 
-public class LivroService {
+public class LivroService implements Serializable{
 	
 	private DAOLivro livroDAO = new DAOLivro();
 	

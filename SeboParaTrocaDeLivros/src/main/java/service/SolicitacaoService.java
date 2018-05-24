@@ -1,5 +1,7 @@
 package service;
 
+import java.io.Serializable;
+
 import excecoes.RollbackException;
 import model.Cliente;
 import model.Livro;
@@ -8,7 +10,7 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
 
-public class SolicitacaoService {
+public class SolicitacaoService implements Serializable{
 	
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOSolicitacao soliDAO = new DAOSolicitacao();
