@@ -12,6 +12,10 @@ import service.LivroService;
 @ManagedBean
 public class BeanCadastrarLivro extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2207143158846475463L;
 	private LivroService service = new LivroService();
 	private Livro livro;
 
@@ -30,7 +34,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 
 				service.salvarLivro(livro);
 			}
-		} catch (RollbackException e) {
+		} catch (Exception e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
 		}

@@ -85,8 +85,8 @@
 							style="width:350px" />
 
 						<p:commandButton id="btnLogar" value="Logar"/>
-						<p:commandButton id="btnCancelar" action="#{logarClienteBean.init()}"
-						value="Cancelar"/>
+						<p:commandButton id="btnCancelar" action="#{logarClienteBean.cancelarRedeficaoSenha()}"
+						value="Cancelar" update=":logar :redefirnirSenha"/>
 
 					</h:panelGrid>
 				</p:panel>

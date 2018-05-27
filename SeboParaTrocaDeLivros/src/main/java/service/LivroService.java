@@ -2,6 +2,8 @@ package service;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
@@ -57,6 +59,14 @@ public class LivroService implements Serializable{
 	public Livro getByID(Long itemId) throws ServiceDacException {
 		try {
 			return (Livro) livroDAO.getByID(new Livro(), itemId);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	public List<Livro> getAllLivrosTitulo(String titulo) throws ServiceDacException{
+		try {
+			return livroDAO.searchItems(titulo);
 		} catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
 		}

@@ -15,11 +15,11 @@
 	</f:metadata>
 
 	<ui:define name="define">
-
 		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
 			severity="info" />
-		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
 			closable="true" severity="error" />
+
 
 		<div id="divImagem">
 
@@ -50,8 +50,7 @@
 
 							<p:password id="senha"
 								value="#{cadastrarClienteBean.cliente.senha}" label="Senha"
-								match="confirmacaoPassword" feedback="true" required="true"
-								style="width:350px" />
+								feedback="true" required="true" style="width:350px" />
 
 						</h:panelGrid>
 					</p:fieldset>

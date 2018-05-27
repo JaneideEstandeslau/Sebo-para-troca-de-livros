@@ -11,58 +11,62 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Solicitacao implements Serializable{
-	
+public class Solicitacao implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String dalaSolicitacao;
 	private boolean aceita;
-	
+
 	@ManyToOne
 	private Cliente clienteSolicitou;
 	
+	@ManyToOne
+	private Cliente clienteRecebeuSolicitacao;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Livro livroSolicitado;
-	
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-public String getDalaSolicitacao() {
+
+	public String getDalaSolicitacao() {
 		return dalaSolicitacao;
 	}
+
 	public void setDalaSolicitacao(String dalaSolicitacao) {
 		this.dalaSolicitacao = dalaSolicitacao;
 	}
-	//	public Date getDalaSolicitacao() {
-//		return dalaSolicitacao;
-//	}
-//	public void setDalaSolicitacao(Date dalaSolicitacao) {
-//		this.dalaSolicitacao = dalaSolicitacao;
-//	}
 	public boolean isAceita() {
 		return aceita;
 	}
+
 	public void setAceita(boolean aceita) {
 		this.aceita = aceita;
 	}
+
 	public Cliente getClienteSolicitou() {
 		return clienteSolicitou;
 	}
+
 	public void setClienteSolicitou(Cliente clienteSolicitou) {
 		this.clienteSolicitou = clienteSolicitou;
 	}
+
 	public Livro getLivroSolicitado() {
 		return livroSolicitado;
 	}
+
 	public void setLivroSolicitado(Livro livroSolicitado) {
 		this.livroSolicitado = livroSolicitado;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,6 +74,7 @@ public String getDalaSolicitacao() {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

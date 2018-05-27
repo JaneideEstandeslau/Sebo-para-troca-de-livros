@@ -55,7 +55,10 @@ public class SolicitacaoService implements Serializable{
 					if (possui == false) {
 
 						Solicitacao solicitacao = new Solicitacao();
+						
 						cliente.getSolicitacoes().add(solicitacao);
+						Cliente clienteRecebeu = clienteDAO.recuperarClienteComSolicitacoesRecebidas(usuarioPossue.getUsuarioPossue().getId());
+						clienteRecebeu.getSolicitacoesRecebidas().add(solicitacao);
 						livro.getSolicitacoes().add(solicitacao);
 						solicitacao.setClienteSolicitou(cliente);
 						solicitacao.setLivroSolicitado(livro);

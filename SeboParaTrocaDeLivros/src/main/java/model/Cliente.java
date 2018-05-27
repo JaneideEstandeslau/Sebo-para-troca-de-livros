@@ -42,6 +42,9 @@ public class Cliente extends Usuario {
 	@OneToMany(mappedBy = "clienteSolicitou", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
 	
+	@OneToMany(mappedBy = "clienteRecebeuSolicitacao", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
+	private Collection<Solicitacao> solicitacoesRecebidas = new ArrayList<Solicitacao>();
+	
 	@OneToMany(mappedBy= "clienteEnviando", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Troca> trocasEnviadas = new ArrayList<Troca>();
 	
@@ -111,6 +114,14 @@ public class Cliente extends Usuario {
 
 	public void setPonto(int ponto) {
 		this.ponto = ponto;
+	}
+
+	public Collection<Solicitacao> getSolicitacoesRecebidas() {
+		return solicitacoesRecebidas;
+	}
+
+	public void setSolicitacoesRecebidas(Collection<Solicitacao> solicitacoesRecebidas) {
+		this.solicitacoesRecebidas = solicitacoesRecebidas;
 	}
 	
 }

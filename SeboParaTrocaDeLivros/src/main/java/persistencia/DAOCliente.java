@@ -81,6 +81,22 @@ public class DAOCliente extends DAOGenerico {
 		}
 		return resultado;
 	}
+	
+	public Cliente recuperarClienteComSolicitacoesRecebidas(Long idCliente) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em.createQuery(
+					"SELECT c FROM Cliente c LEFT JOIN FETCH c.solicitacoesRecebidas ls WHERE c.id = :idCliente");
+			query.setParameter("idCliente", idCliente);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		} finally {
+			em.close();
+		}
+		return resultado;
+	}
 
 	/**
 	 * Esse método recupera um cliente do banco junto com os livros que o mesmo

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{pesquisarLivroBean.getResultado()}" />
+	</f:metadata>
+	<ui:define name="define">
+		<p:fieldset legend="Resultado" style="margin-top:10px">
+			<p:dataTable id="dataTable" border="1" var="livro"
+				value="#{pesquisarLivroBean.livros}"
+				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column headerText="Titulo">
+					<h:outputText value="#{livro.titulo}" />
+				</p:column>
+				<p:column headerText="ISBN">
+					<h:outputText value="#{livro.isbn}" />
+				</p:column>
+				<p:column headerText="Editora">
+					<h:outputText value="#{livro.editora}" />
+				</p:column>
+				<p:column headerText="Ano de Publicação">
+					<h:outputText value="#{livro.publicacao}" />
+				</p:column>
+				<p:column headerText="Operações">
+					<p:commandButton id="visualizarLivroDialog" value="Visualizar"
+						action="#{beanCadastrarLivro.init()}"
+						oncomplete="if (!args.validationFailed) { PF('userEditDialog').show() }"
+						update=":visualizarLivroId">
+						<f:setPropertyActionListener value="#{livro}"
+							target="#{beanCadastrarLivro.livro}" />
+						<p:resetInput target="visualizarLivroId" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+
+		<p:dialog id="visualizarLivroId" widgetVar="userEditDialog"
+			header="Livro" modal="true" dynamic="true" closeOnEscape="true">
+
+			<h:form id="visualizar">
+				<h:panelGrid columns="2" cellpadding="10">
+					<ui:include src="/WEB-INF/template/layoutCadastrarLivro.xhtml" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

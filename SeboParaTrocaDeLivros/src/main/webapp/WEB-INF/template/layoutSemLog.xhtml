@@ -76,7 +76,7 @@
 			text-transform: uppercase;
 			position: absolute;
 			top: 45px;
-			left: 970px;
+			left: 1070px;
 		}
 		
 		div#divMenu023 nav#menuComprar a {
@@ -124,6 +124,20 @@
 			margin-left: 170px;
 		}
 	</style>
+	
+	<div id="divMenu022">
+		<h:form>
+			<p:inputText style="width:500px; margin-top: 27px;" 
+				 value="#{pesquisarLivroBean.nomeDoLivro}"/>
+			
+			<p:commandButton id="buttonPesquisa" icon="fa fa-search" 
+				style="display: block; margin-top: -35px; margin-left: 515px;"
+				action="#{pesquisarLivroBean.pesquisa()}">	
+			</p:commandButton>
+			<p:tooltip id="toolTipPesquisa" for="buttonPesquisa" value="Pesquisar por Livro" position="top"/>
+		</h:form>
+	</div>
+	
 	<div id="divMenu023">
 
 			<nav id="menuComprar">

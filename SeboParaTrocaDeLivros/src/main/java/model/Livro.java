@@ -27,12 +27,12 @@ public class Livro implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String titulo;
-	@Lob
+	@Column(length = 2000)
 	private String conservacao;
 	private String editora;
 	private int publicacao;
 	private String isbn;
-	@Lob
+	@Column(length = 5000)
 	private String sinopse;
 
 	@ManyToMany

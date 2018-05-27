@@ -83,6 +83,20 @@
 			position: absolute;
 		}
 	</style>
+
+		<div id="divMenu022">
+			<h:form>
+				<p:inputText style="width:500px; margin-top: 27px;"
+					value="#{logadoPesquisarLivroBean.nomeDoLivro}" />
+
+				<p:commandButton id="buttonPesquisa" icon="fa fa-search"
+					style="display: block; margin-top: -35px; margin-left: 515px;"
+					action="#{logadoPesquisarLivroBean.pesquisa()}">
+				</p:commandButton>
+				<p:tooltip id="toolTipPesquisa" for="buttonPesquisa"
+					value="Pesquisar por Livro" position="top" />
+			</h:form>
+		</div>
 		<div id="divMenu03">
 
 			<nav id="menuDiv03">
