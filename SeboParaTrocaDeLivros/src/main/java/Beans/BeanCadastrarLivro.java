@@ -24,6 +24,11 @@ public class BeanCadastrarLivro extends AbstractBean {
 			livro = new Livro();
 		}
 	}
+	
+	public String visualizar() {
+		this.init();
+		return  "visualizarLivro.xhtml?faces-redirect=true";
+	}
 
 	public String saveLivro() {
 
@@ -42,7 +47,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 
 		return "index.xhtml?faces-redirect=true";
 	}
-
+	
 	public boolean isEdicaoDeLivro() {
 		return livro.getId() != null;
 	}
@@ -62,4 +67,5 @@ public class BeanCadastrarLivro extends AbstractBean {
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
+
 }

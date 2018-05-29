@@ -78,8 +78,9 @@ public class ClienteService implements Serializable{
 	 * Esse método adiciona um livro ao usuário que o possue, caso ele não pertença a outro usuário.
 	 * @param idCliente
 	 * @param idLivro
+	 * @throws RollbackException 
 	 */
-	public void adicionaLivroPossuintes(Long idCliente, Long idLivro) {
+	public void adicionaLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
 		
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
@@ -89,8 +90,7 @@ public class ClienteService implements Serializable{
 			livro.setUsuarioPossue(cliente);
 			livroDAO.update(livro);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 	}
 	

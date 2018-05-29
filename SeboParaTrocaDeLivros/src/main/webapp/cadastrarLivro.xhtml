@@ -23,28 +23,26 @@
 
 		<br />
 		<h:form>
-			<p:growl id="msgs" showDetail="true" />
-
 			<p:panel id="basic" header="Cadastrar Livro"
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:outputLabel value="Titulo:" for="titulo" />
-					<p:inputText id="titulo" value="#{beanCadastrarLivro.livro.titulo}"
+					<p:inputText id="titulo" required="true" value="#{beanCadastrarLivro.livro.titulo}"
 						label="Titulo" style="width:350px" />
 
 					<h:outputLabel value="ISBN:" for="isbn" />
-					<p:inputText id="isbn" value="#{beanCadastrarLivro.livro.isbn}"
+					<p:inputText id="isbn" required="true" value="#{beanCadastrarLivro.livro.isbn}"
 						label="ISBN" style="width:350px" validator="isbnValidar"></p:inputText>
 
 					<p:outputLabel value="Edotora:" for="editora" />
-					<p:inputText id="editora"
+					<p:inputText id="editora" required="true"
 						value="#{beanCadastrarLivro.livro.editora}" label="Edotora"
 						style="width:350px" />
 
 					<p:outputLabel for="publicacao" value="Ano de Publicação:" />
 					<p:inputText id="publicacao"
 						value="#{beanCadastrarLivro.livro.publicacao}"
-						label="Ano de Publicação" style="width:350px">
+						label="Ano de Publicação" required="true" style="width:350px">
 						<f:convertNumber integerOnly="true" minIntegerDigits="1" />
 					</p:inputText>
 
@@ -52,10 +50,10 @@
 					<p:outputLabel value="Conservação:" for="conservacao" />
 					<p:inputTextarea id="conservacao"
 						value="#{beanCadastrarLivro.livro.conservacao}"
-						label="Conservação" style="width:350px" />
+						label="Conservação" required="true" style="width:350px" />
 
 					<p:outputLabel value="Sinopse:" for="sinopse" />
-					<p:inputTextarea id="sinopse"
+					<p:inputTextarea id="sinopse" required="true"
 						value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
 						style="width:350px" />
 

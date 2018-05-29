@@ -139,7 +139,20 @@ public class DAOLivro extends DAOGenerico {
 			e.printStackTrace();
 			return null;
 		}
-		
-		
+	}
+	
+	public Livro recuperarLivroPeloISBN(String isbn) {
+		EntityManager em = getEntityManager();
+		Livro resultado = null;
+		try {
+			TypedQuery<Livro> query = (TypedQuery<Livro>) em.createQuery("SELECT l FROM Livro l WHERE l.isbn = :isbn");
+			query.setParameter("isbn", isbn);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		} finally {
+			em.close();
+		}
+		return resultado;
 	}
 }

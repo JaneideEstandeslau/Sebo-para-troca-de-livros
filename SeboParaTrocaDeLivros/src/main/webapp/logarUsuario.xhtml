@@ -12,28 +12,28 @@
 	</f:metadata>
 
 	<ui:define name="define">
-	
+
 		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
 			severity="info" />
-		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
 			closable="true" severity="error" />
-	
+
 		<div id="divImagem">
 
 			<style typr="text/css">
-				div#divImagem {
-					width: 1329px;
-					height: 580px;
-					margin-top: 0px;
-					margin-left: -8px;
-					margin-bottom: -50px;
-					background: url("imagemFundo.jpg") no-repeat 0px 0px;
-					padding: 10px;
-				}
-			</style>
+div#divImagem {
+	width: 1329px;
+	height: 580px;
+	margin-top: 0px;
+	margin-left: -8px;
+	margin-bottom: -50px;
+	background: url("imagemFundo.jpg") no-repeat 0px 0px;
+	padding: 10px;
+}
+</style>
 
 			<h:form id="logar" rendered="#{logarClienteBean.logarUsuario()}">
-				<p:panel id="basic" header="Entrar"
+				<p:panel id="basic" header="Logar"
 					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
 					<h:panelGrid columns="2" cellpadding="10">
 
@@ -60,33 +60,28 @@
 
 			<h:form id="redefirnirSenha"
 				rendered="#{logarClienteBean.editarSenha()}">
-				<p:panel id="basic" header="Entrar"
+				<p:panel id="basic" header="Redefinir Senha"
 					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
 					<h:panelGrid columns="2" cellpadding="10">
 
 
 						<p:outputLabel value="Login:" for="login" />
-						<p:inputText id="login" label="Login" required="true" style="width:350px" />
+						<p:inputText id="login" label="Login" style="width:350px" />
 
 						<p:outputLabel value="Senha Atual:" for="senhaAtual" />
-						<p:password id="senhaAtual" label="Senha Atual"
-							match="confirmacaoPassword" feedback="true" required="true"
+						<p:password id="senhaAtual" label="Senha Atual" feedback="true"
 							style="width:350px" />
 
 
 						<p:outputLabel value="Nova Senha:" for="novaSenha" />
-						<p:password id="novaSenha" label="Nova Senha"
-							match="confirmacaoPassword" feedback="true" required="true"
+						<p:password id="novaSenha" label="Nova Senha" feedback="true"
 							style="width:350px" />
 
 						<p:outputLabel value="Confirmar Senha:" for="confirmarSenha" />
 						<p:password id="confirmarSenha" label="Confirmar Senha"
-							match="confirmacaoPassword" feedback="true" required="true"
-							style="width:350px" />
+							feedback="true" style="width:350px" />
 
-						<p:commandButton id="btnLogar" value="Logar"/>
-						<p:commandButton id="btnCancelar" action="#{logarClienteBean.cancelarRedeficaoSenha()}"
-						value="Cancelar" update=":logar :redefirnirSenha"/>
+						<p:commandButton id="btnLogar" value="Modificar" />
 
 					</h:panelGrid>
 				</p:panel>

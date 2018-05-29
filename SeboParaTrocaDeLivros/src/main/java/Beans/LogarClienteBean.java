@@ -34,9 +34,8 @@ public class LogarClienteBean extends AbstractBean{
 		editarSenha = true;
 	}
 	
-	public void cancelarRedeficaoSenha() {
-		logar = true;
-		editarSenha = false;
+	public String cancelarRedeficaoSenha() {
+		return  "logarUsuario.xhtml?faces-redirect=true";
 	}
 
 	public String getLogin() {

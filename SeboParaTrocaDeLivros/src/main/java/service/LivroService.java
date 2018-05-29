@@ -24,7 +24,7 @@ public class LivroService implements Serializable{
 		}
 	}
 	
-	public void modificarLivro(Livro livro) {
+	public void modificarLivro(Livro livro) throws RollbackException {
 		
 		try {
 			validarIsbn(livro.getIsbn());
@@ -37,8 +37,7 @@ public class LivroService implements Serializable{
 			l.setSinopse(livro.getSinopse());
 			livroDAO.update(l);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 		
 	}
@@ -51,7 +50,7 @@ public class LivroService implements Serializable{
 		
 		Livro livro = livroDAO.validarIsbn(isbn);
 		if(livro != null) {
-			throw new RollbackException("Livro já existe");
+			throw new RollbackException("Livro já existe procureo e o possua");
 		}
 		
 	}
@@ -68,6 +67,22 @@ public class LivroService implements Serializable{
 		try {
 			return livroDAO.searchItems(titulo);
 		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	public Livro recuperarLivroPeloISBN(String isbn) throws ServiceDacException{
+		try {
+			return livroDAO.recuperarLivroPeloISBN(isbn);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	public Livro recuperarLivroClientePossui(Long id) throws ServiceDacException{
+		try {
+			return livroDAO.recuperarLivroComPossuinte(id);
+		}catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
 		}
 	}
