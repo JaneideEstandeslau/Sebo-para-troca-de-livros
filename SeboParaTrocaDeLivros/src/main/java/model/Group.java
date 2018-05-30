@@ -3,12 +3,7 @@ package model;
 
 public enum Group {
 	
-	Livro("Lirvo"), 
-	LIVRODEBOLSO("Livro de bolso"),
-	CAPADURA("Capadura"), 
-	EBOOK("Ebook"), 
-	REVISTA("Revista"),
-	PERIODICO("Periodico");
+	ADMIN("Admin"), VISITANTE("Visitante");
 	
 	private String nome;
 	

@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
@@ -11,13 +10,15 @@
 
 	<f:metadata>
 		<o:viewParam name="livro" value="#{beanCadastrarLivro.livro}" />
-		<f:viewAction action="#{beanCadastrarLivro.init()}"/>
+		<f:viewAction action="#{beanCadastrarLivro.init()}" />
 	</f:metadata>
 
 	<ui:define name="layoutLogado">
-	
-		<p:growl id="idMessages" showDetail="true" autoUpdate="true" severity="info" />
-		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true" closable="true" severity="error" />
+
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
 
 		<h:form id="visualizar">
 			<h:panelGrid columns="1" cellpadding="10">
@@ -25,7 +26,7 @@
 					value="#{beanCadastrarLivro.livro.titulo}"
 					style="width:350px; font-size: 40pt; font-family: Edwardian Script ITC, sans-serif;" />
 			</h:panelGrid>
-			
+
 			<h:panelGrid columns="2" cellpadding="10">
 				<p:outputLabel value="ISBN:" for="isbn" />
 				<p:outputLabel id="isbn" value="#{beanCadastrarLivro.livro.isbn}"
@@ -42,6 +43,20 @@
 					label="Ano de Publicação" style="width:350px">
 				</p:outputLabel>
 
+				<p:outputLabel value="Autor:" for="autor" />
+				<p:outputLabel id="autor" required="true"
+					value="#{beanCadastrarLivro.livro.autor}" label="Autor"
+					style="width:350px" />
+
+				<p:outputLabel value="Idioma:" for="idioma" />
+				<p:outputLabel id="idioma" required="true"
+					value="#{beanCadastrarLivro.livro.idioma}" label="Idioma"
+					style="width:350px" />
+
+				<p:outputLabel value="Páginas:" for="paginas" />
+				<p:outputLabel id="paginas" required="true"
+					value="#{beanCadastrarLivro.livro.qtdPaginas}" label="Páginas"
+					style="width:350px" />
 
 				<p:outputLabel value="Conservação:" for="conservacao" />
 				<p:outputLabel id="conservacao"
@@ -52,7 +67,7 @@
 				<p:outputLabel id="sinopse"
 					value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
 					style="width:350px" />
-					
+
 				<p:commandButton id="solicitarLivro" value="Solicitar">
 				</p:commandButton>
 

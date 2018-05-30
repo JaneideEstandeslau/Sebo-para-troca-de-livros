@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Troca implements Serializable{
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

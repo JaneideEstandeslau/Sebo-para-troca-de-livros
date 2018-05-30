@@ -18,7 +18,7 @@
 
 		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
 			severity="info" />
-		<p:messages id="idMessagesErrors" showDetail="false" autoUpdate="true"
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
 			closable="true" severity="error" />
 
 		<br />
@@ -38,6 +38,23 @@
 					<p:inputText id="editora" required="true"
 						value="#{beanCadastrarLivro.livro.editora}" label="Edotora"
 						style="width:350px" />
+						
+					<p:outputLabel value="Autor:" for="autor" />
+					<p:inputText id="autor" required="true"
+						value="#{beanCadastrarLivro.livro.autor}" label="Autor"
+						style="width:350px" />
+						
+					<p:outputLabel value="Idioma:" for="idioma" />
+					<p:inputText id="idioma" required="true"
+						value="#{beanCadastrarLivro.livro.idioma}" label="Idioma"
+						style="width:350px" />
+						
+					<p:outputLabel value="Páginas:" for="paginas" />
+					<p:inputText id="paginas" required="true"
+						value="#{beanCadastrarLivro.livro.qtdPaginas}" label="Páginas"
+						style="width:350px">
+						<f:convertNumber integerOnly="true" minIntegerDigits="1" />
+					</p:inputText>
 
 					<p:outputLabel for="publicacao" value="Ano de Publicação:" />
 					<p:inputText id="publicacao"

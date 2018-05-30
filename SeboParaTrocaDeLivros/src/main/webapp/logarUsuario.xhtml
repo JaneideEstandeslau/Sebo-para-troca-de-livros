@@ -44,6 +44,14 @@ div#divImagem {
 						<p:password id="senha" label="Senha" feedback="true"
 							style="width:350px" />
 
+						<p:outputLabel for="group" value="Group:" />
+						<p:selectOneMenu id="group"
+							label="Group">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+							<f:selectItems value="#{logarClienteBean.getTipos()}" var="g"
+								itemLabel="#{g.nome}" itemValue="#{g}" />
+						</p:selectOneMenu>
+
 
 						<p:commandButton id="btnLogar" value="Entrar" />
 						<p:commandButton id="btnCancelar" value="Cancelar" />

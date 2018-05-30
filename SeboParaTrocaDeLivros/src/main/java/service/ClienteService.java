@@ -16,22 +16,22 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
 
-public class ClienteService implements Serializable{
+public class ClienteService implements Serializable {
 
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOSolicitacao soliDAO = new DAOSolicitacao();
 	private DAOLivro livroDAO = new DAOLivro();
 	private TrocaService trocaServe = new TrocaService();
-	
-	
+
 	public void logarUsuario(String login, String senha) {
 		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
 	}
 
 	/**
 	 * Esse método cadastra um cliente
+	 * 
 	 * @param cliente
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void salvarUsuario(Cliente cliente) throws RollbackException {
 		try {
@@ -43,7 +43,7 @@ public class ClienteService implements Serializable{
 			throw new RollbackException(e.getMessage());
 		}
 	}
-	
+
 	public void removerUsuario(Long idCliente) {
 		try {
 			Cliente cliente = (Cliente) clienteDAO.getByID(new Cliente(), idCliente);
@@ -54,9 +54,10 @@ public class ClienteService implements Serializable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Esse metodo modifica as informações pessoais do usuário.
+	 * 
 	 * @param cliente
 	 */
 	public void modificarUsuario(Cliente cliente) {
@@ -71,17 +72,19 @@ public class ClienteService implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
-	 * Esse método adiciona um livro ao usuário que o possue, caso ele não pertença a outro usuário.
+	 * Esse método adiciona um livro ao usuário que o possue, caso ele não pertença
+	 * a outro usuário.
+	 * 
 	 * @param idCliente
 	 * @param idLivro
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void adicionaLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
-		
+
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
 			verificarLivroPossuiDono(livro);
@@ -93,17 +96,18 @@ public class ClienteService implements Serializable{
 			throw new RollbackException(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Esse método remove um livro da lista dos livros que um usuário possue.
+	 * 
 	 * @param idCliente
 	 * @param idLivro
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void removerLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
-			
+
 			Cliente cliente = clienteDAO.recuperarCliente(idCliente);
 			cliente.getLivrosPossuem().remove(livro);
 			livro.setUsuarioPossue(null);
@@ -112,7 +116,6 @@ public class ClienteService implements Serializable{
 			throw new RollbackException(e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Esse método faz com que um cliente solicite um livro caso ele ainda não tenha
@@ -158,14 +161,15 @@ public class ClienteService implements Serializable{
 			throw new RollbackException("Você já adicionou esse livro a sua lista de desejos");
 		}
 	}
-	
+
 	/**
 	 * Esse método remove um livro da lista de desejos do usuário.
+	 * 
 	 * @param idCliente
 	 * @param idLivro
 	 */
 	public void removerLivroListaDesejos(Long idCliente, Long idLivro) {
-		
+
 		Livro livro = livroDAO.recuperarLivroComClienteDesejam(idLivro);
 		Cliente cliente = clienteDAO.recuperarClienteComLivrosDesejados(idCliente);
 		cliente.getLivrosDesejados().remove(livro);
@@ -176,7 +180,7 @@ public class ClienteService implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -184,7 +188,7 @@ public class ClienteService implements Serializable{
 	 * já existente no sistema.
 	 * 
 	 * @param cpf
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void validarCPF(String cpf) throws RollbackException {
 
@@ -194,7 +198,7 @@ public class ClienteService implements Serializable{
 			throw new RollbackException("Já existe um cliente com esse CPF");
 		}
 	}
-	
+
 	public void validarLogin(String login) throws RollbackException {
 
 		Cliente c = clienteDAO.validarLogin(login);
@@ -203,23 +207,32 @@ public class ClienteService implements Serializable{
 			throw new RollbackException("Já existe um cliente com esse Login");
 		}
 	}
-	
+
 	/**
 	 * Esse método verifica se o livro já possue um dono.
+	 * 
 	 * @param idLivro
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void verificarLivroPossuiDono(Livro usuarioPossue) throws RollbackException {
 
 		if (usuarioPossue.getUsuarioPossue() != null) {
 			throw new RollbackException("Você já possue esse livro");
 		}
-		
+
 	}
 
 	public Object getByID(Long id) throws ServiceDacException {
 		try {
-			return (Livro) clienteDAO.getByID(new Cliente(), id);
+			return (Cliente) clienteDAO.getByID(new Cliente(), id);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+
+	public Cliente recuperarCliente(Long idCliente) throws ServiceDacException {
+		try {
+			return clienteDAO.recuperarCliente(idCliente);
 		} catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
 		}

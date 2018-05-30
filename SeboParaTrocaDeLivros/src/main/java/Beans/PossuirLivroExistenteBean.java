@@ -31,7 +31,7 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 				return "informarDescrocao.xhtml?faces-redirect=true";
 			}
 			else {
-				reportarMensagemDeErro("Esse livro já possui dono");
+				reportarMensagemDeErro("Esse livro já possui um dono");
 				return null;
 			}
 		} catch (ServiceDacException e) {
@@ -44,7 +44,7 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 		try {
 			livro.setConservacao(conservacao);
 			service.modificarLivro(livro);
-//			clienteService.adicionaLivroPossuintes(, idLivro);
+//			clienteService.adicionaLivroPossuintes((long) 1, (long) 1);
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 		}

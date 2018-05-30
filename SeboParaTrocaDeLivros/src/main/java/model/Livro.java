@@ -21,8 +21,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Livro implements Serializable{
+public class Livro implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,24 +38,26 @@ public class Livro implements Serializable{
 	private String isbn;
 	@Column(length = 5000)
 	private String sinopse;
+	private String autor;
+	private String idioma;
+	private int qtdPaginas;
 
 	@ManyToMany
 	private Collection<Cliente> clientesDesejam = new ArrayList<Cliente>();
 
 	@ManyToOne
 	private Cliente usuarioPossue = null;
-	
+
 	@OneToMany(mappedBy = "clienteSolicitou", cascade = CascadeType.ALL)
 	private Collection<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
-	
-	@OneToMany(mappedBy= "livro", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
+
+	@OneToMany(mappedBy = "livro", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	private Collection<Troca> trocas = new ArrayList<Troca>();
 
 	public Livro() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public Collection<Troca> getTrocas() {
 		return trocas;
 	}
@@ -140,6 +146,29 @@ public class Livro implements Serializable{
 		this.sinopse = sinopse;
 	}
 
+	public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public String getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public int getQtdPaginas() {
+		return qtdPaginas;
+	}
+
+	public void setQtdPaginas(int qtdPaginas) {
+		this.qtdPaginas = qtdPaginas;
+	}
 
 	@Override
 	public int hashCode() {
@@ -148,7 +177,6 @@ public class Livro implements Serializable{
 		result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -166,6 +194,5 @@ public class Livro implements Serializable{
 			return false;
 		return true;
 	}
-	
 
 }

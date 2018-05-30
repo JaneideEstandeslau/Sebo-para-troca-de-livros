@@ -45,7 +45,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 		}
 		reportarMensagemDeSucesso("Livro '" + livro.getTitulo() + "' salvo");
 
-		return "index.xhtml?faces-redirect=true";
+		return "paginaDoUsuario.xhtml?faces-redirect=true";
 	}
 	
 	public boolean isEdicaoDeLivro() {

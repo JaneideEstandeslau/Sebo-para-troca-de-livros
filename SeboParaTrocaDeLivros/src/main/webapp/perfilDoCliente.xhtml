@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastrarClienteBean.visualizarPerfil()}" />
+	</f:metadata>
+
+	<ui:define name="layoutLogado">
+
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<h:form id="visualizar">
+			<p:fieldset legend="Dados Pessoais" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:outputLabel id="nome" value="#{cadastrarClienteBean.cliente.nome}"
+						label="Nome Completo" required="true" style="width:350px" />
+
+					<p:outputLabel value="CPF:" for="cpf" />
+					<p:outputLabel id="cpf"
+						value="#{cadastrarClienteBean.cliente.cpf}" label="CPF"
+						required="true" style="width:350px" />
+
+					<p:outputLabel value="Login:" for="login" />
+					<p:outputLabel id="login"
+						value="#{cadastrarClienteBean.cliente.login}" label="Login"
+						required="true" style="width:350px" />
+						
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:outputLabel value="" />
+
+			<p:fieldset legend="Endereço" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="CEP:" for="cep" />
+					<p:outputLabel id="cep"
+						value="#{cadastrarClienteBean.endereco.cep}" label="CEP"
+						required="true" style="width:350px" />
+
+					<p:outputLabel value="Rua:" for="rua" />
+					<p:outputLabel id="rua" value="#{cadastrarClienteBean.endereco.rua}"
+						label="Rua" required="true" style="width:350px" />
+
+					<p:outputLabel value="Bairro:" for="bairro" />
+					<p:outputLabel id="bairro"
+						value="#{cadastrarClienteBean.endereco.bairro}" label="Bairro"
+						required="true" style="width:350px" />
+
+					<p:outputLabel value="Numero:" for="numero" />
+					<p:outputLabel id="numero"
+						value="#{cadastrarClienteBean.endereco.numero}" label="Numero"
+						required="true" style="width:350px" />
+
+					<p:outputLabel value="Cidade:" for="cidade" />
+					<p:outputLabel id="cidade"
+						value="#{cadastrarClienteBean.endereco.cidade}" label="Cidade"
+						required="true" style="width:350px" />
+
+					<p:outputLabel value="Estado:" for="estado" />
+					<p:outputLabel id="estado"
+						value="#{cadastrarClienteBean.endereco.estado}" label="estado"
+						required="true" style="width:350px" />
+
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
