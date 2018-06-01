@@ -23,19 +23,23 @@
 			<p:fieldset legend="Dados Pessoais" style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:outputLabel value="Nome:" for="nome" />
-					<p:outputLabel id="nome" value="#{cadastrarClienteBean.cliente.nome}"
-						label="Nome Completo" required="true" style="width:350px" />
+					<p:outputLabel id="nome"
+						value="#{cadastrarClienteBean.cliente.nome}" label="Nome Completo"
+						required="true" style="width:350px" />
 
 					<p:outputLabel value="CPF:" for="cpf" />
-					<p:outputLabel id="cpf"
-						value="#{cadastrarClienteBean.cliente.cpf}" label="CPF"
-						required="true" style="width:350px" />
+					<p:outputLabel id="cpf" value="#{cadastrarClienteBean.cliente.cpf}"
+						label="CPF" required="true" style="width:350px" />
 
 					<p:outputLabel value="Login:" for="login" />
 					<p:outputLabel id="login"
 						value="#{cadastrarClienteBean.cliente.login}" label="Login"
 						required="true" style="width:350px" />
-						
+					<p:outputLabel value="Email:" for="email" />
+					<p:outputLabel id="email"
+						value="#{cadastrarClienteBean.cliente.email}" label="Login"
+						required="true" style="width:350px" />
+
 				</h:panelGrid>
 			</p:fieldset>
 
@@ -49,8 +53,9 @@
 						required="true" style="width:350px" />
 
 					<p:outputLabel value="Rua:" for="rua" />
-					<p:outputLabel id="rua" value="#{cadastrarClienteBean.endereco.rua}"
-						label="Rua" required="true" style="width:350px" />
+					<p:outputLabel id="rua"
+						value="#{cadastrarClienteBean.endereco.rua}" label="Rua"
+						required="true" style="width:350px" />
 
 					<p:outputLabel value="Bairro:" for="bairro" />
 					<p:outputLabel id="bairro"

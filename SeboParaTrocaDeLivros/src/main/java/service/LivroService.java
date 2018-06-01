@@ -27,7 +27,7 @@ public class LivroService implements Serializable{
 	public void modificarLivro(Livro livro) throws RollbackException {
 		
 		try {
-			validarIsbn(livro.getIsbn());
+//			validarIsbn(livro.getIsbn());
 			Livro l = (Livro) livroDAO.getByID(new Livro(), livro.getId());
 			l.setConservacao(livro.getConservacao());
 			l.setTitulo(livro.getTitulo());
@@ -84,6 +84,14 @@ public class LivroService implements Serializable{
 			return livroDAO.recuperarLivroComPossuinte(id);
 		}catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	public void update(Livro livro) throws RollbackException {
+		try {
+			livroDAO.update(livro);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
 		}
 	}
 

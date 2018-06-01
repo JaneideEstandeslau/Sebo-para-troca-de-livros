@@ -13,11 +13,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Solicitacao implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String dalaSolicitacao;
 	private boolean aceita;
+	private boolean ativa;
 
 	@ManyToOne
 	private Cliente clienteSolicitou;
@@ -90,5 +95,21 @@ public class Solicitacao implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public boolean isAtiva() {
+		return ativa;
+	}
+
+	public void setAtiva(boolean ativa) {
+		this.ativa = ativa;
+	}
+
+	public Cliente getClienteRecebeuSolicitacao() {
+		return clienteRecebeuSolicitacao;
+	}
+
+	public void setClienteRecebeuSolicitacao(Cliente clienteRecebeuSolicitacao) {
+		this.clienteRecebeuSolicitacao = clienteRecebeuSolicitacao;
 	}
 }

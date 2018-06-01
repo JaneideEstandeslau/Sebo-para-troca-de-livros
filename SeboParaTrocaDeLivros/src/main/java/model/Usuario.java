@@ -12,6 +12,10 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy= InheritanceType.JOINED)
 public class Usuario implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1326730304757471278L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -46,12 +46,14 @@
 								required="true" style="width:350px" />
 
 							<p:outputLabel value="Senha:" for="senha" />
-
-
 							<p:password id="senha"
 								value="#{cadastrarClienteBean.cliente.senha}" label="Senha"
 								feedback="true" required="true" style="width:350px" />
-
+							
+							<p:outputLabel value="Email:" for="email" />
+							<p:inputText id="email"
+								value="#{cadastrarClienteBean.cliente.email}" label="Login"
+								required="true" style="width:350px" />
 						</h:panelGrid>
 					</p:fieldset>
 

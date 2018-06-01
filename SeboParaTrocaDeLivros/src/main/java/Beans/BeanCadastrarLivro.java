@@ -6,6 +6,7 @@ import javax.faces.bean.ViewScoped;
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Livro;
+import service.ClienteService;
 import service.LivroService;
 
 @ViewScoped
@@ -17,6 +18,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 	 */
 	private static final long serialVersionUID = -2207143158846475463L;
 	private LivroService service = new LivroService();
+	private ClienteService clienteService = new ClienteService();
 	private Livro livro;
 
 	public void init() {
@@ -38,6 +40,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 			} else {
 
 				service.salvarLivro(livro);
+				clienteService.adicionaLivroPossuintes((long) 1, livro.getId());
 			}
 		} catch (Exception e) {
 			reportarMensagemDeErro(e.getMessage());
@@ -50,6 +53,10 @@ public class BeanCadastrarLivro extends AbstractBean {
 	
 	public boolean isEdicaoDeLivro() {
 		return livro.getId() != null;
+	}
+	
+	public boolean naoEdicaoDeLivro() {
+		return livro.getId() == null;
 	}
 
 	public LivroService getService() {
@@ -66,6 +73,14 @@ public class BeanCadastrarLivro extends AbstractBean {
 
 	public void setLivro(Livro livro) {
 		this.livro = livro;
+	}
+
+	public ClienteService getClienteService() {
+		return clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
 	}
 
 }

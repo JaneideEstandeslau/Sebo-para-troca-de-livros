@@ -8,7 +8,7 @@
 <ui:composition template="/WEB-INF/template/_layoutPadrao.xhtml">
 
 	<ui:define name="content">
-	<style typr="text/css">
+		<style typr="text/css">
 		div#divMenu03 {
 			width: 1329px;
 			height: 36px;
@@ -88,52 +88,26 @@
 			width: 200px;
 		}
 	</style>
-		<div id="divMenu022">
-			<h:form>
-				<p:inputText style="width:500px; margin-top: 27px;"
-					value="#{logadoPesquisarLivroBean.nomeDoLivro}" />
-
-				<p:commandButton id="buttonPesquisa" icon="fa fa-search"
-					style="display: block; margin-top: -35px; margin-left: 515px;"
-					action="#{logadoPesquisarLivroBean.pesquisa()}">
-				</p:commandButton>
-				<p:tooltip id="toolTipPesquisa" for="buttonPesquisa"
-					value="Pesquisar por Livro" position="top" />
-			</h:form>
-		</div>
 		<div id="divMenu03">
 
 			<nav id="menuDiv03">
 				<ul>
 					<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>
-					<li><a href="nossaLojaUsuarioLogado.xhtml"> Nossa Loja</a></li>
-					<li><a href="#">Historico</a>
+					<li><a href="#">Cliente</a>
 						<ul>
-							<li><a href="#">Solicitação</a>
-								<ul>
-									<li><a href="#">Enviadas</a></li>
-									<li><a href="solicitacoesRecebidas.xhtml">Recebidas</a></li>
-									<li><a href="#">Histórico</a></li>
-								</ul></li>
-							<li><a href="#">Trocas</a>
-								<ul>
-									<li><a href="#">Enviadas</a></li>
-									<li><a href="#">Recebidas</a></li>
-									<li><a href="#">Histórico</a></li>
-								</ul></li>
-							<li><a href="#">Pontos</a></li>
-						</ul></li>
-					<li class="teste"><a href="#">Livros</a>
+							<li><a href="editarPerfil.xhtml">Remover</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Admini</a>
 						<ul>
-							<li><a href="livrosDisponiveis.xhtml">Disponíveis</a></li>
-							<li><a href="cadastrarLivro.xhtml">Cadastrar Livro</a></li>
+							<li><a href="cadastrarAdmin.xhtml">Cadastrar</a></li>
 						</ul>
 					</li>
 					<li><a href="faleConosco.xhtml"> Problema na Troca </a></li>
 					<li class="teste"><a href="#">Perfil</a>
 						<ul>
-							<li><a href="perfilDoCliente.xhtml">Meu Perfil</a></li>
-							<li><a href="editarPerfil.xhtml">Editar Perfil</a></li>
+							<li><a href="perfilDoAdmin.xhtml">Meu Perfil</a></li>
+							<li><a href="editarPerfilAdmin.xhtml">Editar Perfil</a></li>
 							<li><a href="#">Remover Conta</a></li>
 							<li><a href="#">Sair</a></li>
 						</ul>
@@ -142,8 +116,8 @@
 				</ul>
 			</nav>
 		</div>
-		<div id="layoutLogado">
-			<ui:insert name="layoutLogado" />
+		<div id="layoutAdmin">
+			<ui:insert name="layoutAdmin" />
 		</div>
 	</ui:define>
 </ui:composition>

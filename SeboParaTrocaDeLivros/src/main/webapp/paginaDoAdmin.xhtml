@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutAdministrador.xhtml">
+	<ui:define name="layoutAdmin">
+	
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+		<style typr="text/css">
+			div#divImagem {
+				width: 1329px;
+				height: 580px;
+				margin-top: 0px;
+				margin-left: -8px;
+				margin-bottom: -50px;
+				background: url("imagemFundo.jpg") no-repeat 0px 0px;
+				padding: 10px;
+			}
+			div#divImagem h1#t1 {
+				font-family: Edwardian Script ITC, sans-serif;
+				color: #ffffff;
+				font-size: 30pt;
+				margin-top: 100px;
+				margin-left: 450px;
+			}
+			
+			div#divImagem h1#t2 {
+				color: #ffffff;
+				font-size: 70pt;
+				margin-top: 50px;
+				margin-left: 360px;
+			}
+			
+			div#divImagem h2#t3 {
+				color: #ffffff;
+				font-size: 40pt;
+				margin-top: 0px;
+				margin-left: 170px;
+			}
+		</style>
+		<div id="divImagem">
+
+			<h1 id="t1">Compartilhando Conhecimento...</h1>
+			<h1 id="t2">Book Exchange</h1>
+			<h2 id="t3">O lugar onde pessoas e livros de encontram</h2>
+
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

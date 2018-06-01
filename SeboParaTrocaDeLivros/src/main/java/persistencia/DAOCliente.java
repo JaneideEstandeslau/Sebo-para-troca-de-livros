@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Cliente;
 import model.Livro;
+import model.Solicitacao;
 
 public class DAOCliente extends DAOGenerico {
 
@@ -269,4 +270,5 @@ public class DAOCliente extends DAOGenerico {
 		}
 		return resultado;
 	}
+
 }

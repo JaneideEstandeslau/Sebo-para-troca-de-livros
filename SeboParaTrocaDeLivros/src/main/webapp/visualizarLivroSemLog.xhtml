@@ -6,14 +6,14 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+<ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
 
 	<f:metadata>
 		<o:viewParam name="livro" value="#{beanCadastrarLivro.livro}" />
 		<f:viewAction action="#{beanCadastrarLivro.init()}" />
 	</f:metadata>
 
-	<ui:define name="layoutLogado">
+	<ui:define name="define">
 
 		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
 			severity="info" />
@@ -67,18 +67,6 @@
 				<p:outputLabel id="sinopse"
 					value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
 					style="width:350px" />
-
-				<p:commandButton id="solicitarLivro" value="Solicitar"
-					action="#{solicitarLivroBean.solicitar()}">
-					<f:setPropertyActionListener value="#{beanCadastrarLivro.livro}"
-						target="#{solicitarLivroBean.livro}" />
-				</p:commandButton>
-
-				<p:commandButton id="tenhoParaTroca" value="Tenho para Troca"
-					action="#{possuirLivroExistenteBean.init()}">
-					<f:setPropertyActionListener value="#{beanCadastrarLivro.livro}"
-						target="#{possuirLivroExistenteBean.livro}" />
-				</p:commandButton>
 
 			</h:panelGrid>
 		</h:form>

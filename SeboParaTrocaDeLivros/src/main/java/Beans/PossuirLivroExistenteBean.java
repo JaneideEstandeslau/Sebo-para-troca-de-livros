@@ -26,6 +26,7 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 
 	public String init() {
 		try {
+			clienteService.verificarLivroPossuiDono(livro);
 			Livro l = service.recuperarLivroClientePossui(livro.getId());
 			if(l.getUsuarioPossue() == null) {
 				return "informarDescrocao.xhtml?faces-redirect=true";
@@ -37,19 +38,23 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 		} catch (ServiceDacException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
 		}
 	}
 	
 	public String possuirLivro() {
 		try {
 			livro.setConservacao(conservacao);
-			service.modificarLivro(livro);
-//			clienteService.adicionaLivroPossuintes((long) 1, (long) 1);
+			service.update(livro);
+			clienteService.adicionaLivroPossuintes((long) 1, livro.getId());
+			reportarMensagemDeSucesso("Você possui o livro " + livro.getTitulo());
+			return "pesquisarLivroLogado.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
+			return null;
 		}
-		reportarMensagemDeSucesso("Você possui o livro " + livro.getTitulo());
-		return "pesquisarLivroLogado.xhtml?faces-redirect=true";
 	}
 	
 	public LivroService getService() {

@@ -32,14 +32,10 @@
 					<h:outputText value="#{livro.publicacao}" />
 				</p:column>
 				<p:column headerText="Operações">
-					<p:commandButton id="visualizarLivroDialog" value="Visualizar"
-						action="#{beanCadastrarLivro.init()}"
-						oncomplete="if (!args.validationFailed) { PF('userEditDialog').show() }"
-						update=":visualizarLivroId">
-						<f:setPropertyActionListener value="#{livro}"
-							target="#{beanCadastrarLivro.livro}" />
-						<p:resetInput target="visualizarLivroId" />
-					</p:commandButton>
+					<p:button id="visualizarLivroDialog" value="Visualizar"
+						outcome="visualizarLivroSemLog.xhtml">
+						<f:param name="livro" value="#{livro.id}" />
+					</p:button>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>

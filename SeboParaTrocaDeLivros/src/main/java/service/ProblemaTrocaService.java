@@ -2,8 +2,10 @@ package service;
 
 import java.io.Serializable;
 
+import excecoes.RollbackException;
 import model.Cliente;
 import model.ProblemaTroca;
+import model.StatusProblema;
 import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
@@ -38,16 +40,29 @@ public class ProblemaTrocaService implements Serializable{
 		
 	}
 	
-	public void problemaResolvido(Long idProblemaTroca) {
+	public void modificarProblema(ProblemaTroca problema) throws RollbackException {
+		try {
+			ProblemaTroca p = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), problema.getId());
+			p.setResolvido(problema.getResolvido());
+			problemaDAO.update(p);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+	
+	/** visualizar a troca e oferecer a opção de problema resolviso.
+	 * @throws RollbackException 
+	 * 
+	 */
+	public void problemaResolvido(Long idProblemaTroca) throws RollbackException {
 		try {
 			
 			ProblemaTroca problema = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), idProblemaTroca);
-			problema.setResolvido(true);
+//			problema.setResolvido(StatusProblema.);
 			problemaDAO.update(problema);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 	}
 

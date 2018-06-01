@@ -17,6 +17,10 @@ import javax.persistence.OneToOne;
 public class ProblemaTroca implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -29,7 +33,7 @@ public class ProblemaTroca implements Serializable{
 	@OneToOne(mappedBy="problema",fetch=FetchType.EAGER)
 	private Troca troca;
 	
-	private boolean resolvido;
+	private StatusProblema resolvido;
 
 	public Long getId() {
 		return id;
@@ -63,13 +67,13 @@ public class ProblemaTroca implements Serializable{
 		this.troca = troca;
 	}
 
-	public boolean isResolvido() {
+	public StatusProblema getResolvido() {
 		return resolvido;
 	}
 
-	public void setResolvido(boolean resolvido) {
+	public void setResolvido(StatusProblema resolvido) {
 		this.resolvido = resolvido;
 	}
-	
+
 	
 }

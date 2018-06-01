@@ -48,7 +48,6 @@ public class TrocaService implements Serializable{
 		try {
 			trocaDAO.save(troca);
 			clienteEnviando.setPonto(clienteEnviando.getPonto() + 1);
-			clienteRecebendo.setPonto(clienteRecebendo.getPonto() - 1);
 			clienteEnviando.getLivrosPossuem().remove(livro);
 			livro.setUsuarioPossue(null);
 			

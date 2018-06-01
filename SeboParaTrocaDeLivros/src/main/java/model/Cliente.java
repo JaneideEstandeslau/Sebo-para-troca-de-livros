@@ -23,8 +23,13 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class Cliente extends Usuario {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int ponto = 0;
-	
+	private String email;
+	private int numTrocasProblema;
 	
 	@OneToMany(mappedBy= "cliente", cascade = CascadeType.ALL)
 	private Collection<ProblemaTroca> problematroca = new ArrayList<ProblemaTroca>();
@@ -122,6 +127,22 @@ public class Cliente extends Usuario {
 
 	public void setSolicitacoesRecebidas(Collection<Solicitacao> solicitacoesRecebidas) {
 		this.solicitacoesRecebidas = solicitacoesRecebidas;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getNumTrocasProblema() {
+		return numTrocasProblema;
+	}
+
+	public void setNumTrocasProblema(int numTrocasProblema) {
+		this.numTrocasProblema = numTrocasProblema;
 	}
 	
 }

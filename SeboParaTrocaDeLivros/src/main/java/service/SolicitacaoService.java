@@ -1,6 +1,8 @@
 package service;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 import excecoes.RollbackException;
 import model.Cliente;
@@ -10,19 +12,19 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
 
-public class SolicitacaoService implements Serializable{
-	
+public class SolicitacaoService implements Serializable {
+
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOSolicitacao soliDAO = new DAOSolicitacao();
 	private DAOLivro livroDAO = new DAOLivro();
 	private TrocaService trocaServe = new TrocaService();
-	
+
 	/**
 	 * Esse metodo solicito, faz com que um cliente solicite um livro já existente.
 	 * 
 	 * @param idCliente
 	 * @param idLivro
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void solicitarLivro(Long idCliente, Long idLivro) throws RollbackException {
 
@@ -54,16 +56,23 @@ public class SolicitacaoService implements Serializable{
 					}
 					if (possui == false) {
 
+						
 						Solicitacao solicitacao = new Solicitacao();
 						
-						cliente.getSolicitacoes().add(solicitacao);
-						Cliente clienteRecebeu = clienteDAO.recuperarClienteComSolicitacoesRecebidas(usuarioPossue.getUsuarioPossue().getId());
+						Cliente clienteRecebeu = clienteDAO
+								.recuperarClienteComSolicitacoesRecebidas(usuarioPossue.getUsuarioPossue().getId());
 						clienteRecebeu.getSolicitacoesRecebidas().add(solicitacao);
+
+						cliente.getSolicitacoes().add(solicitacao);
 						livro.getSolicitacoes().add(solicitacao);
+						solicitacao.setClienteRecebeuSolicitacao(clienteRecebeu);
 						solicitacao.setClienteSolicitou(cliente);
 						solicitacao.setLivroSolicitado(livro);
+						solicitacao.setAtiva(true);
+						cliente.setPonto(cliente.getPonto()-1);
 						try {
 							soliDAO.save(solicitacao);
+							clienteDAO.update(cliente);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -81,16 +90,46 @@ public class SolicitacaoService implements Serializable{
 		}
 
 	}
+
+	/**
+	 * Esse metodo faz com que o cliente que enviou a solicitação de troca cancele a mesma.
+	 * @param idSolicitacao
+	 * @throws RollbackException
+	 */
 	
-	public void cancelarSolicitacao(Long idSolicitacao) {
-		
+	public void cancelarSolicitacaoEnviada(Long idSolicitacao) throws RollbackException {
+
 		try {
+			Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
+			Cliente cliente = clienteDAO.recuperarClienteComSolicitacoes(soli.getClienteSolicitou().getId());
+			cliente.setPonto(cliente.getPonto()+1);
 			this.verificarSolicitacaoAceita(idSolicitacao);
 			soliDAO.delete(new Solicitacao(), idSolicitacao);
+			clienteDAO.update(cliente);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
-		
+
+	}
+
+	/**
+	 * Esse método faz com que o cliente que recebeu a solicitação cancele a mesma.
+	 * @param idSolicitacao
+	 * @throws RollbackException
+	 */
+	
+	public void cancelarSolicitacaoReecebida(Long idSolicitacao) throws RollbackException {
+
+		try {
+			Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
+			Cliente cliente = clienteDAO.recuperarClienteComSolicitacoes(soli.getClienteSolicitou().getId());
+			cliente.setPonto(cliente.getPonto()+1);
+			soliDAO.delete(new Solicitacao(), idSolicitacao);
+			clienteDAO.update(cliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+
 	}
 
 	/**
@@ -98,28 +137,44 @@ public class SolicitacaoService implements Serializable{
 	 * a troca.
 	 * 
 	 * @param idSolicitacao
+	 * @throws RollbackException 
 	 */
-	public void aceitarSolicitacao(Long idSolicitacao) {
+	public void aceitarSolicitacao(Long idSolicitacao) throws RollbackException {
 
 		Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
 		Long idClienteSolicitou = soli.getClienteSolicitou().getId();
 		soli = soliDAO.recuperarSolicitacaoComLivro(idSolicitacao);
 		Livro livro = livroDAO.recuperarLivroComPossuinte(soli.getLivroSolicitado().getId());
 		soli.setAceita(true);
+		soli.setAtiva(false);
 
 		try {
 			soliDAO.update(soli);
 			trocaServe.realizarTroca(livro.getUsuarioPossue().getId(), livro.getId(), idClienteSolicitou);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 
 	}
-	
+
+	/**
+	 * Esse método verifica se uma solicitação feita já foi aceita
+	 * @param idSolicitacao
+	 * @throws Exception
+	 */
 	public void verificarSolicitacaoAceita(Long idSolicitacao) throws Exception {
 		Solicitacao soli = (Solicitacao) soliDAO.getByID(new Solicitacao(), idSolicitacao);
-		if(soli.isAceita() == true) {
-			throw new RollbackException("A solicitação foi aceita é o livro enviado, por tanto você não pode cancelala");
+		if (soli.isAceita() == true) {
+			throw new RollbackException(
+					"A solicitação foi aceita é o livro enviado, por tanto você não pode cancelala");
+		}
+	}
+	
+	public List<Solicitacao> getSoliRecebidas(Long idCliente) throws RollbackException {
+		try {
+			return soliDAO.soliRecebidas(idCliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
 		}
 	}
 

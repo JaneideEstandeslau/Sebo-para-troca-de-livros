@@ -1,6 +1,8 @@
 package service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -38,20 +40,24 @@ public class ClienteService implements Serializable {
 			validarLogin(cliente.getLogin());
 			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
+			cliente.setPonto(1);
+			Cliente c = clienteDAO.recuperarCliente((long) 1);
+			if (c == null) {
+				cliente.setPonto(1);
+			}
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
 	}
 
-	public void removerUsuario(Long idCliente) {
+	public void removerUsuario(Long idCliente) throws RollbackException {
 		try {
 			Cliente cliente = (Cliente) clienteDAO.getByID(new Cliente(), idCliente);
 			cliente.setAtivo(false);
 			clienteDAO.update(cliente);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 	}
 
@@ -67,6 +73,7 @@ public class ClienteService implements Serializable {
 			c.setLogin(cliente.getLogin());
 			c.setNome(cliente.getNome());
 			c.setPonto(cliente.getPonto());
+			c.setEmail(cliente.getEmail());
 			clienteDAO.update(c);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -87,7 +94,7 @@ public class ClienteService implements Serializable {
 
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
-			verificarLivroPossuiDono(livro);
+			// verificarLivroPossuiDono(livro);
 			Cliente cliente = clienteDAO.recuperarCliente(idCliente);
 			cliente.getLivrosPossuem().add(livro);
 			livro.setUsuarioPossue(cliente);
@@ -217,7 +224,7 @@ public class ClienteService implements Serializable {
 	public void verificarLivroPossuiDono(Livro usuarioPossue) throws RollbackException {
 
 		if (usuarioPossue.getUsuarioPossue() != null) {
-			throw new RollbackException("Você já possue esse livro");
+			throw new RollbackException("Esse livro já possue um Dono");
 		}
 
 	}
@@ -238,4 +245,13 @@ public class ClienteService implements Serializable {
 		}
 	}
 
+	public Collection<Livro> recuperarClienteComLivrosPossue(Long idCliente) throws RollbackException {
+		try {
+			Cliente cliente = clienteDAO.recuperarClienteComLivrosPossue(idCliente);
+			Collection<Livro> livros = cliente.getLivrosPossuem();
+			return livros;
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
 }

@@ -27,57 +27,69 @@
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:outputLabel value="Titulo:" for="titulo" />
-					<p:inputText id="titulo" required="true" value="#{beanCadastrarLivro.livro.titulo}"
-						label="Titulo" style="width:350px" />
-
-					<h:outputLabel value="ISBN:" for="isbn" />
-					<p:inputText id="isbn" required="true" value="#{beanCadastrarLivro.livro.isbn}"
-						label="ISBN" style="width:350px" validator="isbnValidar"></p:inputText>
-
-					<p:outputLabel value="Edotora:" for="editora" />
-					<p:inputText id="editora" required="true"
-						value="#{beanCadastrarLivro.livro.editora}" label="Edotora"
-						style="width:350px" />
-						
-					<p:outputLabel value="Autor:" for="autor" />
-					<p:inputText id="autor" required="true"
-						value="#{beanCadastrarLivro.livro.autor}" label="Autor"
-						style="width:350px" />
-						
-					<p:outputLabel value="Idioma:" for="idioma" />
-					<p:inputText id="idioma" required="true"
-						value="#{beanCadastrarLivro.livro.idioma}" label="Idioma"
-						style="width:350px" />
-						
-					<p:outputLabel value="Páginas:" for="paginas" />
-					<p:inputText id="paginas" required="true"
-						value="#{beanCadastrarLivro.livro.qtdPaginas}" label="Páginas"
-						style="width:350px">
-						<f:convertNumber integerOnly="true" minIntegerDigits="1" />
-					</p:inputText>
-
-					<p:outputLabel for="publicacao" value="Ano de Publicação:" />
-					<p:inputText id="publicacao"
-						value="#{beanCadastrarLivro.livro.publicacao}"
-						label="Ano de Publicação" required="true" style="width:350px">
-						<f:convertNumber integerOnly="true" minIntegerDigits="1" />
-					</p:inputText>
-
-
-					<p:outputLabel value="Conservação:" for="conservacao" />
-					<p:inputTextarea id="conservacao"
-						value="#{beanCadastrarLivro.livro.conservacao}"
-						label="Conservação" required="true" style="width:350px" />
-
-					<p:outputLabel value="Sinopse:" for="sinopse" />
-					<p:inputTextarea id="sinopse" required="true"
-						value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
+					<p:inputText id="titulo" required="true"
+						value="#{beanCadastrarLivro.livro.titulo}" label="Titulo"
 						style="width:350px" />
 
-					<p:commandButton id="btnCadastrar"
-						action="#{beanCadastrarLivro.saveLivro}" value="Cadastrar" />
-					<p:commandButton id="btnCancelar" value="Cancelar" />
+					<h:outputLabel value="ISBN:" for="isbn"
+						rendered="#{beanCadastrarLivro.naoEdicaoDeLivro()}" />
+					<p:inputText id="isbn" required="true"
+						value="#{beanCadastrarLivro.livro.isbn}" label="ISBN"
+						style="width:350px" validator="isbnValidar"
+						rendered="#{beanCadastrarLivro.naoEdicaoDeLivro()}"></p:inputText>
 
+					<h:outputLabel value="ISBN:" for="isbns"
+						rendered="#{beanCadastrarLivro.isEdicaoDeLivro()}" />
+					<p:outputLabel id="isbns" required="true"
+						value="#{beanCadastrarLivro.livro.isbn}" label="ISBN"
+						style="width:350px"
+						rendered="#{beanCadastrarLivro.isEdicaoDeLivro()}">
+						</p:outputLabel>
+
+
+						<p:outputLabel value="Edotora:" for="editora" />
+						<p:inputText id="editora" required="true"
+							value="#{beanCadastrarLivro.livro.editora}" label="Edotora"
+							style="width:350px" />
+
+						<p:outputLabel value="Autor:" for="autor" />
+						<p:inputText id="autor" required="true"
+							value="#{beanCadastrarLivro.livro.autor}" label="Autor"
+							style="width:350px" />
+
+						<p:outputLabel value="Idioma:" for="idioma" />
+						<p:inputText id="idioma" required="true"
+							value="#{beanCadastrarLivro.livro.idioma}" label="Idioma"
+							style="width:350px" />
+
+						<p:outputLabel value="Páginas:" for="paginas" />
+						<p:inputText id="paginas" required="true"
+							value="#{beanCadastrarLivro.livro.qtdPaginas}" label="Páginas"
+							style="width:350px">
+							<f:convertNumber integerOnly="true" minIntegerDigits="1" />
+						</p:inputText>
+
+						<p:outputLabel for="publicacao" value="Ano de Publicação:" />
+						<p:inputText id="publicacao"
+							value="#{beanCadastrarLivro.livro.publicacao}"
+							label="Ano de Publicação" required="true" style="width:350px">
+							<f:convertNumber integerOnly="true" minIntegerDigits="1" />
+						</p:inputText>
+
+
+						<p:outputLabel value="Conservação:" for="conservacao" />
+						<p:inputTextarea id="conservacao"
+							value="#{beanCadastrarLivro.livro.conservacao}"
+							label="Conservação" required="true" style="width:350px" />
+
+						<p:outputLabel value="Sinopse:" for="sinopse" />
+						<p:inputTextarea id="sinopse" required="true"
+							value="#{beanCadastrarLivro.livro.sinopse}" label="Sinopse"
+							style="width:350px" />
+
+						<p:commandButton id="btnCadastrar"
+							action="#{beanCadastrarLivro.saveLivro}" value="Cadastrar" />
+						<p:commandButton id="btnCancelar" value="Cancelar" />
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
