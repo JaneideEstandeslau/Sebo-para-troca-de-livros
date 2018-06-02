@@ -15,54 +15,32 @@
 
 		<p:fieldset legend="Resultado" style="margin-top:10px">
 			<p:dataTable id="dataTable" border="1" var="soli"
-				value="#{soliRecebidasBean.getSoliEnviadas()}"
+				value="#{soliRecebidasBean.getSolicitacoes()}"
 				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
 				paginatorAlwaysVisible="false"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15">
 
-				<p:column headerText="Solicitação Recebida de">
-					<h:outputText value="#{soli.clienteSolicitou.nome}" />
-				</p:column>
-
-				<p:column headerText="Endereço">
-					<h:outputText value="Estado: " />
-					<h:outputText value="#{soli.clienteSolicitou.endereco.estado}" />
-					<br />
-					<h:outputText value="Cidade: " />
-					<h:outputText value="#{soli.clienteSolicitou.endereco.cidade}" />
+				<p:column headerText="Solicitação Enviada para">
+					<h:outputText value="#{soli.clienteRecebeuSolicitacao.nome}" />
 				</p:column>
 				<p:column headerText="Livro Solicitado">
 					<h:outputText value="#{soli.livroSolicitado.titulo}" />
 				</p:column>
 
-
 				<p:column headerText="Operações">
 
-					<p:commandButton id="editar" value="Aceitar Troca"
-						action="#{soliRecebidasBean.aceitarSoli()}">
-						
-						<f:setPropertyActionListener value="#{soli}"
-							target="#{soliRecebidasBean.soli}" />
-						
-						<p:confirm header="Confirmação!"
-							message="Tem certeza que deseja aceitar a solicitação do livro '#{soli.livroSolicitado.titulo}'?"
-							icon="ui-icon-alert" />
-							
-						<p:tooltip id="toolTipEditar" for="editar" value="Aceitar solicitaca"
-							position="top" />
-					</p:commandButton>
-					<p:commandButton id="remover" value="Recusar Troca"
+					<p:commandButton id="remover" value="Cancelar"
 						action="#{soliRecebidasBean.recusarSoli()}">
 						
 						<f:setPropertyActionListener value="#{soli}"
 							target="#{soliRecebidasBean.soli}" />
 							
 						<p:confirm header="Confirmação!"
-							message="Tem certeza que deseja decusar a solicitação do livro '#{soli.livroSolicitado.titulo}'?"
+							message="Tem certeza que deseja cancelar a solicitação de troca do livro '#{soli.livroSolicitado.titulo}'?"
 							icon="ui-icon-alert" />
 						<p:tooltip id="toolTipDeleteUser" for="remover"
-							value="Recusar solicitação de Troca" position="top" />
+							value="Cancelar solicitação de Troca" position="top" />
 					</p:commandButton>
 
 				</p:column>

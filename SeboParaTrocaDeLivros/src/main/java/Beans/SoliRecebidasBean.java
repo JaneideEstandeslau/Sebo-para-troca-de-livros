@@ -3,7 +3,8 @@ package Beans;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import excecoes.RollbackException;
 import model.Solicitacao;
@@ -29,10 +30,19 @@ public class SoliRecebidasBean extends AbstractBean{
 		}
 	}
 	
+	public List<Solicitacao> getSoliEnviadas(){
+		try {
+			return service.getSoliEnviadas((long) 2);
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+	}
+	
 	public String aceitarSoli() {
 		try {
 			service.aceitarSolicitacao(soli.getId());
-			return "solicitacoesRecebidas.xhtml?faces-redirect=true";
+			return "trocasEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;

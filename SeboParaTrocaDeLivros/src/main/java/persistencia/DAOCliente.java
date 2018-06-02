@@ -270,5 +270,4 @@ public class DAOCliente extends DAOGenerico {
 		}
 		return resultado;
 	}
-
 }

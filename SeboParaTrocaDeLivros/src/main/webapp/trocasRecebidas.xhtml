@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+
+	<ui:define name="layoutLogado">
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<p:fieldset legend="Resultado" style="margin-top:10px">
+			<p:dataTable id="dataTable" border="1" var="troca"
+				value="#{trocasBean.getTrocasRebidas()}"
+				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+
+				<p:column headerText="Livro Recebido de">
+					<h:outputText value="#{troca.clienteEnviando.nome}" />
+				</p:column>
+				<p:column headerText="Livro Recebido">
+					<h:outputText value="#{troca.livro.titulo}" />
+				</p:column>
+				<p:column headerText="Data Troca">
+					<h:outputText value="#{troca.dataTroca}" />
+				</p:column>
+				<p:column headerText="Codigo Rastreio">
+					<h:outputText value="DB144547RT" />
+				</p:column>
+
+				<p:column headerText="Operações">
+
+					<p:commandButton id="confirmar" value="Recebi"
+						action="#{trocasBean.recebi()}">
+
+						<f:setPropertyActionListener value="#{troca}"
+							target="#{trocasBean.troca}" />
+
+						<p:confirm header="Confirmação!"
+							message="Tem certeza que recebeu o livro '#{troca.livro.titulo}'?"
+							icon="ui-icon-alert" />
+
+						<p:tooltip id="toolTipRecebido" for="confirmar"
+							value="Confirmar Recebimento do Livro" position="top" />
+					</p:commandButton>
+
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+		<p:confirmDialog id="confirmDialog" global="true" showEffect="fade"
+			hideEffect="fade">
+			<p:commandButton id="confirmYes" value="Sim"
+				styleClass="ui-confirmdialog-yes" icon="fa fa-remove" />
+			<p:commandButton id="confirmNo" value="Não"
+				styleClass="ui-confirmdialog-no" icon="fa fa-ban" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

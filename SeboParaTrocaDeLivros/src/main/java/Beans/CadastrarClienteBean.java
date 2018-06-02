@@ -1,7 +1,6 @@
 package Beans;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import excecoes.RollbackException;
@@ -11,7 +10,7 @@ import model.Endereco;
 import service.ClienteService;
 import service.EnderecoService;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class CadastrarClienteBean extends AbstractBean{
 
@@ -23,6 +22,7 @@ public class CadastrarClienteBean extends AbstractBean{
 	private EnderecoService enderecoService = new EnderecoService();
 	private Cliente cliente;
 	private Endereco endereco;
+	
 	
 	public void visualizarPerfil() {
 		try {

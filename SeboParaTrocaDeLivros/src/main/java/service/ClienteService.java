@@ -14,6 +14,7 @@ import model.Cliente;
 import model.Endereco;
 import model.Livro;
 import model.Solicitacao;
+import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
@@ -23,8 +24,7 @@ public class ClienteService implements Serializable {
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOSolicitacao soliDAO = new DAOSolicitacao();
 	private DAOLivro livroDAO = new DAOLivro();
-	private TrocaService trocaServe = new TrocaService();
-
+	
 	public void logarUsuario(String login, String senha) {
 		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
 	}

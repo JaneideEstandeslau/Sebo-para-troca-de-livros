@@ -9,146 +9,148 @@
 <ui:composition template="/WEB-INF/template/_layoutPadrao.xhtml">
 
 	<ui:define name="content">
-	<style type="text/css">
-		div#divMenu03 {
-			width: 1329px;
-			height: 36px;
-			margin-top: -120px;
-			margin-left: -8px;
-			padding: 10px;
-			background-color: #000000;
-		}
-		
-		div#divMenu03 nav#menuDiv03 {
-			display: block;
-		}
-		
-		div#divMenu03 nav#menuDiv03 ul {
-			list-style: none;
-			text-transform: uppercase;
-			position: absolute;
-			top: 145px;
-			left: 0px;
-		}
-		
-		div#divMenu03 nav#menuDiv03 a {
-			color: #ffffff;
-			text-decoration: none;
-		}
-		
-		div#divMenu03 nav#menuDiv03 a:hover {
-			color: #ffffff;
-			text-decoration: underline;
-		}
-		
-		div#divMenu03 nav#menuDiv03 li {
-			display: inline-block;
-			padding: 5px;
-			margin: 2px;
-			transition: background-color 1s;
-			font-size: 10pt;
-			font-family: Arial, sans-serif;
-		}
-		
-		﻿div#divMenu03 nav#menuDiv03 li#lateral {
-			border-right: 1px solid #606060;
-		}
-		
-		div#divMenu03 nav#menuDiv03 a#home {
-			text-decoration: underline;
-		}
-		
-		div#divMenu023 {
-			width: 130px;
-			height: 95px;
-			margin-top: 0px;
-			margin-left: 1030px;
-			padding: 10px;
-			background-color: #ffffff;
-		}
-		
-		div#divMenu023 nav#menuComprar {
-			display: block;
-		}
-		
-		div#divMenu023 nav#menuComprar ul {
-			list-style: none;
-			text-transform: uppercase;
-			position: absolute;
-			top: 45px;
-			left: 1070px;
-		}
-		
-		div#divMenu023 nav#menuComprar a {
-			color: #000000;
-			text-decoration: none;
-		}
-		
-		div#divMenu03 nav#menuDiv03 li#telefone {
-			margin-left: 800px;
-		}
-		
-		div#divMenu023 nav#menuComprar a:hover {
-			color: #000000;
-			text-decoration: underline;
-		}
-		
-		div#divMenu023 nav#menuComprar li#entrar {
-			border-right: 1px solid #000000;
-		}
-		
-		div#divMenu023 nav#menuComprar li {
-			display: inline-block;
-			padding: 10px;
-			margin: 2px;
-			transition: background-color 1s;
-			font-size: 10pt;
-			font-family: Arial, sans-serif;
-		}
-		
-		div#divImagem h1#t1 {
-			font-family: Edwardian Script ITC, sans-serif;
-			color: #ffffff;
-			font-size: 30pt;
-			margin-top: 100px;
-			margin-left: 450px;
-		}
-		
-		div#divImagem h1#t2 {
-			color: #ffffff;
-			font-size: 70pt;
-			margin-top: 50px;
-			margin-left: 360px;
-		}
-		
-		div#divImagem h2#t3 {
-			color: #ffffff;
-			font-size: 40pt;
-			margin-top: 0px;
-			margin-left: 170px;
-		}
-	</style>
-	
-	<div id="divMenu022">
-		<h:form>
-			<p:inputText style="width:500px; margin-top: 27px;" 
-				 value="#{pesquisarLivroBean.nomeDoLivro}"/>
-			
-			<p:commandButton id="buttonPesquisa" icon="fa fa-search" 
-				style="display: block; margin-top: -35px; margin-left: 515px;"
-				action="#{pesquisarLivroBean.pesquisa()}">	
-			</p:commandButton>
-			<p:tooltip id="toolTipPesquisa" for="buttonPesquisa" value="Pesquisar por Livro" position="top"/>
-		</h:form>
-	</div>
-	
-	<div id="divMenu023">
+		<style type="text/css">
+div#divMenu03 {
+	width: 1329px;
+	height: 36px;
+	margin-top: -120px;
+	margin-left: -8px;
+	padding: 10px;
+	background-color: #000000;
+}
+
+div#divMenu03 nav#menuDiv03 {
+	display: block;
+}
+
+div#divMenu03 nav#menuDiv03 ul {
+	list-style: none;
+	text-transform: uppercase;
+	position: absolute;
+	top: 145px;
+	left: 0px;
+}
+
+div#divMenu03 nav#menuDiv03 a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+div#divMenu03 nav#menuDiv03 a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+div#divMenu03 nav#menuDiv03 li {
+	display: inline-block;
+	padding: 5px;
+	margin: 2px;
+	transition: background-color 1s;
+	font-size: 10pt;
+	font-family: Arial, sans-serif;
+}
+
+﻿div#divMenu03 nav#menuDiv03 li#lateral {
+	border-right: 1px solid #606060;
+}
+
+div#divMenu03 nav#menuDiv03 a#home {
+	text-decoration: underline;
+}
+
+div#divMenu023 {
+	width: 130px;
+	height: 95px;
+	margin-top: 0px;
+	margin-left: 1030px;
+	padding: 10px;
+	background-color: #ffffff;
+}
+
+div#divMenu023 nav#menuComprar {
+	display: block;
+}
+
+div#divMenu023 nav#menuComprar ul {
+	list-style: none;
+	text-transform: uppercase;
+	position: absolute;
+	top: 45px;
+	left: 1070px;
+}
+
+div#divMenu023 nav#menuComprar a {
+	color: #000000;
+	text-decoration: none;
+}
+
+div#divMenu03 nav#menuDiv03 li#telefone {
+	margin-left: 800px;
+}
+
+div#divMenu023 nav#menuComprar a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+
+div#divMenu023 nav#menuComprar li#entrar {
+	border-right: 1px solid #000000;
+}
+
+div#divMenu023 nav#menuComprar li {
+	display: inline-block;
+	padding: 10px;
+	margin: 2px;
+	transition: background-color 1s;
+	font-size: 10pt;
+	font-family: Arial, sans-serif;
+}
+
+div#divImagem h1#t1 {
+	font-family: Edwardian Script ITC, sans-serif;
+	color: #ffffff;
+	font-size: 30pt;
+	margin-top: 100px;
+	margin-left: 450px;
+}
+
+div#divImagem h1#t2 {
+	color: #ffffff;
+	font-size: 70pt;
+	margin-top: 50px;
+	margin-left: 360px;
+}
+
+div#divImagem h2#t3 {
+	color: #ffffff;
+	font-size: 40pt;
+	margin-top: 0px;
+	margin-left: 170px;
+}
+</style>
+
+		<div id="divMenu022">
+			<h:form>
+				<p:inputText style="width:500px; margin-top: 27px;"
+					value="#{pesquisarLivroBean.nomeDoLivro}" />
+
+				<p:commandButton id="buttonPesquisa" icon="fa fa-search"
+					style="display: block; margin-top: -35px; margin-left: 515px;"
+					action="#{pesquisarLivroBean.pesquisa()}">
+				</p:commandButton>
+				<p:tooltip id="toolTipPesquisa" for="buttonPesquisa"
+					value="Pesquisar por Livro" position="top" />
+			</h:form>
+		</div>
+
+		<div id="divMenu023">
 
 			<nav id="menuComprar">
 				<ul>
 					<li id="entrar"><a href="logarUsuario.xhtml"
-					name="notRenderHomeLinkMenu" value="true"> Entrar </a></li>
-					<li id="lateral"><a href="cadastrarUsuario.xhtml">Cadastrar </a></li>
+						name="notRenderHomeLinkMenu" value="true"> Entrar </a></li>
+					<li id="lateral"><a href="cadastrarUsuario.xhtml">Cadastrar
+					</a></li>
 				</ul>
 			</nav>
 		</div>

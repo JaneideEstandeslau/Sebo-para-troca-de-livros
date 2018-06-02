@@ -12,65 +12,81 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Troca implements Serializable{
-	
+public class Troca implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5011633873933172284L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String dataTroca;
-	
+
 	@OneToOne
 	private ProblemaTroca problema;
-	
+
 	@ManyToOne
 	private Livro livro;
-	
+
 	@ManyToOne
 	private Cliente clienteEnviando;
-	
+
 	@ManyToOne
 	private Cliente clienteRecebendo;
-	
+
+	private boolean recebida;
+
+	private String codRastreio;
+
 	public String getDataTroca() {
 		return dataTroca;
 	}
+
 	public void setDataTroca(String dataTroca) {
 		this.dataTroca = dataTroca;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Livro getLivro() {
 		return livro;
 	}
+
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
+
 	public ProblemaTroca getProblema() {
 		return problema;
 	}
+
 	public void setProblema(ProblemaTroca problema) {
 		this.problema = problema;
 	}
+
 	public Cliente getClienteEnviando() {
 		return clienteEnviando;
 	}
+
 	public void setClienteEnviando(Cliente clienteEnviando) {
 		this.clienteEnviando = clienteEnviando;
 	}
+
 	public Cliente getClienteRecebendo() {
 		return clienteRecebendo;
 	}
+
 	public void setClienteRecebendo(Cliente clienteRecebendo) {
 		this.clienteRecebendo = clienteRecebendo;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,6 +94,7 @@ public class Troca implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -94,5 +111,20 @@ public class Troca implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	public boolean isRecebida() {
+		return recebida;
+	}
+
+	public void setRecebida(boolean recebida) {
+		this.recebida = recebida;
+	}
+
+	public String getCodRastreio() {
+		return codRastreio;
+	}
+
+	public void setCodRastreio(String codRastreio) {
+		this.codRastreio = codRastreio;
+	}
 }

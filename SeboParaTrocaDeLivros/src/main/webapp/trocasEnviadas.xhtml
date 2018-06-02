@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+
+	<ui:define name="layoutLogado">
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<p:fieldset legend="Resultado" style="margin-top:10px">
+			<p:dataTable id="dataTable" border="1" var="troca"
+				value="#{trocasBean.getTrocasRebidas()}"
+				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+
+				<p:column headerText="Livro Enviado para">
+					<h:outputText value="#{troca.clienteRecebendo.nome}" />
+				</p:column>
+				<p:column headerText="Livro Enviado">
+					<h:outputText value="#{troca.livro.titulo}" />
+				</p:column>
+				<p:column headerText="Data Troca">
+					<h:outputText value="#{troca.dataTroca}" />
+				</p:column>
+				<p:column headerText="Codigo Rastreio">
+					<h:outputText value="#{troca.codRastreio}" />
+				</p:column>
+
+				<p:column headerText="Operações">
+					<p:commandButton id="cancelar" value="Cancelar"
+						action="#{trocasBean.calcelarTroca()}">
+
+						<f:setPropertyActionListener value="#{troca}"
+							target="#{trocasBean.troca}" />
+
+						<p:confirm header="Confirmação!"
+							message="Tem certeza que deseja cancelar essa troca?"
+							icon="ui-icon-alert" />
+
+						<p:tooltip id="toolTipCancelar" for="cancelar"
+							value="Cancelar Troca" position="top" />
+					</p:commandButton>
+
+					<p:commandButton id="confirmar" value="Ver Detalhes"
+						oncomplete="if (!args.validationFailed) { PF('userEditDialog').show() }" update=":userEditDialogId">
+						
+						<f:setPropertyActionListener value="#{troca}"
+							target="#{trocasBean.troca}" />
+						
+						<p:tooltip id="toolTipRecebido" for="confirmar"
+							value="Informar codigo de rastreio" position="top" />
+					</p:commandButton>
+
+
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+
+		<p:confirmDialog id="confirmDialog" global="true" showEffect="fade"
+			hideEffect="fade">
+			<p:commandButton id="confirmYes" value="Sim"
+				styleClass="ui-confirmdialog-yes" icon="fa fa-remove" />
+			<p:commandButton id="confirmNo" value="Não"
+				styleClass="ui-confirmdialog-no" icon="fa fa-ban" />
+		</p:confirmDialog>
+
+		<p:dialog id="userEditDialogId" widgetVar="userEditDialog"
+			header="Informar Codigo de Rastreio" modal="true" dynamic="true" closeOnEscape="true">
+
+			<p:messages id="idMessagesErrorsUserEdit" showDetail="true"
+				closable="true" autoUpdate="true" severity="error" />
+
+			<h:form id="formEdit">
+				<p:panelGrid columns="2" styleClass="ui-noborder"> 
+				
+					<p:outputLabel value="Dodigo Rastreio:" for="codigo" />
+					<p:inputText id="codigo" required="true"
+						value="#{trocasBean.codRastreio}" label="Dodigo Rastreio"
+						style="width:350px" />
+					<p:commandButton id="botaoSubmeter"
+						action="#{trocasBean.informeCodRastreio()}" value="Submeter" />
+				
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

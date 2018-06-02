@@ -1,17 +1,15 @@
 package Beans;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
-import model.Cliente;
-import model.Endereco;
 import model.Livro;
 import service.ClienteService;
 import service.LivroService;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class PossuirLivroExistenteBean extends AbstractBean{
 	

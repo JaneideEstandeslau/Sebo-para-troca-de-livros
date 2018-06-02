@@ -3,7 +3,10 @@ package service;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.List;
 
+import excecoes.RollbackException;
 import model.Cliente;
 import model.Livro;
 import model.Troca;
@@ -11,11 +14,12 @@ import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOTroca;
 
-public class TrocaService implements Serializable{
+public class TrocaService implements Serializable {
 
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOLivro livroDAO = new DAOLivro();
 	private DAOTroca trocaDAO = new DAOTroca();
+	private ClienteService service = new ClienteService();
 
 	/**
 	 * Esse método deixa registrado as trocas que o cliente fez.
@@ -23,8 +27,9 @@ public class TrocaService implements Serializable{
 	 * @param idClienteEnviando
 	 * @param idLivro
 	 * @param idClienteRecebendo
+	 * @throws RollbackException 
 	 */
-	public void realizarTroca(Long idClienteEnviando, Long idLivro, Long idClienteRecebendo) {
+	public void realizarTroca(Long idClienteEnviando, Long idLivro, Long idClienteRecebendo) throws RollbackException {
 
 		LocalDate data = LocalDate.now();
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -50,41 +55,60 @@ public class TrocaService implements Serializable{
 			clienteEnviando.setPonto(clienteEnviando.getPonto() + 1);
 			clienteEnviando.getLivrosPossuem().remove(livro);
 			livro.setUsuarioPossue(null);
-			
+
 			livroDAO.update(livro);
 			clienteDAO.updateCliente(clienteEnviando);
 			clienteDAO.updateCliente(clienteRecebendo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 
+	}
 	
-
-	}
-
-	public void cancelarTroca(Long idTroca) {
-		
+	public void upedate(Troca troca) throws RollbackException {
 		try {
-//			Troca troca = (Troca) trocaDAO.getByID(new Troca(), idTroca);
-			trocaDAO.delete(new Troca(), idTroca);
+			trocaDAO.update(troca);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
-
-		// Troca troca = DAOTroca.retrieve(idTroca);
-		//
-		// Cliente clienteRecebeu = troca.getClienteRecebendo();
-		// clienteRecebeu.setPonto(clienteRecebeu.getPonto()+1);
-		//
-		// Cliente clienteEnviou = troca.getClienteEnviando();
-		// clienteEnviou.setPonto(clienteEnviou.getPonto()-1);
-		//
-		// DAOTroca.retrieve(idTroca);
-		// DAOCliente.update(clienteEnviou);
-		// DAOCliente.update(clienteRecebeu);
-
 	}
 
+	public void cancelarTroca(Long idTroca, Long idEnviando, Long idRecendo) throws RollbackException {
+
+		try {
+			Troca troca = trocaDAO.recuperarTroca(idTroca);
+			Cliente clienteRecebendo = clienteDAO.recuperarClienteComTrocasRecebidas(idRecendo);
+			Cliente clienteEnviando = clienteDAO.recuperarClienteComTrocasEnviadas(idEnviando);
+			
+			clienteRecebendo.setPonto(clienteRecebendo.getPonto() + 1);
+			clienteEnviando.setPonto(clienteEnviando.getPonto() - 1);
+			
+			clienteDAO.update(clienteEnviando);
+			clienteDAO.update(clienteRecebendo);
+			
+			service.adicionaLivroPossuintes(idEnviando, troca.getLivro().getId());
+			trocaDAO.delete(new Troca(), idTroca);
+			
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+
+	public List<Troca> getTrocasRebidas(Long idCliente) throws RollbackException {
+		try {
+
+			return trocaDAO.recuperarTrocasRecebias(idCliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+
+	public List<Troca> getTrocasEnviadas(Long idCliente) throws RollbackException {
+		try {
+
+			return trocaDAO.recuperarTrocasEnviadas(idCliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
 }

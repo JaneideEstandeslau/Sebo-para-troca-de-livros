@@ -177,5 +177,13 @@ public class SolicitacaoService implements Serializable {
 			throw new RollbackException(e.getMessage());
 		}
 	}
+	
+	public List<Solicitacao> getSoliEnviadas(Long idCliente) throws RollbackException {
+		try {
+			return soliDAO.soliEnviadas(idCliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
 
 }

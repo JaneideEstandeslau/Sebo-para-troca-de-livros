@@ -60,5 +60,22 @@ public class DAOSolicitacao extends DAOGenerico {
 			return null;
 		}
 	}
+	
+	public List<Solicitacao> soliEnviadas(Long idCliente) {
+		EntityManager em = getEntityManager();
+		List<Solicitacao> itens = null;
+
+		try {
+			TypedQuery<Solicitacao> itemQuery = em.createQuery(
+					"SELECT s FROM Solicitacao s LEFT JOIN FETCH s.clienteRecebeuSolicitacao c1 LEFT JOIN FETCH s.clienteSolicitou c2 WHERE 1 = 1 AND s.aceita = false AND s.ativa = true AND c2.id = :idCliente",
+					Solicitacao.class);
+			itemQuery.setParameter("idCliente", idCliente);
+			itens = itemQuery.getResultList();
+			return itens;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

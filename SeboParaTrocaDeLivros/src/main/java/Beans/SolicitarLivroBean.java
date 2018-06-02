@@ -2,12 +2,13 @@ package Beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import excecoes.RollbackException;
 import model.Livro;
 import service.SolicitacaoService;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class SolicitarLivroBean extends AbstractBean{
 
