@@ -2,24 +2,34 @@ package service;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
 import model.ProblemaTroca;
-import model.StatusProblema;
 import model.Troca;
 import persistencia.DAOCliente;
-import persistencia.DAOLivro;
 import persistencia.DAOProblemaTroca;
-import persistencia.DAOSolicitacao;
 import persistencia.DAOTroca;
+import util.TransacionalCdi;
 
+@ApplicationScoped
 public class ProblemaTrocaService implements Serializable {
 
-	private DAOCliente clienteDAO = new DAOCliente();
-	private DAOTroca trocaDAO = new DAOTroca();
-	private DAOProblemaTroca problemaDAO = new DAOProblemaTroca();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOCliente clienteDAO;
+	@Inject
+	private DAOTroca trocaDAO;
+	@Inject
+	private DAOProblemaTroca problemaDAO;
 
+	@TransacionalCdi
 	public void registrarProblemaTroca(Long idTroca, Long idCliente, ProblemaTroca problema) throws RollbackException {
 
 		Cliente cliente = clienteDAO.recuprarClienteComProblemaTroca(idCliente);
@@ -40,7 +50,7 @@ public class ProblemaTrocaService implements Serializable {
 		}
 
 	}
-
+	@TransacionalCdi
 	public void modificarProblema(ProblemaTroca problema) throws RollbackException {
 		try {
 			ProblemaTroca p = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), problema.getId());

@@ -2,17 +2,28 @@ package service;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import excecoes.RollbackException;
 import model.Cliente;
 import model.Endereco;
 import persistencia.DAOCliente;
 import persistencia.DAOEndereco;
+import util.TransacionalCdi;
 
+@ApplicationScoped
 public class EnderecoService implements Serializable{
 	
-	private DAOEndereco enderecoDAO = new  DAOEndereco();
-	private DAOCliente clienteDAO = new DAOCliente();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOEndereco enderecoDAO;
+	@Inject
+	private DAOCliente clienteDAO;
 	
+	@TransacionalCdi
 	public void cadastrarEndereco(Endereco endereco, String cpf) throws RollbackException {
 		
 		Cliente cliente = clienteDAO.recuperarClienteComEndereco(cpf);
@@ -25,6 +36,7 @@ public class EnderecoService implements Serializable{
 		}
 	}
 	
+	@TransacionalCdi
 	public void editarEndereco(Endereco endereco) throws RollbackException {
 		try {
 			Endereco end = (Endereco) enderecoDAO.getByID(new Endereco(), endereco.getId());

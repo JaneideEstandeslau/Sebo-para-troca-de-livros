@@ -2,17 +2,23 @@ package Beans;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.Livro;
 import service.LivroService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class LogadoPesquisarLivroBean extends AbstractBean{
 	
-	private LivroService service = new LivroService();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private LivroService service;
 	private List<Livro> livros;
 	private String nomeDoLivro;
 	

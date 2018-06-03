@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import excecoes.ServiceDacException;
 import model.ProblemaTroca;
@@ -15,7 +16,8 @@ import service.TrocaService;
 @FacesConverter(forClass = Troca.class)
 public class TrocaConverter implements Converter{
 	
-	private TrocaService service = new TrocaService();
+	@Inject
+	private TrocaService service;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {

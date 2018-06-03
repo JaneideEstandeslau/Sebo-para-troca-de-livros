@@ -1,14 +1,24 @@
 package service;
 
+import java.io.Serializable;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
-import model.Cliente;
 import model.Usuario;
 import persistencia.DAOUsuario;
 
-public class UsuarioService {
+@ApplicationScoped
+public class UsuarioService implements Serializable{
 
-	private DAOUsuario usuarioDAO = new DAOUsuario();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOUsuario usuarioDAO;
 
 	/**
 	 * Esse metodo adiciona um usuário do tipo administrado ao sistema.

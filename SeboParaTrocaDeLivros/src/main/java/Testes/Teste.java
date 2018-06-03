@@ -117,7 +117,7 @@ public class Teste {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			cli.close();
+//			cli.close();
 		}
 	}
 

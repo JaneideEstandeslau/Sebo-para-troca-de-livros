@@ -87,31 +87,6 @@ public class Troca implements Serializable {
 		this.clienteRecebendo = clienteRecebendo;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Troca other = (Troca) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 	public boolean isRecebida() {
 		return recebida;
 	}
@@ -127,4 +102,57 @@ public class Troca implements Serializable {
 	public void setCodRastreio(String codRastreio) {
 		this.codRastreio = codRastreio;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clienteEnviando == null) ? 0 : clienteEnviando.hashCode());
+		result = prime * result + ((clienteRecebendo == null) ? 0 : clienteRecebendo.hashCode());
+		result = prime * result + ((dataTroca == null) ? 0 : dataTroca.hashCode());
+		result = prime * result + ((livro == null) ? 0 : livro.hashCode());
+		result = prime * result + ((problema == null) ? 0 : problema.hashCode());
+		result = prime * result + (recebida ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Troca other = (Troca) obj;
+		if (clienteEnviando == null) {
+			if (other.clienteEnviando != null)
+				return false;
+		} else if (!clienteEnviando.equals(other.clienteEnviando))
+			return false;
+		if (clienteRecebendo == null) {
+			if (other.clienteRecebendo != null)
+				return false;
+		} else if (!clienteRecebendo.equals(other.clienteRecebendo))
+			return false;
+		if (dataTroca == null) {
+			if (other.dataTroca != null)
+				return false;
+		} else if (!dataTroca.equals(other.dataTroca))
+			return false;
+		if (livro == null) {
+			if (other.livro != null)
+				return false;
+		} else if (!livro.equals(other.livro))
+			return false;
+		if (problema == null) {
+			if (other.problema != null)
+				return false;
+		} else if (!problema.equals(other.problema))
+			return false;
+		if (recebida != other.recebida)
+			return false;
+		return true;
+	}
+	
 }

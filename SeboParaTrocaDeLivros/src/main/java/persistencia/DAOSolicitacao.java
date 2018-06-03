@@ -5,25 +5,25 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-
-import model.Cliente;
-import model.Livro;
 import model.Solicitacao;
 
 public class DAOSolicitacao extends DAOGenerico {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Solicitacao recuperarSolicitacaoComCliente(Long idSolicitacao) {
 		EntityManager em = getEntityManager();
 		Solicitacao resultado = null;
 		try {
 			TypedQuery<Solicitacao> query = (TypedQuery<Solicitacao>) em.createQuery(
-					"SELECT s FROM Solicitacao s LEFT JOIN FETCH s.clienteSolicitou c WHERE s.id = :idSolicitacao");
+					"SELECT s FROM Solicitacao s LEFT JOIN FETCH s.clienteSolicitou c LEFT JOIN FETCH s.livroSolicitado l WHERE s.id = :idSolicitacao");
 			query.setParameter("idSolicitacao", idSolicitacao);
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -38,8 +38,6 @@ public class DAOSolicitacao extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}

@@ -6,18 +6,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-
+import javax.inject.Inject;
 import excecoes.ServiceDacException;
 import model.Cliente;
-import model.Livro;
-import model.Usuario;
 import service.ClienteService;
-import service.LivroService;
 
 @FacesConverter(forClass = Cliente.class)
 public class UsuarioConverter implements Converter{
 
-	private ClienteService service = new ClienteService();
+	@Inject
+	private ClienteService service;
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value == null || value.trim().isEmpty()) {

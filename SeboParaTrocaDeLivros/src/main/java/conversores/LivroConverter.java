@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import excecoes.ServiceDacException;
 import model.Livro;
@@ -14,7 +15,8 @@ import service.LivroService;
 @FacesConverter(forClass = Livro.class)
 public class LivroConverter implements Converter {
 
-	private LivroService service = new LivroService();
+	@Inject
+	private LivroService service;
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value == null || value.trim().isEmpty()) {

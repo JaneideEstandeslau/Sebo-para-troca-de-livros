@@ -1,8 +1,10 @@
 package service;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import excecoes.RollbackException;
 import model.Cliente;
@@ -11,13 +13,23 @@ import model.Solicitacao;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
+import util.TransacionalCdi;
 
+@ApplicationScoped
 public class SolicitacaoService implements Serializable {
 
-	private DAOCliente clienteDAO = new DAOCliente();
-	private DAOSolicitacao soliDAO = new DAOSolicitacao();
-	private DAOLivro livroDAO = new DAOLivro();
-	private TrocaService trocaServe = new TrocaService();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOCliente clienteDAO;
+	@Inject
+	private DAOSolicitacao soliDAO;
+	@Inject
+	private DAOLivro livroDAO;
+	@Inject
+	private TrocaService trocaServe;
 
 	/**
 	 * Esse metodo solicito, faz com que um cliente solicite um livro já existente.
@@ -26,6 +38,7 @@ public class SolicitacaoService implements Serializable {
 	 * @param idLivro
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void solicitarLivro(Long idCliente, Long idLivro) throws RollbackException {
 
 		Livro usuarioPossue = livroDAO.recuperarLivroComPossuinte(idLivro);
@@ -96,15 +109,14 @@ public class SolicitacaoService implements Serializable {
 	 * @param idSolicitacao
 	 * @throws RollbackException
 	 */
-	
-	public void cancelarSolicitacaoEnviada(Long idSolicitacao) throws RollbackException {
+	@TransacionalCdi
+	public void cancelarSolicitacaoEnviada(Solicitacao soli, Cliente cliente, Livro livro) throws RollbackException {
 
 		try {
-			Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
-			Cliente cliente = clienteDAO.recuperarClienteComSolicitacoes(soli.getClienteSolicitou().getId());
 			cliente.setPonto(cliente.getPonto()+1);
-			this.verificarSolicitacaoAceita(idSolicitacao);
-			soliDAO.delete(new Solicitacao(), idSolicitacao);
+			cliente.getSolicitacoes().remove(livro);
+			soli.setAtiva(false);
+			soliDAO.update(soli);
 			clienteDAO.update(cliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
@@ -117,14 +129,14 @@ public class SolicitacaoService implements Serializable {
 	 * @param idSolicitacao
 	 * @throws RollbackException
 	 */
-	
-	public void cancelarSolicitacaoReecebida(Long idSolicitacao) throws RollbackException {
+	@TransacionalCdi
+	public void cancelarSolicitacaoReecebida(Solicitacao soli, Cliente cliente, Livro livro) throws RollbackException {
 
 		try {
-			Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);
-			Cliente cliente = clienteDAO.recuperarClienteComSolicitacoes(soli.getClienteSolicitou().getId());
 			cliente.setPonto(cliente.getPonto()+1);
-			soliDAO.delete(new Solicitacao(), idSolicitacao);
+			cliente.getSolicitacoes().remove(livro);
+			soli.setAtiva(false);
+			soliDAO.update(soli);
 			clienteDAO.update(cliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
@@ -139,6 +151,7 @@ public class SolicitacaoService implements Serializable {
 	 * @param idSolicitacao
 	 * @throws RollbackException 
 	 */
+	@TransacionalCdi
 	public void aceitarSolicitacao(Long idSolicitacao) throws RollbackException {
 
 		Solicitacao soli = soliDAO.recuperarSolicitacaoComCliente(idSolicitacao);

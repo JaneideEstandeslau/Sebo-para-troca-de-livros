@@ -1,29 +1,33 @@
 package service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
-
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
-import model.Endereco;
 import model.Livro;
-import model.Solicitacao;
-import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOSolicitacao;
+import util.TransacionalCdi;
 
+import java.util.List;
+
+@ApplicationScoped
 public class ClienteService implements Serializable {
 
-	private DAOCliente clienteDAO = new DAOCliente();
-	private DAOSolicitacao soliDAO = new DAOSolicitacao();
-	private DAOLivro livroDAO = new DAOLivro();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOCliente clienteDAO;
+	@Inject
+	private DAOSolicitacao soliDAO;
+	@Inject
+	private DAOLivro livroDAO;
 	
 	public void logarUsuario(String login, String senha) {
 		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
@@ -35,12 +39,12 @@ public class ClienteService implements Serializable {
 	 * @param cliente
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void salvarUsuario(Cliente cliente) throws RollbackException {
 		try {
 			validarLogin(cliente.getLogin());
 			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
-			cliente.setPonto(1);
 			Cliente c = clienteDAO.recuperarCliente((long) 1);
 			if (c == null) {
 				cliente.setPonto(1);
@@ -51,6 +55,24 @@ public class ClienteService implements Serializable {
 		}
 	}
 
+	
+	private void validarCPF(String cpf) throws RollbackException {
+		Cliente c = clienteDAO.validarCPFCadastro(cpf);
+
+		if (c != null) {
+			throw new RollbackException("Já existe um cliente com esse CPF");
+		}
+	}
+
+	private void validarLogin(String login) throws RollbackException {
+		Cliente c = clienteDAO.validarLoginCadastro(login);
+
+		if (c != null) {
+			throw new RollbackException("Já existe um cliente com esse Login");
+		}
+	}
+
+	@TransacionalCdi
 	public void removerUsuario(Long idCliente) throws RollbackException {
 		try {
 			Cliente cliente = (Cliente) clienteDAO.getByID(new Cliente(), idCliente);
@@ -67,9 +89,11 @@ public class ClienteService implements Serializable {
 	 * @param cliente
 	 * @throws RollbackException 
 	 */
+	@TransacionalCdi
 	public void modificarUsuario(Cliente cliente) throws RollbackException {
 		try {
-			validarCPF(cliente.getCpf());
+			validarCPFCadastrado(cliente.getCpf());
+			validarLoginCadastrado(cliente.getLogin());
 			Cliente c = (Cliente) clienteDAO.getByID(new Cliente(), cliente.getId());
 			c.setLogin(cliente.getLogin());
 			c.setNome(cliente.getNome());
@@ -90,6 +114,7 @@ public class ClienteService implements Serializable {
 	 * @param idLivro
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void adicionaLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
 
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
@@ -111,6 +136,7 @@ public class ClienteService implements Serializable {
 	 * @param idLivro
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void removerLivroPossuintes(Long idCliente, Long idLivro) throws RollbackException {
 		Livro livro = livroDAO.recuperarLivroComPossuinte(idLivro);
 		try {
@@ -132,7 +158,7 @@ public class ClienteService implements Serializable {
 	 * @param idLivro
 	 * @throws Exception
 	 */
-
+	@TransacionalCdi
 	public void adicionarLivroListaDesejos(Long idCliente, Long idLivro) throws Exception {
 
 		Livro livro = livroDAO.recuperarLivroComClienteDesejam(idLivro);
@@ -175,6 +201,7 @@ public class ClienteService implements Serializable {
 	 * @param idCliente
 	 * @param idLivro
 	 */
+	@TransacionalCdi
 	public void removerLivroListaDesejos(Long idCliente, Long idLivro) {
 
 		Livro livro = livroDAO.recuperarLivroComClienteDesejam(idLivro);
@@ -197,20 +224,20 @@ public class ClienteService implements Serializable {
 	 * @param cpf
 	 * @throws RollbackException
 	 */
-	public void validarCPF(String cpf) throws RollbackException {
+	public void validarCPFCadastrado(String cpf) throws RollbackException {
 
-		Cliente c = clienteDAO.validarCPF(cpf);
+		List<Cliente> c = clienteDAO.validarCPF(cpf);
 
-		if (c != null) {
+		if (c.size() > 1) {
 			throw new RollbackException("Já existe um cliente com esse CPF");
 		}
 	}
 
-	public void validarLogin(String login) throws RollbackException {
+	public void validarLoginCadastrado(String login) throws RollbackException {
 
-		Cliente c = clienteDAO.validarLogin(login);
+		List<Cliente> c = clienteDAO.validarLogin(login);
 
-		if (c != null) {
+		if (c.size() > 1) {
 			throw new RollbackException("Já existe um cliente com esse Login");
 		}
 	}

@@ -1,7 +1,6 @@
 package persistencia;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +9,11 @@ import javax.persistence.TypedQuery;
 import model.Livro;
 
 public class DAOLivro extends DAOGenerico {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Esse método faz com que um cliente solicite um livro caso ele ainda não tenha
@@ -41,8 +45,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -57,8 +59,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -73,8 +73,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -89,8 +87,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -104,8 +100,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -121,8 +115,6 @@ public class DAOLivro extends DAOGenerico {
 			return resultado;
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 	}
 	
@@ -150,8 +142,6 @@ public class DAOLivro extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}

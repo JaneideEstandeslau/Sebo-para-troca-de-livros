@@ -2,23 +2,24 @@ package Beans;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import model.Solicitacao;
 import service.SolicitacaoService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class SoliRecebidasBean extends AbstractBean{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private SolicitacaoService service = new SolicitacaoService();
+	@Inject
+	private SolicitacaoService service;
 	private Solicitacao soli;
 	
 	public List<Solicitacao> getSolicitacoes(){
@@ -51,8 +52,18 @@ public class SoliRecebidasBean extends AbstractBean{
 	
 	public String recusarSoli() {
 		try {
-			service.cancelarSolicitacaoReecebida(soli.getId());
+			service.cancelarSolicitacaoReecebida(soli, soli.getClienteSolicitou(), soli.getLivroSolicitado());
 			return "solicitacoesRecebidas.xhtml?faces-redirect=true";
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+	}
+	
+	public String cancelarSoli() {
+		try {
+			service.cancelarSolicitacaoEnviada(soli, soli.getClienteSolicitou(), soli.getLivroSolicitado());
+			return "soliEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;

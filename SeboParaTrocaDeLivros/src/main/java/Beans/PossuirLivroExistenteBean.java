@@ -1,8 +1,8 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
@@ -11,15 +11,17 @@ import service.ClienteService;
 import service.LivroService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class PossuirLivroExistenteBean extends AbstractBean{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4912670054671337785L;
-	private LivroService service = new LivroService();
-	private ClienteService clienteService = new ClienteService();
+	@Inject
+	private LivroService service;
+	@Inject
+	private ClienteService clienteService;
 	private Livro livro;
 	private String conservacao;
 

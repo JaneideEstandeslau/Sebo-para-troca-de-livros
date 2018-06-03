@@ -1,7 +1,9 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
@@ -11,15 +13,17 @@ import service.ClienteService;
 import service.EnderecoService;
 
 @ViewScoped
-@ManagedBean
+@Named
 public class CadastrarClienteBean extends AbstractBean{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ClienteService clienteService = new ClienteService();
-	private EnderecoService enderecoService = new EnderecoService();
+	@Inject
+	private ClienteService clienteService;
+	@Inject
+	private EnderecoService enderecoService;
 	private Cliente cliente;
 	private Endereco endereco;
 	

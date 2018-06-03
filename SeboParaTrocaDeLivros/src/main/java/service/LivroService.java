@@ -2,19 +2,26 @@ package service;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
-import model.Cliente;
 import model.Livro;
 import persistencia.DAOLivro;
-
+import util.TransacionalCdi;
+@ApplicationScoped
 public class LivroService implements Serializable{
 	
-	private DAOLivro livroDAO = new DAOLivro();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private DAOLivro livroDAO;
 	
+	@TransacionalCdi
 	public void salvarLivro(Livro livro) throws RollbackException {
 		try {
 			validarIsbn(livro.getIsbn());
@@ -24,6 +31,7 @@ public class LivroService implements Serializable{
 		}
 	}
 	
+	@TransacionalCdi
 	public void modificarLivro(Livro livro) throws RollbackException {
 		
 		try {
@@ -87,6 +95,7 @@ public class LivroService implements Serializable{
 		}
 	}
 	
+	@TransacionalCdi
 	public void update(Livro livro) throws RollbackException {
 		try {
 			livroDAO.update(livro);

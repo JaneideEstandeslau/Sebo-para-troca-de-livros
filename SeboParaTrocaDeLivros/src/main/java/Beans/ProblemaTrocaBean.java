@@ -2,8 +2,10 @@ package Beans;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import excecoes.RollbackException;
 import model.ProblemaTroca;
 import model.Troca;
@@ -11,7 +13,7 @@ import service.ProblemaTrocaService;
 import service.TrocaService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class ProblemaTrocaBean extends AbstractBean {
 
 	/**
@@ -20,8 +22,10 @@ public class ProblemaTrocaBean extends AbstractBean {
 	private static final long serialVersionUID = 1L;
 	private ProblemaTroca problema;
 	private Troca troca;
-	private ProblemaTrocaService service = new ProblemaTrocaService();
-	private TrocaService trocaService = new TrocaService();
+	@Inject
+	private ProblemaTrocaService service;
+	@Inject
+	private TrocaService trocaService;
 	
 	public void init() {
 		problema = new ProblemaTroca();

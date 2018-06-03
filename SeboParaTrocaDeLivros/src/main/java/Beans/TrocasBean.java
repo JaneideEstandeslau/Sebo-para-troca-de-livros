@@ -2,23 +2,27 @@ package Beans;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import excecoes.RollbackException;
 import model.Troca;
 import service.ClienteService;
 import service.TrocaService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class TrocasBean extends AbstractBean{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private TrocaService trocaService = new TrocaService();
-	private ClienteService clienteService = new ClienteService();
+	@Inject
+	private TrocaService trocaService;
+	@Inject
+	private ClienteService clienteService;
 	private Troca troca;
 	private String codRastreio;
 	
@@ -64,7 +68,7 @@ public class TrocasBean extends AbstractBean{
 	
 	public String calcelarTroca() {
 		try {
-			trocaService.cancelarTroca(troca.getId(), troca.getClienteEnviando().getId(), troca.getClienteRecebendo().getId());
+			trocaService.cancelarTroca(troca, troca.getLivro(),troca.getClienteEnviando(), troca.getClienteRecebendo());
 			clienteService.adicionaLivroPossuintes(troca.getClienteEnviando().getId(), troca.getLivro().getId());
 			return "trocasEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {

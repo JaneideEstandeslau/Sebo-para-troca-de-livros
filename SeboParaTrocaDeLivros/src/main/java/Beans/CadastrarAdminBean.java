@@ -1,21 +1,24 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import model.Usuario;
 import service.UsuarioService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class CadastrarAdminBean extends AbstractBean{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private UsuarioService service = new UsuarioService();
+	@Inject
+	private UsuarioService service;
 	private Usuario usuario;
 	
 	public void visualizarPerfil() {

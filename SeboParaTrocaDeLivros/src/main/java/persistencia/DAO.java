@@ -2,26 +2,23 @@ package persistencia;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+@ApplicationScoped
 public class DAO implements Serializable {
 
-	static EntityManagerFactory emf;
 
-	static {
-		emf = Persistence.createEntityManagerFactory("trocalivros");
-	}
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private EntityManager em;
+	
 	protected EntityManager getEntityManager() {
-		return emf.createEntityManager();
-	}
-
-	public void close() {
-		if (emf.isOpen()) {
-			emf.close();
-		}
+		return em;
 	}
 
 }

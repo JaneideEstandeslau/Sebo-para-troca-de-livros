@@ -1,10 +1,11 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 @ViewScoped
-@ManagedBean
+@Named
 public class LogarClienteBean extends AbstractBean{
 	
 	/**

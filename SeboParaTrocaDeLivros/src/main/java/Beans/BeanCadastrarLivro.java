@@ -1,24 +1,24 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
-import excecoes.RollbackException;
-import excecoes.ServiceDacException;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import model.Livro;
 import service.ClienteService;
 import service.LivroService;
 
 @ViewScoped
-@ManagedBean
+@Named
 public class BeanCadastrarLivro extends AbstractBean {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2207143158846475463L;
-	private LivroService service = new LivroService();
-	private ClienteService clienteService = new ClienteService();
+	@Inject
+	private LivroService service;
+	@Inject
+	private ClienteService clienteService;
 	private Livro livro;
 
 	public void init() {

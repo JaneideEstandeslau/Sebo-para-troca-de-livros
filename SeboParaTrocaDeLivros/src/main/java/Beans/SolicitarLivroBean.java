@@ -1,22 +1,24 @@
 package Beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import model.Livro;
 import service.SolicitacaoService;
 
 @SessionScoped
-@ManagedBean
+@Named
 public class SolicitarLivroBean extends AbstractBean{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private SolicitacaoService service = new SolicitacaoService();
+	@Inject
+	private SolicitacaoService service;
 	private Livro livro;
 	
 	public void solicitar() {

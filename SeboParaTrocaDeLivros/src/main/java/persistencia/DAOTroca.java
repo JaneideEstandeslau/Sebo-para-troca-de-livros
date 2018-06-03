@@ -5,13 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-
-import model.Cliente;
-import model.Solicitacao;
 import model.Troca;
 
 public class DAOTroca extends DAOGenerico{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Esse método recupera uma determinada troca do sistema com seus repectivos problemas.
 	 * @param idTroca
@@ -27,10 +29,24 @@ public class DAOTroca extends DAOGenerico{
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
+	}
+	
+	public Troca recTroca(Long idTroca) {
+		EntityManager em = getEntityManager();
+		Troca resultado = null;
+		try {
+			TypedQuery<Troca> itemQuery = em.createQuery(
+					"SELECT t FROM Troca t LEFT JOIN FETCH t.clienteEnviando c1 "+""
+	+ "LEFT JOIN FETCH t.clienteRecebendo c2 WHERE 1 = 1 AND t.recebida = false AND t.id = :idTroca",
+					Troca.class);
+			itemQuery.setParameter("idTroca", idTroca);
+			resultado = itemQuery.getSingleResult();
+			return resultado;
+		} catch (PersistenceException pe) {
+			return null;
+		}
 	}
 	
 	public Troca recuperarTroca(Long idTroca) {
@@ -43,8 +59,6 @@ public class DAOTroca extends DAOGenerico{
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}
@@ -62,8 +76,6 @@ public class DAOTroca extends DAOGenerico{
 			return resultado;
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 	}
 	
@@ -80,8 +92,6 @@ public class DAOTroca extends DAOGenerico{
 			return resultado;
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 	}
 

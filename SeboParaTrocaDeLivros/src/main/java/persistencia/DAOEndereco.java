@@ -5,10 +5,14 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import model.Endereco;
-import model.Livro;
 
 public class DAOEndereco extends DAOGenerico{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Endereco recuperarEndereco(Long idEndereco) {
 		EntityManager em = getEntityManager();
 		Endereco resultado = null;
@@ -19,8 +23,6 @@ public class DAOEndereco extends DAOGenerico{
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
 		}
 		return resultado;
 	}

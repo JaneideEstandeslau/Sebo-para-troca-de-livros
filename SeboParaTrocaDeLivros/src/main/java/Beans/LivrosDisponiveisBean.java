@@ -1,24 +1,25 @@
 package Beans;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import excecoes.RollbackException;
 import model.Livro;
 import service.ClienteService;
 
-@ViewScoped
-@ManagedBean
+@SessionScoped
+@Named
 public class LivrosDisponiveisBean extends AbstractBean {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ClienteService clienteService = new ClienteService();
+	@Inject
+	private ClienteService clienteService;
 	private Livro livro;
 
 	public Collection<Livro> getLivros() {

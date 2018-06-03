@@ -8,6 +8,11 @@ import model.Cliente;
 
 public class DAOUsuario extends DAOGenerico {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Cliente validarCPF(String cpf) {
 
 		EntityManager em = getEntityManager();
@@ -19,9 +24,7 @@ public class DAOUsuario extends DAOGenerico {
 			resultado = query.getSingleResult();
 		} catch (PersistenceException pe) {
 			return null;
-		} finally {
-			em.close();
-		}
+		} 
 		return resultado;
 
 	}
