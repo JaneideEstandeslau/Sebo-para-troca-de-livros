@@ -40,7 +40,7 @@ public class BeanCadastrarLivro extends AbstractBean {
 			} else {
 
 				service.salvarLivro(livro);
-				clienteService.adicionaLivroPossuintes((long) 1, livro.getId());
+				clienteService.adicionaLivroPossuintes((long) 2, livro.getId());
 			}
 		} catch (Exception e) {
 			reportarMensagemDeErro(e.getMessage());

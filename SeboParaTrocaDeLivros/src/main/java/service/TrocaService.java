@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import excecoes.RollbackException;
+import excecoes.ServiceDacException;
 import model.Cliente;
 import model.Livro;
 import model.Troca;
@@ -19,7 +20,6 @@ public class TrocaService implements Serializable {
 	private DAOCliente clienteDAO = new DAOCliente();
 	private DAOLivro livroDAO = new DAOLivro();
 	private DAOTroca trocaDAO = new DAOTroca();
-	private ClienteService service = new ClienteService();
 
 	/**
 	 * Esse método deixa registrado as trocas que o cliente fez.
@@ -86,7 +86,6 @@ public class TrocaService implements Serializable {
 			clienteDAO.update(clienteEnviando);
 			clienteDAO.update(clienteRecebendo);
 			
-			service.adicionaLivroPossuintes(idEnviando, troca.getLivro().getId());
 			trocaDAO.delete(new Troca(), idTroca);
 			
 		} catch (Exception e) {
@@ -109,6 +108,14 @@ public class TrocaService implements Serializable {
 			return trocaDAO.recuperarTrocasEnviadas(idCliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
+		}
+	}
+
+	public Object getByID(Long id) throws ServiceDacException {
+		try {
+			return trocaDAO.getByID(new Troca(), id);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
 		}
 	}
 }

@@ -65,8 +65,9 @@ public class ClienteService implements Serializable {
 	 * Esse metodo modifica as informações pessoais do usuário.
 	 * 
 	 * @param cliente
+	 * @throws RollbackException 
 	 */
-	public void modificarUsuario(Cliente cliente) {
+	public void modificarUsuario(Cliente cliente) throws RollbackException {
 		try {
 			validarCPF(cliente.getCpf());
 			Cliente c = (Cliente) clienteDAO.getByID(new Cliente(), cliente.getId());
@@ -76,8 +77,7 @@ public class ClienteService implements Serializable {
 			c.setEmail(cliente.getEmail());
 			clienteDAO.update(c);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RollbackException(e.getMessage());
 		}
 
 	}

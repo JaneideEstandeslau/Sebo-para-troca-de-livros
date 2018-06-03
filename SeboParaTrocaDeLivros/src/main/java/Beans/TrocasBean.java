@@ -3,13 +3,13 @@ package Beans;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
+import javax.faces.bean.SessionScoped;
 import excecoes.RollbackException;
 import model.Troca;
+import service.ClienteService;
 import service.TrocaService;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class TrocasBean extends AbstractBean{
 
@@ -18,12 +18,13 @@ public class TrocasBean extends AbstractBean{
 	 */
 	private static final long serialVersionUID = 1L;
 	private TrocaService trocaService = new TrocaService();
+	private ClienteService clienteService = new ClienteService();
 	private Troca troca;
 	private String codRastreio;
 	
 	public List<Troca> getTrocasRebidas(){
 		try {
-			return trocaService.getTrocasRebidas((long) 2);
+			return trocaService.getTrocasRebidas((long) 1);
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -32,7 +33,7 @@ public class TrocasBean extends AbstractBean{
 	
 	public List<Troca> getTrocasEnviadas(){
 		try {
-			return trocaService.getTrocasEnviadas((long) 1);
+			return trocaService.getTrocasEnviadas((long) 2);
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -64,6 +65,7 @@ public class TrocasBean extends AbstractBean{
 	public String calcelarTroca() {
 		try {
 			trocaService.cancelarTroca(troca.getId(), troca.getClienteEnviando().getId(), troca.getClienteRecebendo().getId());
+			clienteService.adicionaLivroPossuintes(troca.getClienteEnviando().getId(), troca.getLivro().getId());
 			return "trocasEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
@@ -93,5 +95,13 @@ public class TrocasBean extends AbstractBean{
 
 	public void setCodRastreio(String codRastreio) {
 		this.codRastreio = codRastreio;
+	}
+
+	public ClienteService getClienteService() {
+		return clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
 	}
 }

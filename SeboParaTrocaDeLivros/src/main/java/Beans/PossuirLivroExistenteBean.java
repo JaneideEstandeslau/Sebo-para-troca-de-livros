@@ -1,6 +1,7 @@
 package Beans;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import excecoes.RollbackException;
@@ -9,7 +10,7 @@ import model.Livro;
 import service.ClienteService;
 import service.LivroService;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class PossuirLivroExistenteBean extends AbstractBean{
 	
@@ -46,8 +47,9 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 		try {
 			livro.setConservacao(conservacao);
 			service.update(livro);
-			clienteService.adicionaLivroPossuintes((long) 1, livro.getId());
+			clienteService.adicionaLivroPossuintes((long) 2, livro.getId());
 			reportarMensagemDeSucesso("Você possui o livro " + livro.getTitulo());
+			conservacao = null;
 			return "pesquisarLivroLogado.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());

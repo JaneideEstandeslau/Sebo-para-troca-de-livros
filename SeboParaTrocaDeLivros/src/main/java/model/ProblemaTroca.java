@@ -74,6 +74,4 @@ public class ProblemaTroca implements Serializable{
 	public void setResolvido(StatusProblema resolvido) {
 		this.resolvido = resolvido;
 	}
-
-	
 }
