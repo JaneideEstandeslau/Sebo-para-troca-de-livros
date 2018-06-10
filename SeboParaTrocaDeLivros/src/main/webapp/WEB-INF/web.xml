@@ -16,6 +16,9 @@
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
 	<context-param>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
@@ -36,10 +39,132 @@
 		<param-value>true</param-value>
 	</context-param>
 	<error-page>
+		<error-code>403</error-code>
+		<location>/400.xhtml</location>
+	</error-page>
+	<error-page>
 		<error-code>400</error-code>
 		<location>/400.xhtml</location>
 	</error-page>
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.xhtml</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/500.xhtml</location>
+	</error-page>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/sessionTimeout.xhtml</location>
+	</error-page>
+	<login-config>
+		<!-- NONE, BASIC, DIGEST, FORM, or CLIENT-CERT -->
+		<!-- Referência: https://docs.oracle.com/javaee/7/tutorial/security-webtier002.htm#JEETT01227 -->
+		<auth-method>FORM</auth-method>
+		<realm-name>bookechangeJdbcRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/logarUsuario.xhtml</form-login-page>
+			<form-error-page>/logarUsuario.xhtml?error=true</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-constraint>
+		<display-name>Páginas do administrador</display-name>
+		<web-resource-collection>
+			<web-resource-name>Área protegida do administrador</web-resource-name>
+			<description></description>
+			<url-pattern>/paginaDoAdmin.xhtml</url-pattern>
+			<url-pattern>/adminVisualizarClientes.xhtml</url-pattern>
+			<url-pattern>/cadastrarAdmin.xhtml</url-pattern>
+			<url-pattern>/recProblemaTroca.xhtml</url-pattern>
+			<url-pattern>/recProbResolvendo.xhtml</url-pattern>
+			<url-pattern>/perfilDoAdmin.xhtml</url-pattern>
+			<url-pattern>/editarPerfilAdmin.xhtml</url-pattern>
+			<url-pattern>/visualizarTroca.xhtml</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>CONNECT</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>ADMIN</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Páginas do Cliente</display-name>
+		<web-resource-collection>
+			<web-resource-name>Área protegida do cliente</web-resource-name>
+			<description></description>
+			<url-pattern>/nossaLojaUsuarioLogado.xhtml</url-pattern>
+			<url-pattern>/soliEnviadas.xhtml</url-pattern>
+			<url-pattern>/solicitacoesRecebidas.xhtml</url-pattern>
+			<url-pattern>/trocasEnviadas.xhtml</url-pattern>
+			<url-pattern>/trocasRecebidas.xhtml</url-pattern>
+			<url-pattern>/livrosDisponiveis.xhtml</url-pattern>
+			<url-pattern>/cadastrarLivro.xhtml</url-pattern>
+			<url-pattern>/problemaTrocaEnviada.xhtml</url-pattern>
+			<url-pattern>/problemaTrocaRecebida.xhtml</url-pattern>
+			<url-pattern>/perfilDoCliente.xhtml</url-pattern>
+			<url-pattern>/editarPerfil.xhtml</url-pattern>
+			<url-pattern>/informarDescrocao.xhtml</url-pattern>
+			<url-pattern>/visualizarLivro.xhtml</url-pattern>
+			<url-pattern>/informarDescrocao.xhtml</url-pattern>
+			<url-pattern>/pesquisarLivroLogado.xhtml</url-pattern>
+			<url-pattern>/informarDescrocao.xhtml</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>CONNECT</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>CLIENTE</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>Páginas do administrador</display-name>
+		<web-resource-collection>
+			<web-resource-name>Área protegida do administrador e do cliente</web-resource-name>
+			<description></description>
+			<url-pattern>/paginaDoUsuario.xhtml</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>CONNECT</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>ADMIN</role-name>
+			<role-name>CLIENTE</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<!-- Security roles used by this web application -->
+	<security-role>
+		<role-name>ADMIN</role-name>
+	</security-role>
+	<security-role>
+		<role-name>CLIENTE</role-name>
+	</security-role>
 </web-app>

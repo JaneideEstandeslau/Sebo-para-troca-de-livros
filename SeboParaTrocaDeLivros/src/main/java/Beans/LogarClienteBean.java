@@ -1,8 +1,14 @@
 package Beans;
 
 
+import java.security.Principal;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import model.Usuario;
 
 @ViewScoped
 @Named
@@ -16,6 +22,24 @@ public class LogarClienteBean extends AbstractBean{
 	private String senha;
 	private boolean logar;
 	private boolean editarSenha;
+	
+	
+//	public Usuario getUsuarioLogado(){
+//		dao = new UsuarioDAO();
+//		FacesContext facesContext = FacesContext.getCurrentInstance();
+//		ExternalContext externalContext = facesContext.getExternalContext();
+//		Principal principal = externalContext.getUserPrincipal();
+//		Usuario logado = null;
+//		if (principal != null) {
+//			try{
+//				logado = dao.getByLogin(principal.getName());
+//				return logado;
+//			}catch(Exception e){
+//				e.printStackTrace();
+//			}
+//		}
+//		return logado;
+//	}
 	
 	
 	public void init() {

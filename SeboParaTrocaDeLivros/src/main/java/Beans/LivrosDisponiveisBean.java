@@ -24,7 +24,7 @@ public class LivrosDisponiveisBean extends AbstractBean {
 
 	public Collection<Livro> getLivros() {
 		try {
-			return clienteService.recuperarClienteComLivrosPossue((long) 1);
+			return clienteService.recuperarClienteComLivrosPossue(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -33,7 +33,7 @@ public class LivrosDisponiveisBean extends AbstractBean {
 
 	public String remover() {
 		try {
-			clienteService.removerLivroPossuintes((long) 1, livro.getId());
+			clienteService.removerLivroPossuintes(getUsuarioLogado(), livro.getId());
 			reportarMensagemDeSucesso("Livro '" + livro.getTitulo() + "' removido");
 			return "livrosDisponiveis.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {

@@ -7,18 +7,24 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-<ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
+<ui:composition template="/WEB-INF/templates/layoutSemLog.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{sessionTimeout.init()}" />
+	</f:metadata>
 
 	<ui:define name="title">
 		Error
 	</ui:define>
+	
+	<ui:define name="header"></ui:define>
 
 	<ui:define name="define">
-	<p:link value="Error! Go to main page..." outcome="index.xhtml" />
-	
-	<br/>
-	
-	<h:outputText value="Error message: #{requestScope['javax.servlet.error.message']}" />
+
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true" closable="true" severity="error" />
+
+		<p:link value="Login..." outcome="/index.xhtml" />
+		
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml.xhtml">
+
+	<ui:define name="layoutLogado">
+	
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<p:fieldset legend="Usuários Cadastrados" style="margin-top:10px">
+			<h:form id="idFormDataTableUsuariosCadastrados">
+				<p:dataTable id="dataTable" border="1" var="cli"
+					value="#{visualizarClientesBean.getClientes()}"
+					emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
+					paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+	
+					<p:column headerText="Nome">
+						<h:outputText value="#{cli.nome}" />
+					</p:column>
+					<p:column headerText="CPF">
+						<h:outputText value="#{cli.cpf}" />
+					</p:column>
+					<p:column headerText="Trocas com Problemas">
+						<h:outputText value="#{cli.numTrocasProblema}" />
+					</p:column>
+	
+					<p:column headerText="Operações">
+	
+						<p:commandButton process="@this" id="adicionar" value="Adicionar"
+							action="#{visualizarClientesBean.adicionarPontoNegativo()}">
+						
+							<f:setPropertyActionListener value="#{cli}"
+								target="#{visualizarClientesBean.cli}" />
+							
+							<p:confirm header="Confirmação!"
+								message="Tem certeza que deseja adicionar mais um troca com problema a esse cliente '#{cli.nome}'?"
+								icon="ui-icon-alert" />
+								
+							<p:tooltip id="toolTipAdicionar" for="adicionar" value="Adicionar troca com problema ao cliente"
+								position="top" />
+						</p:commandButton>
+						
+						<p:commandButton process="@this" id="remover" value="Dasativar"
+							action="#{visualizarClientesBean.desativarCliente()}">
+							
+							<f:setPropertyActionListener value="#{cli}"
+								target="#{visualizarClientesBean.cli}" />
+								
+							<p:confirm header="Confirmação!"
+								message="Tem certeza que deseja DESATIVAR a conta do usuario '#{cli.nome}'?"
+								icon="ui-icon-alert" />
+							<p:tooltip id="toolTipDesativar" for="remover"
+								value="Desativar temporariamente a conta do cliente" position="top" />
+						</p:commandButton>
+						
+						<p:commandButton process="@this" id="ativar" value="Ativar"
+							action="#{visualizarClientesBean.ativarCliente()}">
+							
+							<f:setPropertyActionListener value="#{cli}"
+								target="#{visualizarClientesBean.cli}" />
+								
+							<p:confirm header="Confirmação!"
+								message="Tem certeza que deseja desativar a ATIVAR do usuario '#{cli.nome}'?"
+								icon="ui-icon-alert" />
+							<p:tooltip id="toolTipAtivar" for="ativar"
+								value="Desativar temporariamente a conta do cliente" position="top" />
+						</p:commandButton>
+	
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+		<p:confirmDialog id="confirmDialog" global="true" showEffect="fade"
+			hideEffect="fade">
+			<p:commandButton id="confirmYes" value="Sim"
+				styleClass="ui-confirmdialog-yes" icon="fa fa-remove" />
+			<p:commandButton id="confirmNo" value="Não"
+				styleClass="ui-confirmdialog-no" icon="fa fa-ban" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

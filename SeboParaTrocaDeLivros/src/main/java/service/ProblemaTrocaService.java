@@ -1,6 +1,7 @@
 package service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
 import model.ProblemaTroca;
+import model.StatusProblema;
 import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOProblemaTroca;
@@ -37,6 +39,7 @@ public class ProblemaTrocaService implements Serializable {
 
 		problema.setCliente(cliente);
 		problema.setTroca(troca);
+		problema.setResolvido(StatusProblema.PENDENTE);
 
 		cliente.getProblematroca().add(problema);
 		troca.setProblema(problema);
@@ -50,12 +53,13 @@ public class ProblemaTrocaService implements Serializable {
 		}
 
 	}
+
 	@TransacionalCdi
 	public void modificarProblema(ProblemaTroca problema) throws RollbackException {
 		try {
-			ProblemaTroca p = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), problema.getId());
-			p.setResolvido(problema.getResolvido());
-			problemaDAO.update(p);
+//			ProblemaTroca p = (ProblemaTroca) problemaDAO.getByID(new ProblemaTroca(), problema.getId());
+//			p.setResolvido(problema.getResolvido());
+			problemaDAO.update(problema);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
@@ -82,6 +86,22 @@ public class ProblemaTrocaService implements Serializable {
 	public Object getByID(Long id) throws ServiceDacException {
 		try {
 			return problemaDAO.getByID(new ProblemaTroca(), id);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+
+	public List<ProblemaTroca> getProblemasPendentes() throws ServiceDacException {
+		try {
+			return problemaDAO.recuperarProbTroca(StatusProblema.PENDENTE);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	public List<ProblemaTroca> getProblemasResolvendo() throws ServiceDacException {
+		try {
+			return problemaDAO.recuperarProbTroca(StatusProblema.RESOLVENDO);
 		} catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
 		}

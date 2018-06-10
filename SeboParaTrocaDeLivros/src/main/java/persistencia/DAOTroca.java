@@ -94,5 +94,4 @@ public class DAOTroca extends DAOGenerico{
 			return null;
 		}
 	}
-
 }

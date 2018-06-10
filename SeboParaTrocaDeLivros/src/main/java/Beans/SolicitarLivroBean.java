@@ -23,7 +23,7 @@ public class SolicitarLivroBean extends AbstractBean{
 	
 	public void solicitar() {
 		try {
-			service.solicitarLivro((long) 1, livro.getId());
+			service.solicitarLivro(getUsuarioLogado(), livro.getId());
 			reportarMensagemDeSucesso("Você solicitou o livro " + livro.getTitulo());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());

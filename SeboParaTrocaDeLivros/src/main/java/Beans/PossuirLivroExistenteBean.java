@@ -49,7 +49,7 @@ public class PossuirLivroExistenteBean extends AbstractBean{
 		try {
 			livro.setConservacao(conservacao);
 			service.update(livro);
-			clienteService.adicionaLivroPossuintes((long) 2, livro.getId());
+			clienteService.adicionaLivroPossuintes(getUsuarioLogado(), livro.getId());
 			reportarMensagemDeSucesso("Você possui o livro " + livro.getTitulo());
 			conservacao = null;
 			return "pesquisarLivroLogado.xhtml?faces-redirect=true";

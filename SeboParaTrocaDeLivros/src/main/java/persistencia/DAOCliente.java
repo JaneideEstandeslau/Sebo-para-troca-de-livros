@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import model.Cliente;
+import model.Usuario;
 
 public class DAOCliente extends DAOGenerico {
 
@@ -51,6 +52,47 @@ public class DAOCliente extends DAOGenerico {
 					.createQuery("SELECT c FROM Cliente c WHERE c.id = :idCliente");
 			query.setParameter("idCliente", idCliente);
 			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		}
+		return resultado;
+	}
+	
+	public Cliente recuperarClienteLogin(String login) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em
+					.createQuery("SELECT c FROM Cliente c WHERE c.login = :login");
+			query.setParameter("login", login);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		}
+		return resultado;
+	}
+	
+	public Usuario recuperarUsuarioLogin(String login) {
+		EntityManager em = getEntityManager();
+		Usuario resultado = null;
+		try {
+			TypedQuery<Usuario> query = (TypedQuery<Usuario>) em
+					.createQuery("SELECT c FROM Usuario c WHERE c.login = :login");
+			query.setParameter("login", login);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		}
+		return resultado;
+	}
+	
+	public List<Cliente> getClientes() {
+		EntityManager em = getEntityManager();
+		List<Cliente> resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em
+					.createQuery("SELECT c FROM Cliente c");
+			resultado = query.getResultList();
 		} catch (PersistenceException pe) {
 			return null;
 		}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+
+	<ui:define name="layoutLogado">
+
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<h:form id="visualizar">
+			<p:fieldset legend="Problemas Pendentes" style="margin-top:10px">
+			<p:dataTable id="dataTable" border="1" var="prob"
+				value="#{problemaTrocaBean.getProblemas()}"
+				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
+				paginatorAlwaysVisible="false"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+
+				<p:column headerText="Enviado de">
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{prob.cliente.nome}" />
+					<br/>
+					<h:outputText value="CPF:" />
+					<h:outputText value="#{prob.cliente.cpf}" />
+				</p:column>
+				<p:column headerText="Troca com Problema">
+					<h:outputText value="#{prob.troca.id}" />
+				</p:column>
+
+				<p:column headerText="Operações">
+
+					<p:commandButton id="detalhes" value="Ver Detalhes"
+						action="#{problemaTrocaBean.visuzaliarProb()}">
+						
+						<f:setPropertyActionListener value="#{prob.troca}" 
+						target="#{problemaTrocaBean.troca}" />
+						
+						<f:setPropertyActionListener value="#{prob}"
+							target="#{problemaTrocaBean.problema}" />
+							
+						<p:tooltip id="toolTipDeleteUser" for="detalhes"
+							value="Ver detalhes sobre o problema" position="top" />
+					</p:commandButton>
+
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

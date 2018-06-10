@@ -2,7 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +24,8 @@ public class Usuario implements Serializable{
 	private Long id;
 	private String cpf;
 	private String nome;
+	@Column(name = "user_group")
+	@Enumerated(EnumType.STRING)
 	private Group tipo;
 	private String login;
 	private String senha;

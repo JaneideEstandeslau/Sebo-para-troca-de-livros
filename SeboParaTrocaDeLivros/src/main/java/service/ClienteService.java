@@ -1,12 +1,17 @@
 package service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Collection;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
+import model.Group;
 import model.Livro;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
@@ -28,7 +33,7 @@ public class ClienteService implements Serializable {
 	private DAOSolicitacao soliDAO;
 	@Inject
 	private DAOLivro livroDAO;
-	
+
 	public void logarUsuario(String login, String senha) {
 		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
 	}
@@ -45,17 +50,18 @@ public class ClienteService implements Serializable {
 			validarLogin(cliente.getLogin());
 			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
+			cliente.setTipo(Group.CLIENTE);
 			Cliente c = clienteDAO.recuperarCliente((long) 1);
 			if (c == null) {
 				cliente.setPonto(1);
 			}
+			calcularHashDaSenha(cliente);
 			clienteDAO.save(cliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
 	}
 
-	
 	private void validarCPF(String cpf) throws RollbackException {
 		Cliente c = clienteDAO.validarCPFCadastro(cpf);
 
@@ -87,7 +93,7 @@ public class ClienteService implements Serializable {
 	 * Esse metodo modifica as informações pessoais do usuário.
 	 * 
 	 * @param cliente
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	@TransacionalCdi
 	public void modificarUsuario(Cliente cliente) throws RollbackException {
@@ -280,5 +286,53 @@ public class ClienteService implements Serializable {
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
+	}
+
+	public List<Cliente> getClientes() throws RollbackException {
+		try {
+			return clienteDAO.getClientes();
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+	
+	@TransacionalCdi
+	public void update(Cliente cliente) throws RollbackException {
+		try {
+			clienteDAO.update(cliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Método que calcula o hash de uma dada senha usando o algoritmo SHA-256.
+	 * 
+	 * @param password
+	 *            senha a ser calculada o hash
+	 * @return hash da senha
+	 * @throws ServiceDacException
+	 *             lançada caso ocorra algum erro durante o processo
+	 */
+	private String hash(String password) throws ServiceDacException {
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes("UTF-8"));
+			byte[] digest = md.digest();
+			String output = Base64.getEncoder().encodeToString(digest);
+			return output;
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			throw new ServiceDacException("Could not calculate hash!", e);
+		}
+	}
+	
+	private String calcularHashDaSenha(Cliente user) throws ServiceDacException {
+		user.setSenha(hash(user.getSenha()));
+		return user.getSenha();
+	}
+	
+	public static void main(String[] args) throws Exception {
+		System.out.println(new ClienteService().hash("123456"));
 	}
 }

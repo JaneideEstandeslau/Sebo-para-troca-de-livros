@@ -22,8 +22,36 @@ public class LogadoPesquisarLivroBean extends AbstractBean{
 	private List<Livro> livros;
 	private String nomeDoLivro;
 	
+	/**
+	 * Método verifica e retorna qual tipo (função) de usuário
+	 * está online.
+	 * 
+	 * @return
+	 */
+	public Integer getTiporUserLog(){
+		
+		switch (tipoUser()) {
+		case ADMIN:
+			return 1;
+		case CLIENTE:
+			return 2;
+		default:
+			return 0;
+		}
+	}
+	
 	public String pesquisa(){
 		return  "pesquisarLivroLogado.xhtml?faces-redirect=true";
+	}
+	
+	public String verPerfil(Livro livro) {
+		if(livro.getUsuarioPossue() != null) {
+			return  "perfilDoCliente.xhtml?faces-redirect=true";
+		}
+		else {
+			reportarMensagemDeErro("Nem um usuário possui esse livro");
+			return null;
+		}
 	}
 	
 	public String teste() {

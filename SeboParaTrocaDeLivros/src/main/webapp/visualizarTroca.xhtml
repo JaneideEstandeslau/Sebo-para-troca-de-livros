@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutAdministrador.xhtml">
+
+	<f:metadata>
+		<f:viewAction action="#{problemaTrocaBean.recTroca()}" />
+	</f:metadata>
+
+	<ui:define name="layoutAdmin">
+
+		<p:growl id="idMessages" showDetail="true" autoUpdate="true"
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
+			closable="true" severity="error" />
+
+		<h:form id="visualizar">
+			<p:fieldset legend="Cliente que esta enviando o livro"
+				style="margin-bottom:20px">
+				
+				<p:outputLabel value="CPF:" for="id" />
+					<p:outputLabel id="id"
+						value="#{problemaTrocaBean.troca.clienteEnviando.cpf}"
+						label="Identificador" style="width:350px"></p:outputLabel>
+						
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="Nome:" for="isbnn" />
+					<p:outputLabel id="isbnn"
+						value="#{problemaTrocaBean.troca.clienteEnviando.nome}"
+						label="Nome" style="width:350px"></p:outputLabel>
+
+					<p:outputLabel value="CPF:" for="cpf" />
+					<p:outputLabel id="cpf"
+						value="#{problemaTrocaBean.troca.clienteEnviando.cpf}" label="CPF"
+						style="width:350px"></p:outputLabel>
+
+					<p:outputLabel value="Email:" for="email" />
+					<p:outputLabel id="email"
+						value="#{problemaTrocaBean.troca.clienteEnviando.email}"
+						label="Email" style="width:350px"></p:outputLabel>
+						
+					<p:outputLabel value="Numero de problemas:" for="numProb" />
+					<p:outputLabel id="numProb"
+						value="#{problemaTrocaBean.troca.clienteEnviando.numTrocasProblema}"
+						label="Numero de problemas nas Trocas" style="width:350px"></p:outputLabel>
+
+				</h:panelGrid>
+			</p:fieldset>
+			<p:fieldset legend="Cliente que esta recebendo o livro"
+				style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+				
+					<p:outputLabel value="CPF:" for="id1" />
+					<p:outputLabel id="id1"
+						value="#{problemaTrocaBean.troca.clienteRecebendo.cpf}"
+						label="Identificador" style="width:350px"></p:outputLabel>
+						
+					<p:outputLabel value="Nome:" for="isbn1" />
+					<p:outputLabel id="isbn1"
+						value="#{problemaTrocaBean.troca.clienteRecebendo.nome}"
+						label="Nome" style="width:350px"></p:outputLabel>
+
+					<p:outputLabel value="CPF:" for="cpf1" />
+					<p:outputLabel id="cpf1"
+						value="#{problemaTrocaBean.troca.clienteRecebendo.cpf}"
+						label="CPF" style="width:350px"></p:outputLabel>
+
+					<p:outputLabel value="Email:" for="email1" />
+					<p:outputLabel id="email1"
+						value="#{problemaTrocaBean.troca.clienteRecebendo.email}"
+						label="Email" style="width:350px"></p:outputLabel>
+						
+					<p:outputLabel value="Numero de problemas nas Trocas:" for="numProb1" />
+					<p:outputLabel id="numProb1"
+						value="#{problemaTrocaBean.troca.clienteRecebendo.numTrocasProblema}"
+						label="Numero de problemas nas Trocas" style="width:350px"></p:outputLabel>
+						
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Troca" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="Livro:" for="livro" />
+					<p:outputLabel id="livro"
+						value="#{problemaTrocaBean.troca.livro.titulo}" label="Livro"
+						style="width:350px"></p:outputLabel>
+
+					<p:outputLabel value="ISBN:" for="isbn" />
+					<p:outputLabel id="isbn"
+						value="#{problemaTrocaBean.troca.livro.isbn}" label="ISBN"
+						style="width:350px"></p:outputLabel>
+
+				</h:panelGrid>
+			</p:fieldset>
+			<p:fieldset legend="Problema na Troca" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<p:outputLabel value="Descrição do Problema:" for="desc" />
+					<p:outputLabel id="desc"
+						value="#{problemaTrocaBean.problema.descricaoProblema}"
+						label="Email" style="width:350px"></p:outputLabel>
+
+					<p:outputLabel for="trocaEnviada" value="Status do Problema:" />
+					<p:selectOneMenu id="trocaEnviada"
+						value="#{problemaTrocaBean.status}" label="Status do Problema">
+						<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{problemaTrocaBean.recStatus()}" var="s"
+							itemLabel="#{s.name()}" itemValue="#{s}" />
+					</p:selectOneMenu>
+					<p:commandButton id="btnLogar"
+						action="#{problemaTrocaBean.modProblema()}" value="Salvar" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

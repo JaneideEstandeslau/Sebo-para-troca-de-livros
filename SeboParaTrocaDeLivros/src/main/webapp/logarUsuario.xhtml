@@ -8,7 +8,10 @@
 <ui:composition template="/WEB-INF/template/layoutSemLog.xhtml">
 
 	<f:metadata>
-		<f:viewAction action="#{logarClienteBean.init()}" />
+		<!-- TODO: Verificar se funciona usando o f:viewAction -->
+		<f:event id="postConstructorEvent"
+			type="javax.faces.event.PreRenderComponentEvent"
+			listener="#{erroPaginaLogin.dispararMensagemLoginErro(param['error'])}" />
 	</f:metadata>
 
 	<ui:define name="define">
@@ -17,54 +20,45 @@
 			severity="info" />
 		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
 			closable="true" severity="error" />
-
+			
 		<div id="divImagem">
 
 			<style typr="text/css">
-				div#divImagem {
-					width: 1329px;
-					height: 580px;
-					margin-top: 0px;
-					margin-left: -8px;
-					margin-bottom: -50px;
-					background: url("imagemFundo.jpg") no-repeat 0px 0px;
-					padding: 10px;
-				}
+			div#divImagem {
+				width: 1329px;
+				height: 580px;
+				margin-top: 0px;
+				margin-left: -8px;
+				margin-bottom: -50px;
+				background: url("imagemFundo.jpg") no-repeat 0px 0px;
+				padding: 10px;
+			}
 			</style>
-
-			<h:form id="logar" rendered="#{logarClienteBean.logarUsuario()}">
-				<p:panel id="basic" header="Logar"
-					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
-					<h:panelGrid columns="2" cellpadding="10">
-
-						<p:outputLabel value="Login:" for="login" />
-						<p:inputText id="login" label="Login" style="width:350px" />
-
-						<p:outputLabel value="Senha:" for="senha" />
-						<p:password id="senha" label="Senha" feedback="true"
-							style="width:350px" />
-
-						<p:outputLabel for="group" value="Group:" />
-						<p:selectOneMenu id="group"
-							label="Group">
-							<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-							<f:selectItems value="#{logarClienteBean.getTipos()}" var="g"
-								itemLabel="#{g.nome}" itemValue="#{g}" />
-						</p:selectOneMenu>
-
-
-						<p:commandButton id="btnLogar" value="Entrar" />
-						<p:commandButton id="btnCancelar" value="Cancelar" />
-
-					</h:panelGrid>
-					<div id="msg2">
+			
+			<p:panel header="Login" style="margin-bottom:20px; width: 550px; margin-left: 350px;">
+		
+			<h:form id="formLogin" prependId="false" onsubmit="action='j_security_check';" >
+			
+				<h:panelGrid columns="2" style="text-align:center; margin: auto;">
+					
+					<h:outputLabel for="j_username" value="Login:" />
+					<h:inputText id="j_username" />
+						
+					<h:outputLabel for="j_password" value="Senha:" />
+					<h:inputSecret id="j_password" />
+						
+					<p:commandButton id="btnLogin" value="Login" ajax="false" icon="fa fa-sign-in" />
+					<p:commandButton id="btnReset" value="Reset" ajax="false" type="reset" icon="fa fa-remove" />
+					
+				</h:panelGrid>
+				<div id="msg2">
 						Esqueceu sua senha?
 						<h:commandLink action="#{logarClienteBean.redefinirSenha()}"
 							value="Redefinir Senha" style="padding:10px" />
 					</div>
 					<br />
-				</p:panel>
 			</h:form>
+		</p:panel>
 
 			<h:form id="redefirnirSenha"
 				rendered="#{logarClienteBean.editarSenha()}">

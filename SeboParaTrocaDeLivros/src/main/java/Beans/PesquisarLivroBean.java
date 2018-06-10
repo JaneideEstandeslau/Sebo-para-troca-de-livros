@@ -32,13 +32,6 @@ public class PesquisarLivroBean extends AbstractBean{
 		return "Nome do livro "+nomeDoLivro;
 	}
 
-	public String getNomeDoLivro() {
-		return nomeDoLivro;
-	}
-
-	public void setNomeDoLivro(String nomeDoLivro) {
-		this.nomeDoLivro = nomeDoLivro;
-	}
 	
 	public List<Livro> getResultado(){
 		try{
@@ -57,6 +50,12 @@ public class PesquisarLivroBean extends AbstractBean{
 	public void setLivros(List<Livro> livros) {
 		this.livros = livros;
 	}
+
+	public String getNomeDoLivro() {
+		return nomeDoLivro;
+	}
 	
-	
+	public void setNomeDoLivro(String nomeDoLivro) {
+		this.nomeDoLivro = nomeDoLivro;
+	}
 }

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+
 import model.Livro;
 
 public class DAOLivro extends DAOGenerico {
@@ -85,7 +87,10 @@ public class DAOLivro extends DAOGenerico {
 					.createQuery("SELECT l FROM Livro l LEFT JOIN FETCH l.usuarioPossue s WHERE l.id = :idLivro");
 			query.setParameter("idLivro", idLivro);
 			resultado = query.getSingleResult();
+		} catch(NoResultException nre) {
+			return null;
 		} catch (PersistenceException pe) {
+			pe.printStackTrace();
 			return null;
 		}
 		return resultado;
@@ -123,7 +128,7 @@ public class DAOLivro extends DAOGenerico {
 		List<Livro> itens = null;
 		
 		try {
-			TypedQuery<Livro> itemQuery = em.createQuery("SELECT l FROM Livro l WHERE 1 = 1 AND l.titulo LIKE :titulo",Livro.class);
+			TypedQuery<Livro> itemQuery = em.createQuery("SELECT l FROM Livro l LEFT JOIN FETCH l.usuarioPossue WHERE 1 = 1 AND l.titulo LIKE :titulo",Livro.class);
 			itemQuery.setParameter("titulo", "%" + searchTerms + "%");
 			itens = itemQuery.getResultList();
 			return itens;

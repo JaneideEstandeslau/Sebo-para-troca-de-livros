@@ -41,6 +41,7 @@ public class Livro implements Serializable {
 	private String autor;
 	private String idioma;
 	private int qtdPaginas;
+	//rating
 
 	@ManyToMany
 	private Collection<Cliente> clientesDesejam = new ArrayList<Cliente>();

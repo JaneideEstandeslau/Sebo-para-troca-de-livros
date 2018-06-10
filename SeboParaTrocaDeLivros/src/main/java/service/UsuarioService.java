@@ -1,6 +1,10 @@
 package service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -88,6 +92,19 @@ public class UsuarioService implements Serializable{
 			return (Usuario) usuarioDAO.getByID(new Usuario(), id);
 		} catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+	
+	private String hash(String password) throws ServiceDacException {
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes("UTF-8"));
+			byte[] digest = md.digest();
+			String output = Base64.getEncoder().encodeToString(digest);
+			return output;
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			throw new ServiceDacException("Could not calculate hash!", e);
 		}
 	}
 

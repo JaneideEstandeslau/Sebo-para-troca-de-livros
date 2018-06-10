@@ -7,7 +7,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import excecoes.RollbackException;
+import excecoes.ServiceDacException;
+import model.Group;
 import model.ProblemaTroca;
+import model.StatusProblema;
 import model.Troca;
 import service.ProblemaTrocaService;
 import service.TrocaService;
@@ -20,6 +23,7 @@ public class ProblemaTrocaBean extends AbstractBean {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private StatusProblema status;
 	private ProblemaTroca problema;
 	private Troca troca;
 	@Inject
@@ -30,10 +34,22 @@ public class ProblemaTrocaBean extends AbstractBean {
 	public void init() {
 		problema = new ProblemaTroca();
 	}
+	
+	public String visuzaliarProb() {
+		return "visualizarTroca.xhtml?faces-redirect=true";
+	}
+	
+	public void recTroca() {
+		try {
+			troca = trocaService.getTroca(troca.getId());
+		} catch (ServiceDacException e) {
+			reportarMensagemDeErro(e.getMessage());
+		}
+	}
 
 	public String registrar() {
 		try {
-			service.registrarProblemaTroca(troca.getId(), (long) 1, problema);
+			service.registrarProblemaTroca(troca.getId(), getUsuarioLogado(), problema);
 			reportarMensagemDeSucesso("Problema registrado com sucesso");
 			return "paginaDoUsuario.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
@@ -44,7 +60,7 @@ public class ProblemaTrocaBean extends AbstractBean {
 	
 	public List<Troca> getTrocasRebidas(){
 		try {
-			return trocaService.getTrocasRebidas((long) 1);
+			return trocaService.getTrocasRebidas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -53,10 +69,43 @@ public class ProblemaTrocaBean extends AbstractBean {
 	
 	public List<Troca> getTrocasEnviadas(){
 		try {
-			return trocaService.getTrocasEnviadas((long) 2);
+			return trocaService.getTrocasEnviadas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
+		}
+	}
+	
+	public List<ProblemaTroca> getProblemas(){
+		try {
+			return service.getProblemasPendentes();
+		} catch (ServiceDacException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+	}
+	
+	public List<ProblemaTroca> getProblemasResol(){
+		try {
+			return service.getProblemasResolvendo();
+		} catch (ServiceDacException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+	}
+	
+	public StatusProblema[] recStatus() {
+		return StatusProblema.values();
+	}
+	
+	public void modProblema() {
+		try {
+			problema.setResolvido(status);
+			service.modificarProblema(problema);
+			reportarMensagemDeSucesso("Status do Problema Modificado");
+			problema = null;
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
 		}
 	}
 
@@ -90,6 +139,14 @@ public class ProblemaTrocaBean extends AbstractBean {
 
 	public void setTrocaService(TrocaService trocaService) {
 		this.trocaService = trocaService;
+	}
+
+	public StatusProblema getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusProblema status) {
+		this.status = status;
 	}
 
 }

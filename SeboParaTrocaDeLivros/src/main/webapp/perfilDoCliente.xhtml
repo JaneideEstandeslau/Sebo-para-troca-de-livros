@@ -35,9 +35,15 @@
 					<p:outputLabel id="login"
 						value="#{cadastrarClienteBean.cliente.login}" label="Login"
 						required="true" style="width:350px" />
+						
 					<p:outputLabel value="Email:" for="email" />
 					<p:outputLabel id="email"
 						value="#{cadastrarClienteBean.cliente.email}" label="Login"
+						required="true" style="width:350px" />
+						
+					<p:outputLabel value="Pontos:" for="pontos" />
+					<p:outputLabel id="pontos"
+						value="#{cadastrarClienteBean.cliente.ponto}" label="Pontos"
 						required="true" style="width:350px" />
 
 				</h:panelGrid>
@@ -80,7 +86,7 @@
 				</h:panelGrid>
 			</p:fieldset>
 			<p:commandButton id="btnLogar"
-				action="#{cadastrarClienteBean.saveCliente()}" value="Remover">
+				action="#{cadastrarClienteBean.removerConta()}" value="Remover Conta">
 			</p:commandButton>
 
 		</h:form>

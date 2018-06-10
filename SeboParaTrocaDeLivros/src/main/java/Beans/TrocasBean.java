@@ -28,7 +28,7 @@ public class TrocasBean extends AbstractBean{
 	
 	public List<Troca> getTrocasRebidas(){
 		try {
-			return trocaService.getTrocasRebidas((long) 1);
+			return trocaService.getTrocasRebidas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -37,7 +37,7 @@ public class TrocasBean extends AbstractBean{
 	
 	public List<Troca> getTrocasEnviadas(){
 		try {
-			return trocaService.getTrocasEnviadas((long) 2);
+			return trocaService.getTrocasEnviadas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -48,6 +48,7 @@ public class TrocasBean extends AbstractBean{
 		try {
 			troca.setRecebida(true);
 			trocaService.upedate(troca);
+			reportarMensagemDeSucesso("Confirmado recebimento do livro");
 			return "trocasRecebidas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
@@ -59,6 +60,7 @@ public class TrocasBean extends AbstractBean{
 		try {
 			troca.setCodRastreio(codRastreio);
 			trocaService.upedate(troca);
+			reportarMensagemDeSucesso("Codigo de Rastreio Adicionado");
 			return "trocasEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
@@ -70,6 +72,7 @@ public class TrocasBean extends AbstractBean{
 		try {
 			trocaService.cancelarTroca(troca, troca.getLivro(),troca.getClienteEnviando(), troca.getClienteRecebendo());
 			clienteService.adicionaLivroPossuintes(troca.getClienteEnviando().getId(), troca.getLivro().getId());
+			reportarMensagemDeSucesso("Troca Cancelada");
 			return "trocasEnviadas.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());

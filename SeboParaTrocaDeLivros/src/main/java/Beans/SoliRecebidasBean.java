@@ -24,7 +24,7 @@ public class SoliRecebidasBean extends AbstractBean{
 	
 	public List<Solicitacao> getSolicitacoes(){
 		try {
-			return service.getSoliRecebidas((long) 2);
+			return service.getSoliRecebidas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -33,7 +33,7 @@ public class SoliRecebidasBean extends AbstractBean{
 	
 	public List<Solicitacao> getSoliEnviadas(){
 		try {
-			return service.getSoliEnviadas((long) 1);
+			return service.getSoliEnviadas(getUsuarioLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;

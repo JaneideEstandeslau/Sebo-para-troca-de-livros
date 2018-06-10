@@ -12,9 +12,12 @@ import excecoes.RollbackException;
 import excecoes.ServiceDacException;
 import model.Cliente;
 import model.Livro;
+import model.ProblemaTroca;
+import model.StatusProblema;
 import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
+import persistencia.DAOProblemaTroca;
 import persistencia.DAOTroca;
 import util.TransacionalCdi;
 
@@ -31,6 +34,8 @@ public class TrocaService implements Serializable {
 	private DAOLivro livroDAO;
 	@Inject
 	private DAOTroca trocaDAO;
+	@Inject
+	private DAOProblemaTroca probDAO;
 
 	/**
 	 * Esse método deixa registrado as trocas que o cliente fez.
@@ -38,7 +43,7 @@ public class TrocaService implements Serializable {
 	 * @param idClienteEnviando
 	 * @param idLivro
 	 * @param idClienteRecebendo
-	 * @throws RollbackException 
+	 * @throws RollbackException
 	 */
 	public void realizarTroca(Long idClienteEnviando, Long idLivro, Long idClienteRecebendo) throws RollbackException {
 
@@ -75,10 +80,16 @@ public class TrocaService implements Serializable {
 		}
 
 	}
-	
+
 	@TransacionalCdi
 	public void upedate(Troca troca) throws RollbackException {
 		try {
+			Troca t = trocaDAO.recuperarTrocaComProblemas(troca.getId());
+			ProblemaTroca prob = t.getProblema();
+			if(prob != null) {
+				prob.setResolvido(StatusProblema.RESOLVIDO);
+				probDAO.update(prob);
+			}
 			trocaDAO.update(troca);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
@@ -86,19 +97,20 @@ public class TrocaService implements Serializable {
 	}
 
 	@TransacionalCdi
-	public void cancelarTroca(Troca troca, Livro livro, Cliente clienteEnviando, Cliente clienteRecebendo) throws RollbackException {
+	public void cancelarTroca(Troca troca, Livro livro, Cliente clienteEnviando, Cliente clienteRecebendo)
+			throws RollbackException {
 
 		try {
-			
+
 			clienteRecebendo.setPonto(clienteRecebendo.getPonto() + 1);
 			clienteRecebendo.getSolicitacoes().remove(livro);
 			clienteEnviando.setPonto(clienteEnviando.getPonto() - 1);
-			
+
 			clienteDAO.update(clienteEnviando);
 			clienteDAO.update(clienteRecebendo);
-			
+
 			trocaDAO.delete(troca, troca.getId());
-			
+
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
@@ -125,6 +137,14 @@ public class TrocaService implements Serializable {
 	public Object getByID(Long id) throws ServiceDacException {
 		try {
 			return trocaDAO.getByID(new Troca(), id);
+		} catch (Exception e) {
+			throw new ServiceDacException(e.getMessage(), e);
+		}
+	}
+
+	public Troca getTroca(Long idTroca) throws ServiceDacException {
+		try {
+			return trocaDAO.recTroca(idTroca);
 		} catch (Exception e) {
 			throw new ServiceDacException(e.getMessage(), e);
 		}

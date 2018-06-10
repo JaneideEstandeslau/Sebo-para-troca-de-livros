@@ -14,37 +14,39 @@
 			closable="true" severity="error" />
 
 		<p:fieldset legend="Solicitações Envidas" style="margin-top:10px">
-			<p:dataTable id="dataTable" border="1" var="soli"
-				value="#{soliRecebidasBean.getSolicitacoes()}"
-				emptyMessage="Nenhum registro encontrado." rows="5" paginator="true"
-				paginatorAlwaysVisible="false"
-				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15">
+			<h:form id="idFormDataTableUsuariosCadastrados">
+				<p:dataTable id="dataTable" border="1" var="soli"
+					value="#{soliRecebidasBean.getSolicitacoes()}"
+					emptyMessage="Nenhum registro encontrado." rows="5"
+					paginator="true" paginatorAlwaysVisible="false"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
 
-				<p:column headerText="Solicitação Enviada para">
-					<h:outputText value="#{soli.clienteRecebeuSolicitacao.nome}" />
-				</p:column>
-				<p:column headerText="Livro Solicitado">
-					<h:outputText value="#{soli.livroSolicitado.titulo}" />
-				</p:column>
+					<p:column headerText="Solicitação Enviada para">
+						<h:outputText value="#{soli.clienteRecebeuSolicitacao.nome}" />
+					</p:column>
+					<p:column headerText="Livro Solicitado">
+						<h:outputText value="#{soli.livroSolicitado.titulo}" />
+					</p:column>
 
-				<p:column headerText="Operações">
+					<p:column headerText="Operações">
 
-					<p:commandButton id="remover" value="Cancelar"
-						action="#{soliRecebidasBean.cancelarSoli()}">
-						
-						<f:setPropertyActionListener value="#{soli}"
-							target="#{soliRecebidasBean.soli}" />
-							
-						<p:confirm header="Confirmação!"
-							message="Tem certeza que deseja cancelar a solicitação de troca do livro '#{soli.livroSolicitado.titulo}'?"
-							icon="ui-icon-alert" />
-						<p:tooltip id="toolTipDeleteUser" for="remover"
-							value="Cancelar solicitação de Troca" position="top" />
-					</p:commandButton>
+						<p:commandButton id="remover" process="@this" value="Cancelar"
+							action="#{soliRecebidasBean.cancelarSoli()}">
 
-				</p:column>
-			</p:dataTable>
+							<f:setPropertyActionListener value="#{soli}"
+								target="#{soliRecebidasBean.soli}" />
+
+							<p:confirm header="Confirmação!"
+								message="Tem certeza que deseja cancelar a solicitação de troca do livro '#{soli.livroSolicitado.titulo}'?"
+								icon="ui-icon-alert" />
+							<p:tooltip id="toolTipDeleteUser" for="remover"
+								value="Cancelar solicitação de Troca" position="top" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+			</h:form>
 		</p:fieldset>
 		<p:confirmDialog id="confirmDialog" global="true" showEffect="fade"
 			hideEffect="fade">

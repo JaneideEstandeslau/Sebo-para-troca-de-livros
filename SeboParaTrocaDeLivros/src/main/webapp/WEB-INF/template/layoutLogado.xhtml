@@ -3,7 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/WEB-INF/template/_layoutPadrao.xhtml">
 
@@ -88,63 +89,112 @@ div#divMenu03 nav#menuDiv03 li#telefone {
 	top: -30px;
 	width: 200px;
 }
+
+div#divMenu023 {
+	width: 130px;
+	height: 95px;
+	margin-top: 0px;
+	margin-left: 1030px;
+	padding: 10px;
+	background-color: #ffffff;
+}
 </style>
-		<div id="divMenu022">
-			<h:form>
-				<p:inputText style="width:500px; margin-top: 27px;"
-					value="#{logadoPesquisarLivroBean.nomeDoLivro}" />
+		<c:if test="${logadoPesquisarLivroBean.getTiporUserLog() == '2'}">
+			<p:outputLabel id="nome"
+					value="Olá #{logadoPesquisarLivroBean.getUsuario().nome}"
+					style="position: absolute; top: 50px; font-size: 25pt; 
+					font-family: Edwardian Script ITC, sans-serif; margin-left: 1040px;" />
+			
+			<div id="divMenu022">
+				<h:form>
+					<p:inputText style="width:500px; margin-top: 27px;"
+						value="#{logadoPesquisarLivroBean.nomeDoLivro}" />
 
-				<p:commandButton id="buttonPesquisa" icon="fa fa-search"
-					style="display: block; margin-top: -35px; margin-left: 515px;"
-					action="#{logadoPesquisarLivroBean.pesquisa()}">
-				</p:commandButton>
-				<p:tooltip id="toolTipPesquisa" for="buttonPesquisa"
-					value="Pesquisar por Livro" position="top" />
-			</h:form>
-		</div>
+					<p:commandButton id="buttonPesquisa" icon="fa fa-search"
+						style="display: block; margin-top: -35px; margin-left: 515px;"
+						action="#{logadoPesquisarLivroBean.pesquisa()}">
+					</p:commandButton>
+					<p:tooltip id="toolTipPesquisa" for="buttonPesquisa"
+						value="Pesquisar por Livro" position="top" />
+				</h:form>
+			</div>
+			
+				<p:outputLabel id="qtdPonto"
+					value="Pontos: #{logadoPesquisarLivroBean.getCliente().ponto}"
+					style="position: absolute; top: 90px; margin-left: 1050px;" />
+			
+			<div id="divMenu03">
 
-		<div id="divMenu03">
+				<nav id="menuDiv03">
+					<ul>
+						<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>
+						<li><a href="nossaLojaUsuarioLogado.xhtml"> Nossa Loja</a></li>
+						<li><a href="#">Historico</a>
+							<ul>
+								<li><a href="#">Solicitação</a>
+									<ul>
+										<li><a href="soliEnviadas.xhtml">Enviadas</a></li>
+										<li><a href="solicitacoesRecebidas.xhtml">Recebidas</a></li>
+									</ul></li>
+								<li><a href="#">Trocas</a>
+									<ul>
+										<li><a href="trocasEnviadas.xhtml">Enviadas</a></li>
+										<li><a href="trocasRecebidas.xhtml">Recebidas</a></li>
+									</ul></li>
 
-			<nav id="menuDiv03">
-				<ul>
-					<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>
-					<li><a href="nossaLojaUsuarioLogado.xhtml"> Nossa Loja</a></li>
-					<li><a href="#">Historico</a>
-						<ul>
-							<li><a href="#">Solicitação</a>
-								<ul>
-									<li><a href="soliEnviadas.xhtml">Enviadas</a></li>
-									<li><a href="solicitacoesRecebidas.xhtml">Recebidas</a></li>
-								</ul></li>
-							<li><a href="#">Trocas</a>
-								<ul>
-									<li><a href="trocasEnviadas.xhtml">Enviadas</a></li>
-									<li><a href="trocasRecebidas.xhtml">Recebidas</a></li>
-								</ul></li>
+							</ul></li>
+						<li class="teste"><a href="#">Livros</a>
+							<ul>
+								<li><a href="livrosDisponiveis.xhtml">Disponíveis</a></li>
+								<li><a href="cadastrarLivro.xhtml">Cadastrar Livro</a></li>
+							</ul></li>
+						<li><a href="#"> Problema na Troca </a>
+							<ul>
+								<li><a href="problemaTrocaEnviada.xhtml">Troca Enviada</a></li>
+								<li><a href="problemaTrocaRecebida.xhtml">Troca
+										Recebida</a></li>
+							</ul></li>
+						<li class="teste"><a href="#">Perfil</a>
+							<ul>
+								<li><a href="perfilDoCliente.xhtml">Meu Perfil</a></li>
+								<li><a href="editarPerfil.xhtml">Editar Perfil</a></li>
+								<li><a href="deslogarUsuario.xhtml">Sair</a></li>
+							</ul></li>
+						<li id="telefone"><a href="#"> Telefone (83) 9 9959-7974
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</c:if>
 
-						</ul></li>
-					<li class="teste"><a href="#">Livros</a>
-						<ul>
-							<li><a href="livrosDisponiveis.xhtml">Disponíveis</a></li>
-							<li><a href="cadastrarLivro.xhtml">Cadastrar Livro</a></li>
-						</ul></li>
-					<li><a href="faleConosco.xhtml"> Problema na Troca </a>
-						<ul>
-							<li><a href="problemaTrocaEnviada.xhtml">Troca Enviada</a></li>
-							<li><a href="problemaTrocaRecebida.xhtml">Troca Recebida</a></li>
-						</ul>
-					</li>
-					<li class="teste"><a href="#">Perfil</a>
-						<ul>
-							<li><a href="perfilDoCliente.xhtml">Meu Perfil</a></li>
-							<li><a href="editarPerfil.xhtml">Editar Perfil</a></li>
-							<li><a href="#">Remover Conta</a></li>
-							<li><a href="#">Sair</a></li>
-						</ul></li>
-					<li id="telefone"><a href="#"> Telefone (83) 9 9959-7974 </a></li>
-				</ul>
-			</nav>
-		</div>
+		<c:if test="${logadoPesquisarLivroBean.getTiporUserLog() == '1'}">
+			<div id="divMenu03">
+
+				<nav id="menuDiv03">
+					<ul>
+						<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>
+						<li><a href="adminVisualizarClientes.xhtml">Cliente</a></li>
+						<li><a href="#">Administrador</a>
+							<ul>
+								<li><a href="cadastrarAdmin.xhtml">Cadastrar</a></li>
+							</ul></li>
+						<li><a href="#"> Problema na Troca </a>
+							<ul>
+								<li><a href="recProblemaTroca.xhtml">Pendentes</a></li>
+								<li><a href="recProbResolvendo.xhtml">Resolvendo</a></li>
+							</ul></li>
+						<li class="teste"><a href="#">Perfil</a>
+							<ul>
+								<li><a href="perfilDoAdmin.xhtml">Meu Perfil</a></li>
+								<li><a href="editarPerfilAdmin.xhtml">Editar Perfil</a></li>
+								<li><a href="deslogarUsuario.xhtml">Sair</a></li>
+							</ul></li>
+						<li id="telefone"><a href="#"> Telefone (83) 9 9959-7974
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</c:if>
 		<div id="layoutLogado">
 			<ui:insert name="layoutLogado" />
 		</div>

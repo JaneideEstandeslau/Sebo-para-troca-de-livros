@@ -30,7 +30,7 @@ public class CadastrarClienteBean extends AbstractBean{
 	
 	public void visualizarPerfil() {
 		try {
-			cliente = clienteService.recuperarCliente((long) 1);
+			cliente = clienteService.recuperarCliente(getUsuarioLogado());
 			endereco = enderecoService.recuperarEndereco(cliente.getEndereco().getId());
 		} catch (ServiceDacException e) {
 			reportarMensagemDeErro(e.getMessage());
@@ -65,6 +65,16 @@ public class CadastrarClienteBean extends AbstractBean{
 
 		return "paginaDoUsuario.xhtml?faces-redirect=true";
 		
+	}
+	
+	public String removerConta() {
+		try {
+			clienteService.removerUsuario(getUsuarioLogado());
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+		return "deslogarUsuario.xhtml?faces-redirect=true";
 	}
 	
 	public boolean isEdicaoDeClinte() {
