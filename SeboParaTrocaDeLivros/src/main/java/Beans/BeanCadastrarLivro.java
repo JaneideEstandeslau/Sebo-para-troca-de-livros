@@ -37,18 +37,19 @@ public class BeanCadastrarLivro extends AbstractBean {
 		try {
 			if (isEdicaoDeLivro()) {
 				service.modificarLivro(livro);
+				reportarMensagemDeSucesso("Livro '" + livro.getTitulo() + "' salvo");
+				return "livrosDisponiveis.xhtml?faces-redirect=true";
 			} else {
 
 				service.salvarLivro(livro);
 				clienteService.adicionaLivroPossuintes(getUsuarioLogado(), livro.getId());
+				reportarMensagemDeSucesso("Livro '" + livro.getTitulo() + "' salvo");
+				return "paginaDoUsuario.xhtml?faces-redirect=true";
 			}
 		} catch (Exception e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
 		}
-		reportarMensagemDeSucesso("Livro '" + livro.getTitulo() + "' salvo");
-
-		return "paginaDoUsuario.xhtml?faces-redirect=true";
 	}
 	
 	public boolean isEdicaoDeLivro() {
@@ -57,6 +58,13 @@ public class BeanCadastrarLivro extends AbstractBean {
 	
 	public boolean naoEdicaoDeLivro() {
 		return livro.getId() == null;
+	}
+	
+	public boolean visualizarDono() {
+		if(livro.getUsuarioPossue().getId() == getUsuarioLogado()) {
+			return false;
+		}
+		return true;
 	}
 
 	public LivroService getService() {

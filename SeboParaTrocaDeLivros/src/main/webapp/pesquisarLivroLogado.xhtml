@@ -37,35 +37,39 @@
 				<p:column headerText="Ano de Publicação">
 					<h:outputText value="#{livro.publicacao}" />
 				</p:column>
-				
+
 				<p:column headerText="Operações">
 					<p:button id="visualizarLivroDialog" value="Visualizar"
 						outcome="visualizarLivro.xhtml">
 						<f:param name="livro" value="#{livro.id}" />
+
+						<p:tooltip id="toolTipEditar" for="visualizarLivroDialog"
+							value="Visializar detalhes do livro" position="top" />
+
 					</p:button>
+
 					<p:commandButton id="solicitarLivro" value="Solicitar"
 						action="#{solicitarLivroBean.solicitar()}">
 						<f:setPropertyActionListener value="#{livro}"
 							target="#{solicitarLivroBean.livro}" />
+						<p:tooltip id="toolTipSolicitar" for="solicitarLivro"
+							value="Solicitar Livro" position="top" />
+						<p:confirm header="Confirmação!"
+							message="Tem certeza que deseja solicitar o livro '#{livro.titulo}'?"
+							icon="ui-icon-alert" />
 					</p:commandButton>
+
+					<br />
+					<br />
 
 					<p:commandButton id="tenhoParaTroca" value="Disponibilizar"
 						action="#{possuirLivroExistenteBean.init()}">
 						<f:setPropertyActionListener value="#{livro}"
 							target="#{possuirLivroExistenteBean.livro}" />
+						<p:tooltip id="toolTipDisponibilizar" for="tenhoParaTroca"
+							value="Disponibilizar livro para Troca" position="top" />
 					</p:commandButton>
-					
-					<p:commandButton id="perfil" value="Perfil"
-						action="#{logadoPesquisarLivroBean.verPerfil(livro)}">
-						
-						<f:setPropertyActionListener value="#{livro.usuarioPossue}"
-							target="#{cadastrarClienteBean.cliente}" />
-							
-						<f:setPropertyActionListener value="#{livro.usuarioPossue.endereco}"
-							target="#{cadastrarClienteBean.endereco}" />
-							
-					</p:commandButton>
-					
+
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
@@ -81,6 +85,13 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+		<p:confirmDialog id="confirmDialog" global="true" showEffect="fade"
+			hideEffect="fade">
+			<p:commandButton id="confirmYes" value="Sim"
+				styleClass="ui-confirmdialog-yes" icon="fa fa-remove" />
+			<p:commandButton id="confirmNo" value="Não"
+				styleClass="ui-confirmdialog-no" icon="fa fa-ban" />
+		</p:confirmDialog>
 	</ui:define>
 </ui:composition>
 </html>

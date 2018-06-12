@@ -22,6 +22,9 @@ public class Troca implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String dataTroca;
+	
+	@OneToOne (mappedBy = "troca",cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH })
+	private Solicitacao solicitacao;
 
 	@OneToOne
 	private ProblemaTroca problema;
@@ -153,6 +156,14 @@ public class Troca implements Serializable {
 		if (recebida != other.recebida)
 			return false;
 		return true;
+	}
+
+	public Solicitacao getSolicitacao() {
+		return solicitacao;
+	}
+
+	public void setSolicitacao(Solicitacao solicitacao) {
+		this.solicitacao = solicitacao;
 	}
 	
 }

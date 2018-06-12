@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Solicitacao implements Serializable {
@@ -23,6 +24,9 @@ public class Solicitacao implements Serializable {
 	private String dalaSolicitacao;
 	private boolean aceita;
 	private boolean ativa;
+	
+	@OneToOne
+	private Troca troca;
 
 	@ManyToOne
 	private Cliente clienteSolicitou;
@@ -135,5 +139,13 @@ public class Solicitacao implements Serializable {
 		} else if (!livroSolicitado.equals(other.livroSolicitado))
 			return false;
 		return true;
+	}
+
+	public Troca getTroca() {
+		return troca;
+	}
+
+	public void setTroca(Troca troca) {
+		this.troca = troca;
 	}
 }

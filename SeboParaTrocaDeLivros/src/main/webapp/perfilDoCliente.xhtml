@@ -24,7 +24,12 @@
 				<h:panelGrid columns="2" cellpadding="10">
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:outputLabel id="nome"
-						value="#{cadastrarClienteBean.cliente.nome}" label="Nome Completo"
+						value="#{cadastrarClienteBean.cliente.nome}" label="Nome"
+						required="true" style="width:350px" />
+					
+					<p:outputLabel value="Segundo Nome:" for="Segnome" />
+					<p:outputLabel id="Segnome"
+						value="#{cadastrarClienteBean.cliente.sobrenome}" label="Segundo Nome"
 						required="true" style="width:350px" />
 
 					<p:outputLabel value="CPF:" for="cpf" />

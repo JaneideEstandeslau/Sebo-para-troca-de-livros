@@ -16,7 +16,7 @@
 		<p:fieldset legend="Solicitações Envidas" style="margin-top:10px">
 			<h:form id="idFormDataTableUsuariosCadastrados">
 				<p:dataTable id="dataTable" border="1" var="soli"
-					value="#{soliRecebidasBean.getSolicitacoes()}"
+					value="#{soliRecebidasBean.getSoliEnviadas()}"
 					emptyMessage="Nenhum registro encontrado." rows="5"
 					paginator="true" paginatorAlwaysVisible="false"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

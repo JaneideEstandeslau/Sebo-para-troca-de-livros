@@ -10,101 +10,107 @@
 
 	<ui:define name="content">
 		<style typr="text/css">
-div#divMenu03 {
-	width: 1329px;
-	height: 36px;
-	margin-top: 0px;
-	margin-left: -8px;
-	padding: 10px;
-	background-color: #000000;
-}
-
-div#divMenu03 nav#menuDiv03 a {
-	color: #ffffff;
-	text-decoration: none;
-}
-
-div#divMenu03 nav#menuDiv03 a:hover {
-	color: #ffffff;
-	text-decoration: underline;
-}
-
-div#divMenu03 nav#menuDiv03 li {
-	display: inline-block;
-	padding: 0px;
-	margin: 0px;
-	transition: background-color 1s;
-	font-size: 10pt;
-	font-family: Arial, sans-serif;
-}
-
-div#divMenu03 nav#menuDiv03 li#lateral {
-	border-right: 0px solid #606060;
-}
-
-div#divMenu03 nav#menuDiv03 ul li {
-	background-color: #000000;
-	color: white;
-	float: left;
-	width: 130px;
-	height: 30px;
-	margin-top: -0px;
-	display: inline-block;
-	text-align: center;
-	line-height: 17px;
-	font-size: 15px;
-	position: relative;
-}
-
-div#divMenu03 nav#menuDiv03 ul li:hover {
-	background-color: #000000;
-}
-
-div#divMenu03 nav#menuDiv03 ul {
-	padding: 0;
-}
-
-div#divMenu03 nav#menuDiv03 ul  ul {
-	display: none;
-}
-
-div#divMenu03 nav#menuDiv03 ul li:hover>ul {
-	display: block;
-}
-
-div#divMenu03 nav#menuDiv03 ul ul {
-	margin-left: 0px;
-	top: 30px;
-	position: absolute;
-}
-
-div#divMenu03 nav#menuDiv03 ul ul ul {
-	margin-left: 130px;
-	top: 0px;
-	position: absolute;
-}
-
-div#divMenu03 nav#menuDiv03 li#telefone {
-	margin-left: 1070px;
-	top: -30px;
-	width: 200px;
-}
-
-div#divMenu023 {
-	width: 130px;
-	height: 95px;
-	margin-top: 0px;
-	margin-left: 1030px;
-	padding: 10px;
-	background-color: #ffffff;
-}
-</style>
-		<c:if test="${logadoPesquisarLivroBean.getTiporUserLog() == '2'}">
-			<p:outputLabel id="nome"
-					value="Olá #{logadoPesquisarLivroBean.getUsuario().nome}"
-					style="position: absolute; top: 50px; font-size: 25pt; 
-					font-family: Edwardian Script ITC, sans-serif; margin-left: 1040px;" />
+			div#divMenu03 {
+				width: 1329px;
+				height: 36px;
+				margin-top: 0px;
+				margin-left: -8px;
+				padding: 10px;
+				background-color: #000000;
+			}
 			
+			div#divMenu03 nav#menuDiv03 a {
+				color: #ffffff;
+				text-decoration: none;
+			}
+			
+			div#divMenu03 nav#menuDiv03 a:hover {
+				color: #ffffff;
+				text-decoration: underline;
+			}
+			
+			div#divMenu03 nav#menuDiv03 li {
+				display: inline-block;
+				padding: 0px;
+				margin: 0px;
+				transition: background-color 1s;
+				font-size: 10pt;
+				font-family: Arial, sans-serif;
+			}
+			
+			div#divMenu03 nav#menuDiv03 li#lateral {
+				border-right: 0px solid #606060;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul li {
+				background-color: #000000;
+				color: white;
+				float: left;
+				width: 130px;
+				height: 30px;
+				margin-top: -0px;
+				display: inline-block;
+				text-align: center;
+				line-height: 17px;
+				font-size: 15px;
+				position: relative;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul li:hover {
+				background-color: #000000;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul {
+				padding: 0;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul  ul {
+				display: none;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul li:hover>ul {
+				display: block;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul ul {
+				margin-left: 0px;
+				top: 30px;
+				position: absolute;
+			}
+			
+			div#divMenu03 nav#menuDiv03 ul ul ul {
+				margin-left: 130px;
+				top: 0px;
+				position: absolute;
+			}
+			
+			div#divMenu03 nav#menuDiv03 li#telefone {
+				margin-left: 1070px;
+				top: -30px;
+				width: 200px;
+			}
+			
+			div#divMenu023 {
+				width: 130px;
+				height: 95px;
+				margin-top: 0px;
+				margin-left: 1030px;
+				padding: 10px;
+				background-color: #ffffff;
+			}
+		</style>
+
+		<p:outputLabel id="nome"
+			value="Olá #{logadoPesquisarLivroBean.getUsuario().nome}"
+			style="position: absolute; top: 40px; font-size: 25pt; 
+			font-family: Edwardian Script ITC, sans-serif; margin-left: 1040px;" />
+			
+		<p:outputLabel id="sobnome"
+			value="#{logadoPesquisarLivroBean.getUsuario().sobrenome}"
+			style="position: absolute; top: 70px; font-size: 25pt; 
+			font-family: Edwardian Script ITC, sans-serif; margin-left: 1040px;" />
+
+		<c:if test="${logadoPesquisarLivroBean.getTiporUserLog() == '2'}">
 			<div id="divMenu022">
 				<h:form>
 					<p:inputText style="width:500px; margin-top: 27px;"
@@ -118,11 +124,11 @@ div#divMenu023 {
 						value="Pesquisar por Livro" position="top" />
 				</h:form>
 			</div>
-			
-				<p:outputLabel id="qtdPonto"
-					value="Pontos: #{logadoPesquisarLivroBean.getCliente().ponto}"
-					style="position: absolute; top: 90px; margin-left: 1050px;" />
-			
+
+			<p:outputLabel id="qtdPonto"
+				value="Pontos: #{logadoPesquisarLivroBean.getClientee().ponto}"
+				style="position: absolute; top: 110px; margin-left: 1050px;" />
+
 			<div id="divMenu03">
 
 				<nav id="menuDiv03">
@@ -145,13 +151,13 @@ div#divMenu023 {
 							</ul></li>
 						<li class="teste"><a href="#">Livros</a>
 							<ul>
-								<li><a href="livrosDisponiveis.xhtml">Disponíveis</a></li>
-								<li><a href="cadastrarLivro.xhtml">Cadastrar Livro</a></li>
+								<li><a href="livrosDisponiveis.xhtml">Meus Livros</a></li>
+								<li><a href="cadastrarLivro.xhtml">Novo Livro</a></li>
 							</ul></li>
 						<li><a href="#"> Problema na Troca </a>
 							<ul>
-								<li><a href="problemaTrocaEnviada.xhtml">Troca Enviada</a></li>
-								<li><a href="problemaTrocaRecebida.xhtml">Troca
+								<li><a href="problemaTrocaEnviada.xhtml">Trocas Enviada</a></li>
+								<li><a href="problemaTrocaRecebida.xhtml">Trocas
 										Recebida</a></li>
 							</ul></li>
 						<li class="teste"><a href="#">Perfil</a>
@@ -169,7 +175,6 @@ div#divMenu023 {
 
 		<c:if test="${logadoPesquisarLivroBean.getTiporUserLog() == '1'}">
 			<div id="divMenu03">
-
 				<nav id="menuDiv03">
 					<ul>
 						<li><a href="paginaDoUsuario.xhtml" id="home"> Home </a></li>

@@ -51,7 +51,7 @@ public class ClienteService implements Serializable {
 			validarCPF(cliente.getCpf());
 			cliente.setAtivo(true);
 			cliente.setTipo(Group.CLIENTE);
-			Cliente c = clienteDAO.recuperarCliente((long) 1);
+			Cliente c = clienteDAO.recuperarCliente((long) 2);
 			if (c == null) {
 				cliente.setPonto(1);
 			}

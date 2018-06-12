@@ -24,6 +24,7 @@ public class CadastrarClienteBean extends AbstractBean{
 	private ClienteService clienteService;
 	@Inject
 	private EnderecoService enderecoService;
+	private String senha;
 	private Cliente cliente;
 	private Endereco endereco;
 	
@@ -52,18 +53,28 @@ public class CadastrarClienteBean extends AbstractBean{
 			if(isEdicaoDeClinte()) {
 				clienteService.modificarUsuario(cliente);
 				enderecoService.editarEndereco(endereco);
+				reportarMensagemDeSucesso("Usuario '" + cliente.getNome() + "' salvo");
+				
+				return "paginaDoUsuario.xhtml?faces-redirect=true";
 			}
 			else {
-				clienteService.salvarUsuario(cliente);
-				enderecoService.cadastrarEndereco(endereco, cliente.getCpf());
+			
+				if(cliente.getSenha().equals(senha)) {
+					clienteService.salvarUsuario(cliente);
+					enderecoService.cadastrarEndereco(endereco, cliente.getCpf());
+					reportarMensagemDeSucesso("Usuario '" + cliente.getNome() + "' salvo");
+					
+					return "paginaDoUsuario.xhtml?faces-redirect=true";
+				}
+				else {
+					reportarMensagemDeErro("Senhas não conferem");
+					return null;
+				}
 			}
 		}catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
 		}
-		reportarMensagemDeSucesso("Usuario '" + cliente.getNome() + "' salvo");
-
-		return "paginaDoUsuario.xhtml?faces-redirect=true";
 		
 	}
 	
@@ -111,5 +122,13 @@ public class CadastrarClienteBean extends AbstractBean{
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }

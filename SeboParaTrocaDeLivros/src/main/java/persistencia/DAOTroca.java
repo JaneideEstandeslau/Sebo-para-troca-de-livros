@@ -69,7 +69,8 @@ public class DAOTroca extends DAOGenerico{
 		try {
 			TypedQuery<Troca> itemQuery = em.createQuery(
 					"SELECT t FROM Troca t LEFT JOIN FETCH t.clienteEnviando c1 "+""
-	+ "LEFT JOIN FETCH t.clienteRecebendo c2 WHERE 1 = 1 AND t.recebida = false AND c2.id = :idCliente",
+	+ "LEFT JOIN FETCH t.clienteRecebendo c2 LEFT JOIN FETCH t.solicitacao"
+	+ "WHERE 1 = 1 AND t.recebida = false AND c2.id = :idCliente",
 					Troca.class);
 			itemQuery.setParameter("idCliente", idCliente);
 			resultado = itemQuery.getResultList();
@@ -85,7 +86,8 @@ public class DAOTroca extends DAOGenerico{
 		try {
 			TypedQuery<Troca> itemQuery = em.createQuery(
 					"SELECT t FROM Troca t LEFT JOIN FETCH t.clienteEnviando c1 "+""
-	+ "LEFT JOIN FETCH t.clienteRecebendo c2 WHERE 1 = 1 AND t.recebida = false AND c1.id = :idCliente",
+	+ "LEFT JOIN FETCH t.clienteRecebendo c2 LEFT JOIN FETCH t.solicitacao "
+	+ "WHERE 1 = 1 AND t.recebida = false AND c1.id = :idCliente",
 					Troca.class);
 			itemQuery.setParameter("idCliente", idCliente);
 			resultado = itemQuery.getResultList();

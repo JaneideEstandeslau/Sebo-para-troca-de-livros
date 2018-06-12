@@ -35,6 +35,12 @@
 								value="#{cadastrarAdminBean.usuario.nome}"
 								label="Nome Completo" required="true" style="width:350px" />
 
+							<p:outputLabel value="Sobrenome:" for="sobrenome" />
+							<p:inputText id="sobrenome"
+								value="#{cadastrarAdminBean.usuario.sobrenome}"
+								label="Sobrenome" required="true" style="width:350px" />
+							
+
 							<p:outputLabel value="CPF:" for="cpf" />
 							<p:inputMask mask="999.999.999-99" id="cpf"
 								value="#{cadastrarAdminBean.usuario.cpf}" label="CPF"
@@ -49,12 +55,17 @@
 							<p:password id="senha"
 								value="#{cadastrarAdminBean.usuario.senha}" label="Senha"
 								feedback="true" required="true" style="width:350px" />
+								
+							<p:outputLabel value="Confirmar Senha:" for="confsenha" />
+							<p:password id="confsenha"
+								value="#{cadastrarAdminBean.senha}" label="Confirmar Senha"
+								feedback="true" required="true" style="width:350px" />
+								
 						</h:panelGrid>
 					</p:fieldset>
 				</h:panelGrid>
 				<p:commandButton id="btnLogar"
 					action="#{cadastrarAdminBean.saveUsuario()}" value="Salvar" />
-				<p:commandButton id="btnCancelar" value="Cancelar" />
 			</h:form>
 		</div>
 	</ui:define>

@@ -120,10 +120,10 @@ public class SolicitacaoService implements Serializable {
 
 		try {
 			cliente.setPonto(cliente.getPonto() + 1);
-			cliente.getSolicitacoes().remove(livro);
-			soli.setAtiva(false);
-			soliDAO.update(soli);
+//			cliente.getSolicitacoes().remove(livro);
+//			soli.setAtiva(false);
 			clienteDAO.update(cliente);
+			soliDAO.delete(soli, soli.getId());
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
@@ -141,10 +141,8 @@ public class SolicitacaoService implements Serializable {
 
 		try {
 			cliente.setPonto(cliente.getPonto() + 1);
-			cliente.getSolicitacoes().remove(livro);
-			soli.setAtiva(false);
-			soliDAO.update(soli);
 			clienteDAO.update(cliente);
+			soliDAO.delete(soli, soli.getId());
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
@@ -170,7 +168,7 @@ public class SolicitacaoService implements Serializable {
 
 		try {
 			soliDAO.update(soli);
-			trocaServe.realizarTroca(livro.getUsuarioPossue().getId(), livro.getId(), idClienteSolicitou);
+			trocaServe.realizarTroca(livro.getUsuarioPossue().getId(), livro.getId(), idClienteSolicitou, soli);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}

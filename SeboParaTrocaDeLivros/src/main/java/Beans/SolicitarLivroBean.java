@@ -21,12 +21,14 @@ public class SolicitarLivroBean extends AbstractBean{
 	private SolicitacaoService service;
 	private Livro livro;
 	
-	public void solicitar() {
+	public String solicitar() {
 		try {
 			service.solicitarLivro(getUsuarioLogado(), livro.getId());
 			reportarMensagemDeSucesso("Você solicitou o livro " + livro.getTitulo());
+			return "pesquisarLivroLogado.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
+			return null;
 		}
 	}
 	

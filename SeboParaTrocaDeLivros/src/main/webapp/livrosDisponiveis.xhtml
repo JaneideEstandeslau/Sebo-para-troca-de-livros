@@ -42,6 +42,10 @@
 						<f:param name="livro" value="#{livro.id}" />
 						<p:tooltip id="toolTipEditar" for="editar" value="Editar Livro" position="top"/>
 					</p:button>
+					
+					<br />
+					<br />
+					
 					<p:commandButton id="remover" value="Remover"
 						action="#{livrosDisponiveisBean.remover()}">
 						<f:setPropertyActionListener value="#{livro}"

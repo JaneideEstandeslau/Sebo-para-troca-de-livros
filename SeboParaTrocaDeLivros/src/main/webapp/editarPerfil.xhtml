@@ -19,9 +19,7 @@
 
 
 		<div id="divImagem">
-
 			<h:form>
-
 				<h:panelGrid columns="2" cellpadding="10">
 
 					<p:fieldset legend="Dados Pessoais" style="margin-bottom:20px">
@@ -32,6 +30,11 @@
 								value="#{cadastrarClienteBean.cliente.nome}"
 								label="Nome Completo" required="true" style="width:350px" />
 
+							<p:outputLabel value="Segundo Nome:" for="Segnome" />
+							<p:inputText id="Segnome"
+								value="#{cadastrarClienteBean.cliente.sobrenome}"
+								label="Segundo Nome" required="true" style="width:350px" />
+
 							<p:outputLabel value="CPF:" for="cpf" />
 							<p:inputMask mask="999.999.999-99" id="cpf"
 								value="#{cadastrarClienteBean.cliente.cpf}" label="CPF"
@@ -41,7 +44,7 @@
 							<p:inputText id="login"
 								value="#{cadastrarClienteBean.cliente.login}" label="Login"
 								required="true" style="width:350px" />
-								
+
 							<p:outputLabel value="Email:" for="email" />
 							<p:inputText id="email"
 								value="#{cadastrarClienteBean.cliente.email}" label="Login"
@@ -91,7 +94,6 @@
 				</h:panelGrid>
 				<p:commandButton id="btnLogar"
 					action="#{cadastrarClienteBean.saveCliente()}" value="Editar" />
-				<p:commandButton id="btnCancelar" value="Cancelar" />
 			</h:form>
 
 		</div>

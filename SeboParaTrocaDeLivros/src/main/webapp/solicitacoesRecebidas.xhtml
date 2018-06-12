@@ -16,14 +16,15 @@
 		<p:fieldset legend="Solicitações Recebidas" style="margin-top:10px">
 			<h:form id="idFormDataTableUsuariosCadastrados">
 				<p:dataTable id="dataTable" border="1" var="soli"
-					value="#{soliRecebidasBean.getSoliEnviadas()}"
+					value="#{soliRecebidasBean.getSolicitacoes()}"
 					emptyMessage="Nenhum registro encontrado." rows="5"
 					paginator="true" paginatorAlwaysVisible="false"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
 
 					<p:column headerText="Solicitação Recebida de">
-						<h:outputText value="#{soli.clienteSolicitou.nome}" />
+						<h:outputText value="#{soli.clienteSolicitou.nome}
+						#{soli.clienteSolicitou.sobrenome}" />
 					</p:column>
 
 					<p:column headerText="Endereço">

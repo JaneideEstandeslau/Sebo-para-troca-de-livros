@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="/WEB-INF/template/layoutLogado.xhtml.xhtml">
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
 
 	<ui:define name="layoutLogado">
 	
@@ -34,20 +34,6 @@
 					</p:column>
 	
 					<p:column headerText="Operações">
-	
-						<p:commandButton process="@this" id="adicionar" value="Adicionar"
-							action="#{visualizarClientesBean.adicionarPontoNegativo()}">
-						
-							<f:setPropertyActionListener value="#{cli}"
-								target="#{visualizarClientesBean.cli}" />
-							
-							<p:confirm header="Confirmação!"
-								message="Tem certeza que deseja adicionar mais um troca com problema a esse cliente '#{cli.nome}'?"
-								icon="ui-icon-alert" />
-								
-							<p:tooltip id="toolTipAdicionar" for="adicionar" value="Adicionar troca com problema ao cliente"
-								position="top" />
-						</p:commandButton>
 						
 						<p:commandButton process="@this" id="remover" value="Dasativar"
 							action="#{visualizarClientesBean.desativarCliente()}">
@@ -73,6 +59,21 @@
 								icon="ui-icon-alert" />
 							<p:tooltip id="toolTipAtivar" for="ativar"
 								value="Desativar temporariamente a conta do cliente" position="top" />
+						</p:commandButton>
+						
+						<br />
+						<p:commandButton process="@this" id="adicionar" value="Adicionar"
+							action="#{visualizarClientesBean.adicionarPontoNegativo()}">
+						
+							<f:setPropertyActionListener value="#{cli}"
+								target="#{visualizarClientesBean.cli}" />
+							
+							<p:confirm header="Confirmação!"
+								message="Tem certeza que deseja adicionar mais um troca com problema a esse cliente '#{cli.nome}'?"
+								icon="ui-icon-alert" />
+								
+							<p:tooltip id="toolTipAdicionar" for="adicionar" value="Adicionar troca com problema ao cliente"
+								position="top" />
 						</p:commandButton>
 	
 					</p:column>

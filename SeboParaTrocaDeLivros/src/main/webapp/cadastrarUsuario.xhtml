@@ -35,6 +35,11 @@
 								value="#{cadastrarClienteBean.cliente.nome}"
 								label="Nome Completo" required="true" style="width:350px" />
 
+							<p:outputLabel value="Segundo Nome:" for="Segnome" />
+							<p:inputText id="Segnome"
+								value="#{cadastrarClienteBean.cliente.sobrenome}"
+								label="Segundo Nome" required="true" style="width:350px" />
+							
 							<p:outputLabel value="CPF:" for="cpf" />
 							<p:inputMask mask="999.999.999-99" id="cpf"
 								value="#{cadastrarClienteBean.cliente.cpf}" label="CPF"
@@ -45,9 +50,16 @@
 								value="#{cadastrarClienteBean.cliente.login}" label="Login"
 								required="true" style="width:350px" />
 
+							
+								
 							<p:outputLabel value="Senha:" for="senha" />
 							<p:password id="senha"
 								value="#{cadastrarClienteBean.cliente.senha}" label="Senha"
+								feedback="true" required="true" style="width:350px" />
+						
+							<p:outputLabel value="Confirme a Senha:" for="senhaConfirme" />
+							<p:password id="senhaConfirme"
+								value="#{cadastrarClienteBean.senha}" label="Confirme a Senha"
 								feedback="true" required="true" style="width:350px" />
 							
 							<p:outputLabel value="Email:" for="email" />

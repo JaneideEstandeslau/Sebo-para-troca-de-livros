@@ -24,6 +24,7 @@ public class Usuario implements Serializable{
 	private Long id;
 	private String cpf;
 	private String nome;
+	private String sobrenome;
 	@Column(name = "user_group")
 	@Enumerated(EnumType.STRING)
 	private Group tipo;
@@ -96,6 +97,12 @@ public class Usuario implements Serializable{
 		} else if (!cpf.equals(other.cpf))
 			return false;
 		return true;
+	}
+	public String getSobrenome() {
+		return sobrenome;
+	}
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 	
 }

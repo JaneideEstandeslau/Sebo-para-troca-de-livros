@@ -13,11 +13,13 @@ import excecoes.ServiceDacException;
 import model.Cliente;
 import model.Livro;
 import model.ProblemaTroca;
+import model.Solicitacao;
 import model.StatusProblema;
 import model.Troca;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
 import persistencia.DAOProblemaTroca;
+import persistencia.DAOSolicitacao;
 import persistencia.DAOTroca;
 import util.TransacionalCdi;
 
@@ -36,6 +38,8 @@ public class TrocaService implements Serializable {
 	private DAOTroca trocaDAO;
 	@Inject
 	private DAOProblemaTroca probDAO;
+	@Inject
+	private DAOSolicitacao soliDAO;
 
 	/**
 	 * Esse método deixa registrado as trocas que o cliente fez.
@@ -45,7 +49,7 @@ public class TrocaService implements Serializable {
 	 * @param idClienteRecebendo
 	 * @throws RollbackException
 	 */
-	public void realizarTroca(Long idClienteEnviando, Long idLivro, Long idClienteRecebendo) throws RollbackException {
+	public void realizarTroca(Long idClienteEnviando, Long idLivro, Long idClienteRecebendo, Solicitacao soli) throws RollbackException {
 
 		LocalDate data = LocalDate.now();
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -67,6 +71,9 @@ public class TrocaService implements Serializable {
 		troca.setLivro(livro);
 
 		try {
+			soli.setTroca(troca);
+			troca.setSolicitacao(soli);
+			soliDAO.update(soli);
 			trocaDAO.save(troca);
 			clienteEnviando.setPonto(clienteEnviando.getPonto() + 1);
 			clienteEnviando.getLivrosPossuem().remove(livro);
@@ -101,14 +108,16 @@ public class TrocaService implements Serializable {
 			throws RollbackException {
 
 		try {
+			
+			Solicitacao soli = troca.getSolicitacao();
 
 			clienteRecebendo.setPonto(clienteRecebendo.getPonto() + 1);
-			clienteRecebendo.getSolicitacoes().remove(livro);
 			clienteEnviando.setPonto(clienteEnviando.getPonto() - 1);
-
+			
 			clienteDAO.update(clienteEnviando);
 			clienteDAO.update(clienteRecebendo);
 
+			soliDAO.delete(soli, soli.getId());
 			trocaDAO.delete(troca, troca.getId());
 
 		} catch (Exception e) {

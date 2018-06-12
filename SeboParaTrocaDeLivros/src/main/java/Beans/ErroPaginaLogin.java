@@ -14,7 +14,7 @@ public class ErroPaginaLogin extends AbstractBean {
 	
 	public void dispararMensagemLoginErro(boolean error){
 		if(error){
-			reportarMensagemDeErro("Login e/ou senha errada.");
+			reportarMensagemDeErro("Login e/ou senha errada ou usuário desativado.");
 		}
 	}
 

@@ -5,14 +5,18 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
+import model.Cliente;
+import model.Group;
 import model.Usuario;
 import persistencia.DAOUsuario;
+import util.TransacionalCdi;
 
 @ApplicationScoped
 public class UsuarioService implements Serializable{
@@ -30,12 +34,17 @@ public class UsuarioService implements Serializable{
 	 * @param admin
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void salvarAdmin(Usuario admin) throws RollbackException {
 		try {
 			validarCPF(admin.getCpf());
+			validarLoginCadastro(admin.getLogin());
+			admin.setAtivo(true);
+			admin.setTipo(Group.ADMIN);
+			calcularHashDaSenha(admin);
 			usuarioDAO.save(admin);
 		} catch (Exception e) {
-			throw new RollbackException(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -45,6 +54,7 @@ public class UsuarioService implements Serializable{
 	 * @param idAdmin
 	 * @throws RollbackException
 	 */
+	@TransacionalCdi
 	public void removerAdmin(Long idAdmin) throws RollbackException {
 
 		try {
@@ -62,16 +72,28 @@ public class UsuarioService implements Serializable{
 		Usuario u = usuarioDAO.validarCPF(cpf);
 
 		if (u != null) {
-			throw new RollbackException("Já existe um Administrador com esse CPF");
+			throw new RollbackException("Já existe um administrador com esse CPF");
+		}
+	}
+	
+	public void validarCPFUpdate(String cpf) throws RollbackException {
+
+		List<Usuario> u = usuarioDAO.validarCPFUpdate(cpf);
+
+		if (u.size() > 1) {
+			throw new RollbackException("Já existe um administrador com esse CPF");
 		}
 	}
 
+	@TransacionalCdi
 	public void modificarUsuario(Usuario usuario) throws RollbackException {
 		try {
-			validarCPF(usuario.getCpf());
+			validarCPFUpdate(usuario.getCpf());
 			Usuario c = (Usuario) usuarioDAO.getByID(new Usuario(), usuario.getId());
 			c.setLogin(usuario.getLogin());
 			c.setNome(usuario.getNome());
+			c.setSobrenome(usuario.getSobrenome());
+			c.setCpf(usuario.getCpf());
 			usuarioDAO.update(c);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
@@ -81,7 +103,7 @@ public class UsuarioService implements Serializable{
 
 	public Usuario recuperarAdmin(String cpf) throws RollbackException {
 		try {
-			return usuarioDAO.validarCPF(cpf);
+			return usuarioDAO.recuperarAdmin(cpf);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
 		}
@@ -105,6 +127,28 @@ public class UsuarioService implements Serializable{
 			return output;
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			throw new ServiceDacException("Could not calculate hash!", e);
+		}
+	}
+	
+	public int validarLogin(String login){
+		Usuario c = usuarioDAO.validarLoginCadastro(login);
+
+		if (c != null) {
+			return 1;
+		}
+		return 2;
+	}
+	
+	private String calcularHashDaSenha(Usuario user) throws ServiceDacException {
+		user.setSenha(hash(user.getSenha()));
+		return user.getSenha();
+	}
+	
+	private void validarLoginCadastro(String login) throws RollbackException {
+		Usuario c = usuarioDAO.validarLoginCadastro(login);
+
+		if (c != null) {
+			throw new RollbackException("Já existe um cliente com esse Login");
 		}
 	}
 

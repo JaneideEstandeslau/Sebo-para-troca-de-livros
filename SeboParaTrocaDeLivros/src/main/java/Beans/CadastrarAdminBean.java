@@ -1,6 +1,5 @@
 package Beans;
 
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,8 +10,8 @@ import service.UsuarioService;
 
 @SessionScoped
 @Named
-public class CadastrarAdminBean extends AbstractBean{
-	
+public class CadastrarAdminBean extends AbstractBean {
+
 	/**
 	 * 
 	 */
@@ -20,44 +19,52 @@ public class CadastrarAdminBean extends AbstractBean{
 	@Inject
 	private UsuarioService service;
 	private Usuario usuario;
-	
+	private String senha;
+
 	public void visualizarPerfil() {
 		try {
-			usuario = service.recuperarAdmin("70544869436");
-		}catch (RollbackException e) {
+			usuario = service.recuperarAdmin("705.448.694-35");
+		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 		}
 	}
-	
+
 	public void init() {
-		if(usuario == null) {
-			usuario = new Usuario();
-		}
+
+		usuario = new Usuario();
+
 	}
-	
+
 	public String saveUsuario() {
 		try {
-			
-			if(isEdicaoDeClinte()) {
+
+			if (isEdicaoDeClinte()) {
 				service.modificarUsuario(usuario);
+				reportarMensagemDeSucesso("Administrador '" + usuario.getNome() + "' salvo");
+
+				return "paginaDoUsuario.xhtml?faces-redirect=true";
+			} else {
+
+				if (usuario.getSenha().equals(senha)) {
+					service.salvarAdmin(usuario);
+					reportarMensagemDeSucesso("Administrador '" + usuario.getNome() + "' salvo");
+					return "paginaDoUsuario.xhtml?faces-redirect=true";
+				} else {
+					reportarMensagemDeErro("Senhas não conferem");
+					return null;
+				}
 			}
-			else {
-				service.salvarAdmin(usuario);
-			}
-		}catch (RollbackException e) {
+		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
 		}
-		reportarMensagemDeSucesso("Administrador '" + usuario.getNome() + "' salvo");
 
-		return "paginaDoAdmin.xhtml?faces-redirect=true";
-		
 	}
-	
+
 	public boolean isEdicaoDeClinte() {
 		return usuario.getId() != null;
 	}
-	
+
 	public UsuarioService getService() {
 		return service;
 	}
@@ -72,6 +79,14 @@ public class CadastrarAdminBean extends AbstractBean{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

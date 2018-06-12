@@ -44,6 +44,10 @@ public class LogadoPesquisarLivroBean extends AbstractBean{
 		return  "pesquisarLivroLogado.xhtml?faces-redirect=true";
 	}
 	
+	public String vosualizar(){
+		return  "visualizarLivro.xhtml?faces-redirect=true";
+	}
+	
 	public String verPerfil(Livro livro) {
 		if(livro.getUsuarioPossue() != null) {
 			return  "perfilDoCliente.xhtml?faces-redirect=true";

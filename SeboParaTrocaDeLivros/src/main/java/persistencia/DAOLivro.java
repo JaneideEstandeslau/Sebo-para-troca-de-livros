@@ -129,7 +129,7 @@ public class DAOLivro extends DAOGenerico {
 		
 		try {
 			TypedQuery<Livro> itemQuery = em.createQuery("SELECT l FROM Livro l LEFT JOIN FETCH l.usuarioPossue WHERE 1 = 1 AND l.titulo LIKE :titulo",Livro.class);
-			itemQuery.setParameter("titulo", "%" + searchTerms + "%");
+			itemQuery.setParameter("titulo", "%" + searchTerms.toUpperCase() + "%");
 			itens = itemQuery.getResultList();
 			return itens;
 		} catch (Exception e) {

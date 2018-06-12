@@ -122,7 +122,7 @@ public class AbstractBean implements Serializable{
 		return null;
 	}
 	
-	public Cliente getCliente() {
+	public Cliente getClientee() {
 		
 		String login = getUserLogin();
 		Cliente users = null;
