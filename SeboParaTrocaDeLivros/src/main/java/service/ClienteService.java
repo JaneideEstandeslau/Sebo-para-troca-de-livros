@@ -332,7 +332,27 @@ public class ClienteService implements Serializable {
 		return user.getSenha();
 	}
 	
-	public static void main(String[] args) throws Exception {
-		System.out.println(new ClienteService().hash("123456"));
+	public boolean senhaAtualConfere(String passwordAtualHash, String confirmacaoPasswordAtual) throws ServiceDacException {
+		
+		if (passwordAtualHash == null && confirmacaoPasswordAtual == null) {
+			return true;
+		}
+
+		if (passwordAtualHash == null || confirmacaoPasswordAtual == null) {
+			return false;
+		}
+		
+		String confirmacaoPasswordAtualHash = hash(confirmacaoPasswordAtual);
+		return passwordAtualHash.equals(confirmacaoPasswordAtualHash);
+	}
+	
+	@TransacionalCdi
+	public void modificarSenha(Cliente cliente) throws RollbackException {
+		try {
+			calcularHashDaSenha(cliente);
+			clienteDAO.update(cliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
 	}
 }

@@ -20,73 +20,41 @@
 			severity="info" />
 		<p:messages id="idMessagesErrors" showDetail="true" autoUpdate="true"
 			closable="true" severity="error" />
-			
+
 		<div id="divImagem">
 
 			<style typr="text/css">
-			div#divImagem {
-				width: 1329px;
-				height: 580px;
-				margin-top: 0px;
-				margin-left: -8px;
-				margin-bottom: -50px;
-				background: url("imagemFundo.jpg") no-repeat 0px 0px;
-				padding: 10px;
-			}
+				div#divImagem {
+					width: 1329px;
+					height: 580px;
+					margin-top: 0px;
+					margin-left: -8px;
+					margin-bottom: -50px;
+					background: url("imagemFundo.jpg") no-repeat 0px 0px;
+					padding: 10px;
+				}
 			</style>
-			
-			<p:panel header="Login" style="margin-bottom:20px; width: 550px; margin-left: 350px;">
-		
-			<h:form id="formLogin" prependId="false" onsubmit="action='j_security_check';" >
-			
-				<h:panelGrid columns="2" style="text-align:center; margin: auto;">
-					
-					<h:outputLabel for="j_username" value="Login:" />
-					<h:inputText id="j_username" />
-						
-					<h:outputLabel for="j_password" value="Senha:" />
-					<h:inputSecret id="j_password" />
-						
-					<p:commandButton id="btnLogin" value="Login" ajax="false" icon="fa fa-sign-in" />
-					
-				</h:panelGrid>
-				<div id="msg2">
-						Esqueceu sua senha?
-						<h:commandLink action="#{logarClienteBean.redefinirSenha()}"
-							value="Redefinir Senha" style="padding:10px" />
-					</div>
-					<br />
-			</h:form>
-		</p:panel>
 
-			<h:form id="redefirnirSenha"
-				rendered="#{logarClienteBean.editarSenha()}">
-				<p:panel id="basic" header="Redefinir Senha"
-					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
-					<h:panelGrid columns="2" cellpadding="10">
+			<p:panel header="Login"
+				style="margin-bottom:20px; width: 550px; margin-left: 350px;">
 
+				<h:form id="formLogin" prependId="false"
+					onsubmit="action='j_security_check';">
 
-						<p:outputLabel value="Login:" for="login" />
-						<p:inputText id="login" label="Login" style="width:350px" />
+					<h:panelGrid columns="2" style="text-align:center; margin: auto;">
 
-						<p:outputLabel value="Senha Atual:" for="senhaAtual" />
-						<p:password id="senhaAtual" label="Senha Atual" feedback="true"
-							style="width:350px" />
+						<h:outputLabel for="j_username" value="Login:" />
+						<h:inputText id="j_username" />
 
+						<h:outputLabel for="j_password" value="Senha:" />
+						<h:inputSecret id="j_password" />
 
-						<p:outputLabel value="Nova Senha:" for="novaSenha" />
-						<p:password id="novaSenha" label="Nova Senha" feedback="true"
-							style="width:350px" />
-
-						<p:outputLabel value="Confirmar Senha:" for="confirmarSenha" />
-						<p:password id="confirmarSenha" label="Confirmar Senha"
-							feedback="true" style="width:350px" />
-
-						<p:commandButton id="btnLogar" value="Modificar" />
+						<p:commandButton id="btnLogin" value="Login" ajax="false"
+							icon="fa fa-sign-in" />
 
 					</h:panelGrid>
-				</p:panel>
-			</h:form>
+				</h:form>
+			</p:panel>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
 public class Usuario implements Serializable{
@@ -22,6 +23,8 @@ public class Usuario implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+//	@CPF(message="cpf inválido")
 	private String cpf;
 	private String nome;
 	private String sobrenome;
