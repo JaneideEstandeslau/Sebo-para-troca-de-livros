@@ -16,6 +16,7 @@
 		<class>model.Solicitacao</class>
 		<class>model.Troca</class>
 		<class>model.Usuario</class>
+		<class>model.Avaliacao</class>
         
 		<properties>
         

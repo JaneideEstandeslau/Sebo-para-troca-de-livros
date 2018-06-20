@@ -10,12 +10,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
+import model.Avaliacao;
 import model.Cliente;
 import model.Group;
 import model.Livro;
 import persistencia.DAOCliente;
 import persistencia.DAOLivro;
-import persistencia.DAOSolicitacao;
 import util.TransacionalCdi;
 
 import java.util.List;
@@ -30,13 +30,7 @@ public class ClienteService implements Serializable {
 	@Inject
 	private DAOCliente clienteDAO;
 	@Inject
-	private DAOSolicitacao soliDAO;
-	@Inject
 	private DAOLivro livroDAO;
-
-	public void logarUsuario(String login, String senha) {
-		Cliente cliente = clienteDAO.recuperarClienteParaLogar(login, senha);
-	}
 
 	/**
 	 * Esse método cadastra um cliente
@@ -353,6 +347,25 @@ public class ClienteService implements Serializable {
 			clienteDAO.update(cliente);
 		} catch (Exception e) {
 			throw new RollbackException(e.getMessage());
+		}
+	}
+	
+	public int avaliacoes(long idCliente) {
+		Cliente c = clienteDAO.getAvaliacoes(idCliente);
+		int cont = 0;
+		for(Avaliacao avali: c.getAvaliacoes()) {
+			cont += avali.getPonto();
+		}
+		
+		if(cont > 0) {
+			cont = cont/c.getAvaliacoes().size();
+			if(cont >= 5)
+				return 5;
+			else 
+				return cont;
+		}
+		else {
+			return 0;
 		}
 	}
 }

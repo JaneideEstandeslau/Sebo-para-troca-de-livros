@@ -119,6 +119,7 @@
 			<url-pattern>/informarDescrocao.xhtml</url-pattern>
 			<url-pattern>/pesquisarLivroLogado.xhtml</url-pattern>
 			<url-pattern>/informarDescrocao.xhtml</url-pattern>
+			<url-pattern>/avaliarTroca.xhtml</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>HEAD</http-method>

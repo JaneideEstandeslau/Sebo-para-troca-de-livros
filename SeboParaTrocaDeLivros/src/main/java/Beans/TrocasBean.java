@@ -7,7 +7,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import excecoes.RollbackException;
+import model.Avaliacao;
 import model.Troca;
+import service.AvaliacaoService;
 import service.ClienteService;
 import service.TrocaService;
 
@@ -23,8 +25,27 @@ public class TrocasBean extends AbstractBean{
 	private TrocaService trocaService;
 	@Inject
 	private ClienteService clienteService;
+	@Inject
+	private AvaliacaoService service;
 	private Troca troca;
 	private String codRastreio;
+	private Avaliacao avali;
+	private long idCliente;
+	
+	public void init() {
+		avali = new Avaliacao();
+	}
+
+	public String salvarAvaliacao() {
+		try {
+			service.salverAvaliacao(avali, idCliente);
+			reportarMensagemDeSucesso("Avaliação salva com sucesso!");
+			return "trocasRecebidas.xhtml?faces-redirect=true";
+		} catch (RollbackException e) {
+			reportarMensagemDeErro(e.getMessage());
+			return null;
+		}
+	}
 	
 	public List<Troca> getTrocasRebidas(){
 		try {
@@ -49,7 +70,7 @@ public class TrocasBean extends AbstractBean{
 			troca.setRecebida(true);
 			trocaService.upedate(troca);
 			reportarMensagemDeSucesso("Confirmado recebimento do livro");
-			return "trocasRecebidas.xhtml?faces-redirect=true";
+			return "avaliarTroca.xhtml?faces-redirect=true";
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 			return null;
@@ -110,5 +131,21 @@ public class TrocasBean extends AbstractBean{
 
 	public void setClienteService(ClienteService clienteService) {
 		this.clienteService = clienteService;
+	}
+
+	public Avaliacao getAvali() {
+		return avali;
+	}
+
+	public void setAvali(Avaliacao avali) {
+		this.avali = avali;
+	}
+
+	public long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(long idCliente) {
+		this.idCliente = idCliente;
 	}
 }

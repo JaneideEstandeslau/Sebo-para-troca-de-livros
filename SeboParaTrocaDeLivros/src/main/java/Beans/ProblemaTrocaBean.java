@@ -1,14 +1,11 @@
 package Beans;
 
 import java.util.List;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import excecoes.RollbackException;
 import excecoes.ServiceDacException;
-import model.Group;
 import model.ProblemaTroca;
 import model.StatusProblema;
 import model.Troca;

@@ -327,4 +327,18 @@ public class DAOCliente extends DAOGenerico {
 		}
 		return resultado;
 	}
+	
+	public Cliente getAvaliacoes(long idCliente) {
+		EntityManager em = getEntityManager();
+		Cliente resultado = null;
+		try {
+			TypedQuery<Cliente> query = (TypedQuery<Cliente>) em
+			.createQuery("SELECT c FROM Cliente c LEFT JOIN FETCH c.avaliacoes WHERE c.id = :idCliente");
+			query.setParameter("idCliente", idCliente);
+			resultado = query.getSingleResult();
+		} catch (PersistenceException pe) {
+			return null;
+		}
+		return resultado;
+	}
 }

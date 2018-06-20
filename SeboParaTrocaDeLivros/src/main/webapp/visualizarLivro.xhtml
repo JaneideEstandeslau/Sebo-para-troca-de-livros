@@ -89,6 +89,10 @@
 					<p:outputLabel id="email"
 						value="#{beanCadastrarLivro.livro.usuarioPossue.email}"
 						label="Login" required="true" style="width:350px" />
+						
+					<p:outputLabel value="Avaliação:"/>
+					<p:rating value="#{cadastrarClienteBean.avaliacoes()}" readonly="true"/>
+
 
 					<p:outputLabel value="Problemas na Troca:" for="pontos" />
 					<p:outputLabel id="pontos"

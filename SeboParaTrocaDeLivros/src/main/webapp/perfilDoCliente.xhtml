@@ -50,6 +50,9 @@
 					<p:outputLabel id="pontos"
 						value="#{cadastrarClienteBean.cliente.ponto}" label="Pontos"
 						required="true" style="width:350px" />
+						
+					<h:outputLabel value="Avaliação de Troca:"/>
+					<p:rating value="#{cadastrarClienteBean.avaliacoes()}" readonly="true"/>
 
 				</h:panelGrid>
 			</p:fieldset>

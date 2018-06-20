@@ -39,6 +39,9 @@
 
 						<p:commandButton id="confirmar" process="@this" value="Recebi"
 							action="#{trocasBean.recebi()}">
+							
+							<f:setPropertyActionListener value="#{troca.clienteEnviando.id}"
+								target="#{trocasBean.idCliente}" />
 
 							<f:setPropertyActionListener value="#{troca}"
 								target="#{trocasBean.troca}" />
@@ -50,7 +53,6 @@
 							<p:tooltip id="toolTipRecebido" for="confirmar"
 								value="Confirmar Recebimento do Livro" position="top" />
 						</p:commandButton>
-
 					</p:column>
 				</p:dataTable>
 			</h:form>

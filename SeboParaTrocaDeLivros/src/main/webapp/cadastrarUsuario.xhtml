@@ -110,7 +110,9 @@
 				</h:panelGrid>
 				<p:commandButton id="btnLogar"
 					action="#{cadastrarClienteBean.saveCliente()}" value="Salvar" />
-				<p:commandButton id="btnCancelar" value="Cancelar" />
+				<p:button id="btnCancelar" value="Cancelar" 
+					outcome="index.xhtml">
+				</p:button>
 			</h:form>
 
 		</div>

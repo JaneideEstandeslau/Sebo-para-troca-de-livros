@@ -7,7 +7,7 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="/WEB-INF/templates/layoutSemLog.xhtml">
+<ui:composition template="/WEB-INF/templates/layoutLogado.xhtml">
 
 	<ui:define name="title">
 		Acesso não autorizado!
@@ -19,7 +19,7 @@
 		<p:panel columns="1" style="width : 100%; text-align:center">
 			<h:outputText value="Você não tem acesso a este recurso do sistema!" />
 			<br/>
-			<p:link value="Go to main page..." outcome="/index.xhtml" />
+			<p:link value="Vá para a página principal ..." outcome="/paginaDoUsuario.xhtml" />
 		</p:panel>
 	</ui:define>
 

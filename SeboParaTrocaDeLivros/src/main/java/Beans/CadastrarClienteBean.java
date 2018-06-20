@@ -12,7 +12,7 @@ import model.Endereco;
 import service.ClienteService;
 import service.EnderecoService;
 
-@ViewScoped
+@SessionScoped
 @Named
 public class CadastrarClienteBean extends AbstractBean{
 
@@ -86,6 +86,10 @@ public class CadastrarClienteBean extends AbstractBean{
 			return null;
 		}
 		return "deslogarUsuario.xhtml?faces-redirect=true";
+	}
+	
+	public int avaliacoes() {
+		return clienteService.avaliacoes(getUsuarioLogado());
 	}
 	
 	public boolean isEdicaoDeClinte() {
