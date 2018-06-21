@@ -42,7 +42,7 @@ public class AbstractBean implements Serializable{
 			FacesContext.getCurrentInstance().validationFailed();
 		}
 
-		FacesMessage msg = new FacesMessage(severity, tipo + " " + detalhe, null);
+		FacesMessage msg = new FacesMessage(severity, tipo, detalhe);
 
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.setKeepMessages(true);
@@ -118,6 +118,23 @@ public class AbstractBean implements Serializable{
 
 		if (users != null) {
 			return users;
+		}
+		return null;
+	}
+	
+	public String getCpfLogado() {
+		
+		String login = getUserLogin();
+		Usuario users = null;
+		try {
+			users = clienteDAO.recuperarUsuarioLogin(login);
+		} catch (Exception e) {
+			e.printStackTrace();
+			reportarMensagemDeErro("Erro ao recuperar o usuário logado!");
+		}
+
+		if (users != null) {
+			return users.getCpf();
 		}
 		return null;
 	}

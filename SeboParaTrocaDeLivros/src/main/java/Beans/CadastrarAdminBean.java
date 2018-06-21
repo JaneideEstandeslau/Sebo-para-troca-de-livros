@@ -23,7 +23,7 @@ public class CadastrarAdminBean extends AbstractBean {
 
 	public void visualizarPerfil() {
 		try {
-			usuario = service.recuperarAdmin("705.448.694-35");
+			usuario = service.recuperarAdmin(getCpfLogado());
 		} catch (RollbackException e) {
 			reportarMensagemDeErro(e.getMessage());
 		}
@@ -41,7 +41,6 @@ public class CadastrarAdminBean extends AbstractBean {
 			if (isEdicaoDeClinte()) {
 				service.modificarUsuario(usuario);
 				reportarMensagemDeSucesso("Administrador '" + usuario.getNome() + "' salvo");
-
 				return "paginaDoUsuario.xhtml?faces-redirect=true";
 			} else {
 

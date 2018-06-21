@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/template/layoutLogado.xhtml">
+
+	<ui:define name="layoutLogado">
+
+		<p:growl id="idMessages" showDetail="true" 
+			severity="info" />
+		<p:messages id="idMessagesErrors" showDetail="true" 
+			closable="true" severity="error" />
+			
+		<div id="divImagem">
+
+			<style type="text/css">
+				div#divImagem {
+					width: 1329px;
+					height: 580px;
+					margin-top: 0px;
+					margin-left: -8px;
+					margin-bottom: -50px;
+					background: url("imagemFundo.jpg") no-repeat 0px 0px;
+					padding: 10px;
+				}
+			</style>
+			
+			<h:form id="redefirnirSenha">
+				<p:panel id="basic" header="Redefinir Senha"
+					style="margin-bottom:20px; width: 550px; margin-left: 350px; ">
+					<h:panelGrid columns="2" cellpadding="10">
+
+						<p:outputLabel value="Senha Atual:" for="senhaAtual" />
+						<p:password id="senhaAtual" label="Senha Atual"
+							value="#{modSenhaAdmin.senhaAtual}" style="width:350px" />
+
+
+						<p:outputLabel value="Nova Senha:" for="novaSenha" />
+						<p:password id="novaSenha" label="Nova Senha" feedback="true"
+							value="#{modSenhaAdmin.novaSenha}" style="width:350px" />
+
+						<p:outputLabel value="Confirmar Senha:" for="confirmarSenha" />
+						<p:password id="confirmarSenha" label="Confirmar Senha"
+							value="#{modSenhaAdmin.confNovaSenha}" feedback="true" style="width:350px" />
+
+						<p:commandButton id="btnLogar" value="Modificar"
+							action="#{modSenhaAdmin.modSenha()}">
+						</p:commandButton>
+
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

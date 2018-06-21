@@ -19,7 +19,7 @@ import persistencia.DAOUsuario;
 import util.TransacionalCdi;
 
 @ApplicationScoped
-public class UsuarioService implements Serializable{
+public class UsuarioService implements Serializable {
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class UsuarioService implements Serializable{
 			throw new RollbackException("Já existe um administrador com esse CPF");
 		}
 	}
-	
+
 	public void validarCPFUpdate(String cpf) throws RollbackException {
 
 		List<Usuario> u = usuarioDAO.validarCPFUpdate(cpf);
@@ -85,10 +85,20 @@ public class UsuarioService implements Serializable{
 		}
 	}
 
+	public void validarLoginUpdate(String login) throws RollbackException {
+
+		List<Usuario> u = usuarioDAO.validarLoginUpdate(login);
+
+		if (u.size() > 1) {
+			throw new RollbackException("Já existe um administrador com esse login");
+		}
+	}
+
 	@TransacionalCdi
 	public void modificarUsuario(Usuario usuario) throws RollbackException {
 		try {
 			validarCPFUpdate(usuario.getCpf());
+			validarLoginUpdate(usuario.getLogin());
 			Usuario c = (Usuario) usuarioDAO.getByID(new Usuario(), usuario.getId());
 			c.setLogin(usuario.getLogin());
 			c.setNome(usuario.getNome());
@@ -108,7 +118,7 @@ public class UsuarioService implements Serializable{
 			throw new RollbackException(e.getMessage());
 		}
 	}
-	
+
 	public Object getByID(Long id) throws ServiceDacException {
 		try {
 			return (Usuario) usuarioDAO.getByID(new Usuario(), id);
@@ -116,7 +126,7 @@ public class UsuarioService implements Serializable{
 			throw new ServiceDacException(e.getMessage(), e);
 		}
 	}
-	
+
 	private String hash(String password) throws ServiceDacException {
 		MessageDigest md;
 		try {
@@ -129,8 +139,8 @@ public class UsuarioService implements Serializable{
 			throw new ServiceDacException("Could not calculate hash!", e);
 		}
 	}
-	
-	public int validarLogin(String login){
+
+	public int validarLogin(String login) {
 		Usuario c = usuarioDAO.validarLoginCadastro(login);
 
 		if (c != null) {
@@ -138,12 +148,12 @@ public class UsuarioService implements Serializable{
 		}
 		return 2;
 	}
-	
+
 	private String calcularHashDaSenha(Usuario user) throws ServiceDacException {
 		user.setSenha(hash(user.getSenha()));
 		return user.getSenha();
 	}
-	
+
 	private void validarLoginCadastro(String login) throws RollbackException {
 		Usuario c = usuarioDAO.validarLoginCadastro(login);
 
@@ -152,4 +162,28 @@ public class UsuarioService implements Serializable{
 		}
 	}
 
+	@TransacionalCdi
+	public void modificarSenha(Usuario cliente) throws RollbackException {
+		try {
+			calcularHashDaSenha(cliente);
+			usuarioDAO.update(cliente);
+		} catch (Exception e) {
+			throw new RollbackException(e.getMessage());
+		}
+	}
+
+	public boolean senhaAtualConfere(String passwordAtualHash, String confirmacaoPasswordAtual)
+			throws ServiceDacException {
+
+		if (passwordAtualHash == null && confirmacaoPasswordAtual == null) {
+			return true;
+		}
+
+		if (passwordAtualHash == null || confirmacaoPasswordAtual == null) {
+			return false;
+		}
+
+		String confirmacaoPasswordAtualHash = hash(confirmacaoPasswordAtual);
+		return passwordAtualHash.equals(confirmacaoPasswordAtualHash);
+	}
 }

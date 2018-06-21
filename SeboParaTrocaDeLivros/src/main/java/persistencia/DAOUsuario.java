@@ -48,6 +48,22 @@ public class DAOUsuario extends DAOGenerico {
 
 	}
 	
+	public List<Usuario> validarLoginUpdate(String login) {
+
+		EntityManager em = getEntityManager();
+		List<Usuario> resultado = null;
+		try {
+			TypedQuery<Usuario> query = (TypedQuery<Usuario>) em
+					.createQuery("SELECT u FROM Usuario u WHERE u.login = :login");
+			query.setParameter("login", login);
+			resultado = query.getResultList();
+		} catch (PersistenceException pe) {
+			return null;
+		}
+		return resultado;
+
+	}
+	
 	public Usuario validarLoginCadastro(String login) {
 
 		EntityManager em = getEntityManager();
