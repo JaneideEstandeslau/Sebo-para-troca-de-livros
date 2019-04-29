@@ -81,6 +81,7 @@
 			<url-pattern>/perfilDoAdmin.xhtml</url-pattern>
 			<url-pattern>/editarPerfilAdmin.xhtml</url-pattern>
 			<url-pattern>/visualizarTroca.xhtml</url-pattern>
+			<url-pattern>/editarSenhaAdmin.xhtml</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>HEAD</http-method>
